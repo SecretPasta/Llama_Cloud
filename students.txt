@@ -1,0 +1,6 @@
+Ilya Vorotyntsev Ilya.Vorotyntsev@e.braude.ac.il Cloud Computing, WEB Technologies, Compilation https://google.com
+Alex Pitkin Alex.Pitkin@e.braude.ac.il Math, WEB Technologies, Algebra https://bebra.com
+Boris Shoostin Boris.Shoostin@e.braude.ac.il Crypto, Physics, Math https://chatgpt.com
+Ofir Ofek Ofir.Ofek@e.braude.ac.il English, Hedva, Matam https://youtube.com
+Hagar Tibi Hagar.Tibi@e.braude.ac.il Cloud, Crypto, Algebra https://braude.com
+Guy Edri Guy.Edri@e.braude.ac.il Math, Compilation, English https://idf.il
