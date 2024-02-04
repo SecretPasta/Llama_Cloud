@@ -1,0 +1,49 @@
+{
+  "questions": [
+    {
+      "question": "What is the result of 2 + 2 in Python?",
+      "answers": [
+        {"text": "3", "correct": false},
+        {"text": "4", "correct": true},
+        {"text": "5", "correct": false},
+        {"text": "6", "correct": false}
+      ]
+    },
+    {
+      "question": "Which of the following is NOT a valid Python data type?",
+      "answers": [
+        {"text": "int", "correct": false},
+        {"text": "str", "correct": false},
+        {"text": "list", "correct": false},
+        {"text": "float*", "correct": true}
+      ]
+    },
+    {
+      "question": "What is the purpose of 'if' statements in Python?",
+      "answers": [
+        {"text": "To declare variables", "correct": false},
+        {"text": "To iterate over a list", "correct": false},
+        {"text": "To perform mathematical calculations", "correct": false},
+        {"text": "To control the flow of the program based on conditions", "correct": true}
+      ]
+    },
+    {
+      "question": "How do you define a function in Python?",
+      "answers": [
+        {"text": "using the 'def' keyword", "correct": true},
+        {"text": "using the 'function' keyword", "correct": false},
+        {"text": "using the 'define' keyword", "correct": false},
+        {"text": "using the 'func' keyword", "correct": false}
+      ]
+    },
+    {
+      "question": "What is the result of the expression '3 * 4 + 2' in Python?",
+      "answers": [
+        {"text": "10", "correct": false},
+        {"text": "14", "correct": true},
+        {"text": "12", "correct": false},
+        {"text": "18", "correct": false}
+      ]
+    }
+  ]
+}
