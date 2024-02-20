@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llama Search Results</title>
+
+    <!-- For PNG or other formats -->
+    <link rel="icon" type="image/png" href="logo_nobg.png">
+    <!-- Apple Touch Icon for use with Apple devices -->
+    <link rel="apple-touch-icon" href="logo_nobg.png">
+    <!-- To specify a theme color for address bar in mobile browsers -->
+    <meta name="theme-color" content="#10182F">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 50;
+        }
+
+        body,
+        html {
+
+            -webkit-user-select: none;
+            /* Safari */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* Internet Explorer/Edge */
+            user-select: none;
+            /* Non-prefixed version, currently supported by Chrome, Opera and Edge */
+
+            height: 100%;
+            /* font-family: 'Roboto', sans-serif; */
+            font-family: 'Calibri', sans-serif;
+            
+            background: linear-gradient(to bottom left, #10182F, #152e48, #112037, #0F172A);
+            /* Dark background */
+            color: rgb(141, 174, 230);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: left;
+            height: 110vh;
+            /* Change height to 100vh to fill the entire viewport */
+        }
+        .logo-cont {
+            font-size: 2rem;
+            top: 0;
+            right: 0;
+            padding: 10px;
+            /* Adjust the padding to control the distance from the corner */
+            display: flex;
+            /* Enables Flexbox for this container */
+            align-items: center;
+            /* Vertically centers the flex items (the image and label) */
+            justify-content: flex-start;
+            /* Aligns items to the start of the container */
+        }
+
+        .logo {
+            height: 100px;
+            /* Adjust based on your logo's size */
+            width: auto;
+            /* Maintains the aspect ratio of the logo */
+            margin-right: 10px;
+            /* Adds some space between the logo and the label */
+            color: #010406;
+        }
+        
+        .title {
+            font-size: 4rem;
+            font-weight: 600;
+            color: #1b769e;
+        }
+        
+        .search-result {
+            margin-bottom: 1px;
+            padding: 0px;
+            border: 5px solid #ffffff1a;
+            border-radius: 10px;
+            background-color: #9dbe6800;
+            backdrop-filter: blur(10px);
+            width: 100%;
+            text-align: left;
+        }
+
+        .search-result h2 {
+            margin-bottom: 10px;
+            color: #11a0de;
+        }
+
+        .search-result p {
+            color: rgb(157, 161, 157);
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .search-result a {
+            color: #12a0e2;
+            /* font-weight: bold; */
+            font-size: 18px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .search-result a:hover {
+            color: #1086b9;
+        }
+        .search-result {
+            margin-top: 50px; /* Adjust this value to move it further down */
+            margin-bottom: 1px;
+            padding: 0px;
+            border: 5px solid #ffffff1a;
+            border-radius: 10px;
+            background-color: #9dbe6800;
+            backdrop-filter: blur(10px);
+            width: 60%;
+            text-align: left;
+        }
+        .pagination {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pagination a {
+            color: #38BDF8;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 0 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination a:hover {
+            background-color: #38BDF8;
+            color: rgba(255, 255, 255, 0.705);
+        }
+        header {
+            position: absolute;
+            display: flex;
+            top: 0;
+            width: 100%;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: left;
+        }
+
+        header .title {
+            font-size: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo-cont">
+            <img src="logo_nobg.png" alt="LlamaCloud" class="logo">
+            <label class="miniTitle">Llama Search Results</label>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="search-result">
+                <h2>Amazon Web Services</h2>
+                <p><a href="https://aws.amazon.com/account/sign-up">Amazon Web Services</a><br>
+                    Get Innovating On AWS Today — Build, Deploy, and Manage Websites, Apps or Processes On AWS' Secure, Reliable Network. Sign Up for a Free Account &amp; Experience AWS' Secure, Reliable, Scalable Services. In-Memory Caching. Performance At Scale. Easily Manage Clusters.</p>
+                <p><a href="#">What is Cloud Computing?</a><br>
+                    Benefits &amp; Types of Cloud Computing Learn How AWS Can Help your Success</p>
+                <p><a href="#">AWS Cloud Compute Service</a><br>
+                    AWS Lightsail: Easy-To-Use Platform For Simple Computing. 1 Year Free.</p>
+                <p><a href="#">Why Choose AWS?</a><br>
+                    From Startups to Enterprises. Learn Why Millions of Customers Chose AWS</p>
+                <p><a href="#">AWS Compute Solutions</a><br>
+                    Try Amazon EC2 - Resizable Compute Capacity in The Cloud. 1 Year Free.</p>
+                <p><a href="#">Why Amazon Web Services</a><br>
+                    Focus on What Differentiates Your Business - Not the Infrastructure.</p>
+            </div>
+            <div class="pagination">
+                <a href="#">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <span>. . . .</span>
+                <a href="#">10</a>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>
