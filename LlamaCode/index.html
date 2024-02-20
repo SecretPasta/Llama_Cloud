@@ -51,77 +51,411 @@
 
             height: 100%;
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to bottom left, #10182F, #152e48, #112037, #0F172A);
+            background: linear-gradient(to bottom left, #0F172A, #1A2346, #193251, #142941, #0F172A, #0F172A, #0F172A);
             /* Dark background */
+            background-attachment: fixed;
+            /* Keep the gradient fixed during scroll */
             color: white;
         }
 
-        .container {
+        /* --- HEADER --- */
+        header {
+            position: absolute;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            top: 0;
+            width: 100%;
+            padding: 1rem;
+            justify-content: space-between;
             align-items: center;
-            height: 100vh;
-            /* Change height to 100vh to fill the entire viewport */
+        }
+
+        header .login,
+        header .user-icon {
+            color: #94A3B8;
+        }
+
+        header .user-icon {
+            font-size: 2rem;
+        }
+
+        .logo-container {
+            top: 0;
+            right: 0;
+            padding: 10px;
+            /* Adjust the padding to control the distance from the corner */
+            display: flex;
+            /* Enables Flexbox for this container */
+            align-items: center;
+            /* Vertically centers the flex items (the image and label) */
+            justify-content: flex-start;
+            /* Aligns items to the start of the container */
+        }
+
+        .logo {
+            height: 100px;
+            /* Adjust based on your logo's size */
+            width: auto;
+            /* Maintains the aspect ratio of the logo */
+            margin-right: 10px;
+            /* Adds some space between the logo and the label */
+        }
+
+        .miniTitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #38BDF8;
+        }
+
+        .title {
+            font-size: 6rem;
+            font-weight: 600;
+            background: linear-gradient(to right, #007bff, #70bee6);
+            /* Gradient from blue to light blue */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline;
+            /* Required for gradient text */
+            background-clip: text;
+            color: transparent;
+            /* Fallback for non-webkit browsers */
+            text-shadow: 0 0 3px #007bff59, 0 0 6px #007bff56, 0 0 9px #85d6ff50;
+            /* Glowing effect */
+            font-weight: bold;
         }
 
         .login-container {
+            text-decoration: none;
+            /* Remove underline from links */
             display: flex;
             gap: 6px;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            color: #94A3B8;
             margin: 20px;
             background-color: #ffffff0f;
             border: 1px solid #ffffff1a;
-            width: 10%;
+            width: auto;
+            min-width: 120px;
             border-radius: 10px;
             padding: 10px;
             backdrop-filter: blur(10px);
             position: fixed;
             right: 0;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            /* Make the cursor indicate clickable area */
         }
 
         .login-container:hover {
-            cursor: pointer;
             background-color: #ffffff1a;
         }
 
-        .title {
-            font-size: 4rem;
-            font-weight: 600;
-            color: #38BDF8;
+        /* --- MAIN --- */
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Use at least 100% of the viewport height */
+            width: 100vw;
+            /* Use 100% of the viewport width */
         }
 
+        main .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            /* Change height to 100vh to fill the entire viewport */
+        }
+
+        .welcome-message {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 30vh;
+            /* This takes up the full height of the viewport */
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+
+        .welcome-message p {
+            font-size: 1.25rem;
+            /* Larger font size for the subtitles */
+            margin-bottom: 1rem;
+            /* Spacing between paragraphs */
+            margin-top: 1rem;
+        }
+
+        .welcome-message .cta-text {
+            font-size: 1.5rem;
+            /* Even larger font size for call-to-action */
+            font-weight: bold;
+            /* Make it bold */
+            color: #ff9900;
+            /* Make it a color that stands out */
+            animation: pulse 2s infinite;
+            /* Add an animation to attract attention */
+        }
+
+        /* Keyframes for the pulse animation */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+
         .search-box {
-            position: relative;
+            display: flex;
+            /* This will align the children (input and button) in a row */
+            align-items: center;
+            /* This will vertically center the input and button */
+            overflow: hidden;
+            /* Clip the children to the wrapper's border radius */
             border-radius: 50px;
+            /* Your desired border radius */
+
             border: 2px solid #0488D2;
+            /* New: Unified border style */
+            background: #ffffff1a;
+            /* New: Unified background */
+            /* box-shadow: 0 2px 4px #007bff88; */
+            /* New: Default shadow, consider conditional application */
+
+        }
+
+        .search-box:focus-within {
+            box-shadow: 0 0 8px #007bff;
+            /* New box-shadow when input is focused */
+            border-color: #007bff;
+            /* Change border color on hover */
+        }
+
+        /* Small x in the search bar right corner */
+        .search-box input[type="search"]::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+            height: 0;
+            width: 0;
+            display: none;
+        }
+
+        .search-box:hover {
+            border-color: #007bff;
+            /* Change border color on hover */
+            box-shadow: 0 0 8px #007bff88;
+            /* Subtle shadow for depth */
         }
 
         .search-box input[type="search"] {
             color: #E2E8F0;
-            padding: 1rem 1rem;
-            border-radius: 50px;
-            border: none;
+            padding: 1rem 0.5rem;
             font-size: 1rem;
             width: 30rem;
-            background: #ffffff1a;
+            font-weight: bold;
+            border: none;
+            /* Adjusted: Removed border */
+            background: transparent;
+            /* Adjusted: Background transparent */
         }
 
-        .search-box .search-btn {
-            font-size: 1.3rem;
-            position: absolute;
-            top: 20%;
+        .search-box input[type="search"]::placeholder {
+            color: #94A3B8;
+            font-weight: bold;
+        }
 
-            /* right: 10px;
-            top: 50%; */
-            /* transform: translateY(-50%); */
-            background: none;
+        /* When pressed on search */
+        .search-box input[type="search"]:focus {
+            outline: none;
+        }
+
+        .search-box .search-btn,
+        .left-pan {
+            padding: 13px 20px;
+            font-size: 1.3em;
             border: none;
-            color: #0d6efd;
+            /* Adjusted: Removed individual borders */
+            background: transparent;
+            /* Adjusted: Background transparent */
+            color: #94A3B8;
             cursor: pointer;
         }
+
+        .search-box .search-btn i,
+        .left-pan .divider {
+            pointer-events: none;
+            /* Prevents the icon from being clickable separately from the button */
+        }
+
+        .search-box .search-btn:hover {
+            background: linear-gradient(to bottom left, #0F172A, #10182F);
+            /* border-color: #0d6efd; */
+            color: #E2E8F0;
+        }
+
+        .left-pan .divider {
+            color: #94A3B8;
+            /* Light grey color for the divider */
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .left-pan:hover {
+            color: #E2E8F0;
+            /* Change background color on hover */
+            cursor: pointer;
+        }
+
+        .left-pan i.fa-microphone {
+            /* Apply glow effect to the microphone icon */
+            text-shadow: 0 0 2px #007bff;
+        }
+
+        .search-btn i.fa-search {
+            /* Apply glow effect to the search icon */
+            text-shadow: 0 0 3px #0F172A;
+        }
+
+        /* Optional: Enhance the glow on hover */
+        .left-pan:hover i.fa-microphone {
+            text-shadow: 0 0 12px #007bff;
+            /* Stronger glow effect on hover */
+        }
+
+
+        .filter-options {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            /* This will vertically center the items in the container */
+            gap: 2rem;
+            /* Space between filter buttons */
+            margin: 1.3rem 0;
+            /* Distance from the search box */
+            flex-wrap: wrap;
+            /* Ensure responsiveness */
+        }
+
+        .filter-topic,
+        .filter-btn {
+            padding: 10px 15px;
+            border: 2px solid #0488D2;
+            /* Match the search box border */
+            background-color: #ffffff1a;
+            /* Semi-transparent background like the search box */
+            color: #94A3B8;
+            /* Light grey color to match the icon and placeholder */
+            font-weight: bold;
+            /* For emphasis */
+            border-radius: 50px;
+            /* Rounded corners */
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            /* Smooth transition for hover effects */
+        }
+
+        .filter-btn {
+            background: linear-gradient(to bottom left, #0F172A, #1A2346);
+            /* Gradient background for filter button */
+            color: #E2E8F0;
+            /* White-ish color for text to stand out */
+        }
+
+        .filter-topic:hover,
+        .filter-btn:hover {
+            background-color: #0488D2;
+            /* Darker color on hover for visibility */
+            color: #FFFFFF;
+            /* White color for text on hover */
+            border-color: #007bff;
+            /* Slightly lighter border on hover */
+        }
+
+        .filter-topic.pressed {
+            background-color: #0056b3;
+            /* Darker shade to indicate pressed state */
+            color: #FFFFFF;
+            /* Change text color for contrast */
+            border-color: #004080;
+            /* Optionally change the border color */
+            box-shadow: 0 0 4px #007bff88;
+            /* Subtle shadow for depth */
+        }
+
+
+        .more-filters {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #0F172A;
+            /* Deep background to contrast with button */
+            border-radius: 10px;
+            /* Rounded corners for the container */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            /* Soft shadow for depth */
+        }
+
+        .checkbox-container {
+            margin: 10px 0;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            /* Hide the default checkbox */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            /* Create a custom checkbox appearance */
+            width: 20px;
+            height: 20px;
+            background-color: #ffffff1a;
+            border: 2px solid #0488D2;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .checkbox-container input[type="checkbox"]:checked {
+            background-color: #007bff;
+            border: 2px solid #007bff;
+        }
+
+        .checkbox-container input[type="checkbox"]:checked::after {
+            /* Custom checkmark style */
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1px;
+            width: 6px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+
+        .checkbox-container label {
+            margin-left: 8px;
+            color: #94A3B8;
+            /* Light grey color to match the design */
+            font-weight: bold;
+            user-select: none;
+            /* Prevent text selection */
+        }
+
+        /* --- FOOTER --- */
 
         footer {
             position: absolute;
@@ -145,25 +479,49 @@
             color: #0E99DA;
         }
 
-        header {
-            position: absolute;
-            display: flex;
-            top: 0;
-            width: 100%;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        /* --- FOR DIFFERENT SIZES OF SCREEN --- */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 4rem;
+                /* Smaller font size for smaller screens */
+            }
 
-        header .login {
-            color: #94A3B8;
-            font-size: 1rem;
-        }
+            .miniTitle,
+            .welcome-message p,
+            .welcome-message .cta-text {
+                font-size: 1rem;
+                /* Adjust font size for readability */
+            }
 
-        header .user-icon {
-            color: #94A3B8;
-            font-size: 2rem;
+            .search-box input[type="search"] {
+                font-size: 0.8rem;
+                /* Smaller font size for the search input */
+                width: 15rem;
+                /* Adjust width to fit smaller screens */
+            }
+
+            header,
+            .login-container,
+            .welcome-message,
+            main .container {
+                padding: 0.5rem;
+                /* Reduce padding */
+                margin: 0.5rem;
+                /* Adjust margins */
+            }
+
+            .logo {
+                height: auto;
+                /* Maintain aspect ratio */
+                max-width: 15%;
+                /* Ensure logo does not exceed container width */
+            }
+
+            .filter-options,
+            .more-filters {
+                display: none;
+                /* Optionally hide filters on smaller screens */
+            }
         }
     </style>
 </head>
@@ -171,32 +529,129 @@
 <body>
 
     <header>
-        <div class="title">Llama</div>
-        <div class="login-container">
-            <span class="login">Login</span>
-            <i class="fas fa-user-circle user-icon"></i>
+
+        <div class="logo-container">
+            <img src="logo_nobg.png" alt="LlamaCloud" class="logo">
+            <!-- <span class="miniTitle">LlamaCloud</span> -->
         </div>
+
+        <a href="admin.html" class="login-container">Login
+            <i class="fas fa-user-circle user-icon"></i>
+        </a>
+
+
     </header>
 
     <main>
         <div class="container">
-            <label class="title" for="search">Llama</label>
-            <label>Find everything in AWS... Maybe</label>
+
+            <!-- WELCOME MESSAGE -->
+            <div class="welcome-message">
+                <h1 class="title">
+                    Llama
+                </h1>
+                <p>The best place to search AWS Services, Documentation, Blog Posts, and More...</p>
+                <p class="cta-text">Discover AWS with a simple search<br>👇🏼</p>
+            </div>
+
+            <!-- SEARCH BOX -->
             <div class="search-box">
-                <input id="search" type="search" placeholder="Search...">
-                <button class="search-btn">
+                <button class="left-pan" aria-label="Search by voice">
+                    <i class="fa fa-microphone"></i>
+                    <span class="divider">|</span>
+                </button>
+
+                <input id="search" type="search" placeholder="What are you looking for in AWS?">
+                <button class="search-btn" type="submit" aria-label="Search">
                     <i class="fas fa-search"></i>
                 </button>
             </div>
+
+            <!-- FILTER OPTIONS -->
+            <div class="filter-options">
+                <button class="filter-topic">Server</button>
+                <button class="filter-topic">Documents</button>
+                <button class="filter-topic">Tools</button>
+                <button class="filter-topic">APIs</button>
+                <button class="filter-btn">Filters</button>
+            </div>
+
+            <!-- MORE FILTERS (Initially hidden)-->
+            <div class="more-filters" style="display: none;">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="option1" name="filter" value="option1">
+                    <label for="option1">Option 1</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="option2" name="filter" value="option2">
+                    <label for="option2">Option 2</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="option3" name="filter" value="option3">
+                    <label for="option3">Option 3</label>
+                </div>
+            </div>
+
+
         </div>
     </main>
 
     <footer>
-        <a href="#">Server</a>
-        <a href="#">Documents</a>
-        <a href="#">Tools</a>
-        <a href="#">APIs</a>
+        <a href="https://youtu.be/dQw4w9WgXcQ" target="_blank">made with 💙 in Braude</a>
+        <a href="https://github.com/SecretPasta/Llama_Cloud.git" target="_blank">GitHub</a>
     </footer>
+
+    <!-- SCRIPT SECTION -->
+
+
+    <!-- SEARCH QUERY + AUDIO INPUT -->
+    <script>
+        document.querySelector('.search-btn').addEventListener('click', function () {
+            var query = document.getElementById('search').value;
+            console.log("Search query:", query);
+            // Implement search functionality here
+        });
+
+        // Example function to start audio input - this will need actual implementation
+        document.querySelector('.left-pan').addEventListener('click', function () {
+            console.log("Audio input activated");
+            // Implement audio input functionality here
+        });
+    </script>
+
+    <!-- BUTTONS STAY PRESSED AFTER CLICK -->
+    <script>
+        // Wait for the DOM to fully load
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get all the filter-topic buttons
+            var filterButtons = document.querySelectorAll('.filter-topic');
+
+            // Add a click event listener to each button
+            filterButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    // Toggle the 'pressed' class on click
+                    button.classList.toggle('pressed');
+                });
+            });
+        });
+    </script>
+
+    <!-- OPEN FILTERS ON CLICK -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const filterBtn = document.querySelector('.filter-btn');
+            const moreFilters = document.querySelector('.more-filters');
+
+            filterBtn.addEventListener('click', function () {
+                // Toggle visibility
+                if (moreFilters.style.display === 'none') {
+                    moreFilters.style.display = 'block';
+                } else {
+                    moreFilters.style.display = 'none';
+                }
+            });
+        });
+    </script>
 
 </body>
 

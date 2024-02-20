@@ -4,29 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Llama</title>
+    <title>Llama - Statistics</title>
 
     <!-- For PNG or other formats -->
     <link rel="icon" type="image/png" href="logo_nobg.png">
-    <!-- Apple Touch Icon for use with Apple devices -->
-    <link rel="apple-touch-icon" href="logo_nobg.png">
-    <!-- To specify a theme color for address bar in mobile browsers -->
-    <meta name="theme-color" content="#10182F">
-
-    <!-- Function to change the title of the page when the tab is not active -->
-    <script>
-        function handleVisibilityChange() {
-            if (document.hidden) {
-                // Set the new title when the tab is inactive
-                document.title = "Llama 😢";
-            } else {
-                // Reset the title when the tab is active again
-                document.title = "Llama";
-            }
-        }
-        // Add a listener for the visibilitychange event
-        document.addEventListener("visibilitychange", handleVisibilityChange, false);
-    </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -49,64 +30,261 @@
             user-select: none;
             /* Non-prefixed version, currently supported by Chrome, Opera and Edge */
 
-            height: 132%;
+            height: 100%;
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to bottom left, #10182F, #152e48, #112037, #0F172A);
+            background: linear-gradient(to bottom left, #0F172A, #1A2346, #193251, #142941, #0F172A, #0F172A, #0F172A);
             /* Dark background */
+            background-attachment: fixed;
+            /* Keep the gradient fixed during scroll */
             color: white;
         }
 
-        .container {
+        /* --- HEADER --- */
+        header {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0.5rem;
+        }
+
+        .logo-container,
+        .login-container {
+            display: flex;
+            align-items: center;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
-            /* Change height to 100vh to fill the entire viewport */
-        }
-
-        .miniTitle {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #38BDF8;
-        }
-
-        .logo-cont {
-            top: 0;
-            right: 0;
-            padding: 10px;
-            /* Adjust the padding to control the distance from the corner */
-            display: flex;
-            /* Enables Flexbox for this container */
-            align-items: center;
-            /* Vertically centers the flex items (the image and label) */
-            justify-content: flex-start;
-            /* Aligns items to the start of the container */
+            padding: 8px;
+            gap: 6px;
         }
 
         .logo {
-            height: 100px;
-            /* Adjust based on your logo's size */
+            height: 70px;
             width: auto;
-            /* Maintains the aspect ratio of the logo */
-            margin-right: 10px;
-            /* Adds some space between the logo and the label */
         }
 
-        .title {
-            font-size: 4rem;
+        .section-title {
+            color: #007bff;
+        }
+
+        .miniTitle {
+            width: 100%;
+            text-align: center;
+            font-size: 1.5rem;
             font-weight: 600;
             color: #38BDF8;
+            margin: 0;
+            padding: 0;
         }
 
+        .login-container {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94A3B8;
+            background-color: #ffffff0f;
+            border: 1px solid #ffffff1a;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 20px;
+            backdrop-filter: blur(10px);
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+
+            width: auto;
+            min-width: 120px;
+        }
+
+        .login-container:hover {
+            background-color: #ffffff1a;
+        }
+
+        /* --- MAIN --- */
+
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Use at least 100% of the viewport height */
+        }
+
+        .stat-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-section {
+            background: #ffffff1a;
+            /* Light background for sections */
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            width: 80%;
+            /* Adjusted width for better layout control */
+            max-width: 960px;
+            /* Max width for larger screens */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+        }
+
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        /* Line Chart Styling */
+
+        /* --- BAR CHART --- */
+        .simple-bar-chart {
+            --line-count: 10;
+            --line-color: currentcolor;
+            --line-opacity: 0.25;
+            --item-gap: 2%;
+            --item-default-color: #060606;
+
+            height: 10rem;
+            display: grid;
+            grid-auto-flow: column;
+            gap: var(--item-gap);
+            align-items: end;
+            padding-inline: var(--item-gap);
+            --padding-block: 1.5rem;
+            /*space for labels*/
+            padding-block: var(--padding-block);
+            position: relative;
+            isolation: isolate;
+        }
+
+        .simple-bar-chart::after {
+            content: "";
+            position: absolute;
+            inset: var(--padding-block) 0;
+            z-index: -1;
+            --line-width: 1px;
+            --line-spacing: calc(100% / var(--line-count));
+            background-image: repeating-linear-gradient(to top, transparent 0 calc(var(--line-spacing) - var(--line-width)), var(--line-color) 0 var(--line-spacing));
+            box-shadow: 0 var(--line-width) 0 var(--line-color);
+            opacity: var(--line-opacity);
+        }
+
+        .simple-bar-chart>.item {
+            height: calc(1% * var(--val));
+            background-color: var(--clr, var(--item-default-color));
+            position: relative;
+            animation: item-height 1s ease forwards
+        }
+
+        @keyframes item-height {
+            from {
+                height: 0
+            }
+        }
+
+        .simple-bar-chart>.item>* {
+            position: absolute;
+            text-align: center
+        }
+
+        .simple-bar-chart>.item>.label {
+            inset: 100% 0 auto 0
+        }
+
+        .simple-bar-chart>.item>.value {
+            inset: auto 0 100% 0
+        }
+
+        /* >--- BAR CHART ---< */
+
+        /* --- PIE CHART --- */
+
+        .pie-chart-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pie-chart {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            position: relative;
+            background-color: #eee;
+            /* Fallback color */
+            background-image:
+                conic-gradient(from 0deg at 50% 50%,
+                    #FFD700 0deg 90deg,
+                    /* Chrome */
+                    #FF8C00 90deg 162deg,
+                    /* Firefox */
+                    #FF6347 162deg 207deg,
+                    /* Edge */
+                    #4682B4 207deg 360deg
+                    /* Safari */
+                );
+        }
+
+        .segment {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            clip-path: circle(50% at 50% 50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: justify;
+            font-size: 1;
+            /* Hide text */
+        }
+
+        .segment::before {
+            content: attr(style);
+            font-size: 14px;
+            position: absolute;
+            white-space: nowrap;
+            color: transparent;
+            /* Hide actual content */
+        }
+
+        .labels {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: -30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+        }
+
+        .label {
+            position: absolute;
+            /* Adjust the translate value to move labels outward */
+            transform: translate(100%, -50%) rotate(var(--angle)) translateX(50%);
+            transform-origin: 0% 50%;
+            white-space: nowrap;
+        }
+
+
+        /* >--- PIE CHART ---< */
+
+
+
+        /* --- FOOTER --- */
+
         footer {
-            position: fixed;
             bottom: 0;
             width: 100%;
             padding: 1rem;
-            background-color: #38BDF8;
             text-align: center;
-            height: 50px;
+            background: transparent;
         }
 
         footer a {
@@ -121,158 +299,83 @@
         footer a:hover {
             color: #0E99DA;
         }
-
-        header {
-            position: absolute;
-            display: flex;
-            top: 0;
-            width: 100%;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header .login {
-            color: #94A3B8;
-            font-size: 1rem;
-        }
-
-        header .user-icon {
-            color: #94A3B8;
-            font-size: 2rem;
-        }
-
-        .chart-wrap {
-        margin-left: 50px;
-        font-family: sans-serif;
-        }
-
-        .chart-wrap .title {
-        font-weight: bold;
-        font-size: 1.62em;
-        padding: 0.5em 0 1.8em 0;
-        text-align: center;
-        white-space: nowrap;
-        }
-
-        .chart-wrap.vertical .grid {
-        transform: translateY(150px - 325px) translateX(325px - 150px) rotate(-90deg);
-        }
-
-        .chart-wrap.vertical .grid .bar::after {
-        transform: translateY(15%) rotate(0deg);
-        display: block;
-        }
-
-        .chart-wrap.vertical .grid::before,
-
-        .chart-wrap {
-        height: 360px;
-        width: 650px;
-        }
-
-        .chart-wrap .grid {
-        position: relative;
-        padding: 5px 0 5px 0;
-        height: 100%;
-        width: 100%;
-        border-left: 2px solid #94A3B8;
-        background: repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 19.5%,
-            fadeout(#94A3B8, 30%) 20%
-        );
-        }
-
-        .chart-wrap .grid::before {
-        font-size: 0.8em;
-        font-weight: bold;
-        content: "0%";
-        position: absolute;
-        left: -0.5em;
-        top: -1.5em;
-        }
-
-        .chart-wrap .grid::after {
-        font-size: 0.8em;
-        font-weight: bold;
-        content: "100%";
-        position: absolute;
-        right: 4em;
-        top: -1.5em;
-        }
-
-        .chart-wrap .bar {
-        width: var(--bar-value);
-        height: 50px;
-        margin: 20px 0;
-        background-color: #38BDF8;
-        border-radius: 0 3px 3px 0;
-        }
-
-        .chart-wrap .bar:hover {
-        opacity: 0.7;
-        }
-
-        .chart-wrap .bar::after {
-        content: attr(data-name);
-        margin-left: 100%;
-        padding: 10px;
-        display: inline-block;
-        white-space: nowrap;
-        font-size: var(--text-size, 14px);
-        }
-
-
-        
     </style>
 </head>
 
 <body>
 
     <header>
-        <div class="logo-cont">
+        <div class="logo-container">
             <img src="logo_nobg.png" alt="LlamaCloud" class="logo">
-            <label class="miniTitle">LlamaCloud</label>
         </div>
+
+        <span class="miniTitle">Statistics 📊</span>
+
+        <a href="admin.html" class="login-container">Back
+            <i class="fas fa-arrow-left"></i>
+        </a>
     </header>
 
     <main>
-        <div class="container">
-            <label class="title" for="search">Statistics</label>
-            <div class="chart-wrap vertical">
-                <h2 class="title">Hourly usage</h2>
-                
-                <div class="grid">
-                    <div class="bar" style="--bar-value:3%;" data-name="00:00 - 08:00" title="3%"></div>
-                    <div class="bar" style="--bar-value:65%;" data-name="08:00 - 15:00" title="65%"></div>
-                    <div class="bar" style="--bar-value:21%;" data-name="15:00 - 20:00" title="21%"></div>
-                    <div class="bar" style="--bar-value:11%;" data-name="20:00 - 00:00" title="11%"></div>
-                </div>
+        <div class="stat-container">
 
-                <h2 class="title">Browser usage</h2>
-                
-                <div class="grid">
-                    <div class="bar" style="--bar-value:6%;" data-name="Explorer / Edge" title="6%"></div>
-                    <div class="bar" style="--bar-value:68%;" data-name="Chrome" title="68%"></div>
-                    <div class="bar" style="--bar-value:13%;" data-name="Safari" title="13%"></div>
-                    <div class="bar" style="--bar-value:11%;" data-name="Firefox" title="11%"></div>
-                    <div class="bar" style="--bar-value:2%;" data-name="Opera" title="2%"></div>
+            <!-- Monthly Usage Bar Chart -->
+            <div class="dashboard-section">
+                <h2 class="section-title">Monthly Usage</h2>
+                <div class="simple-bar-chart">
+                    <!-- Each "item" represents a month with a unique color and value -->
+
+                    <div class="item" style="--clr: #5EB344; --val: 21"> <!-- Example for January -->
+                        <div class="label">Jan</div>
+                        <div class="value">21%</div>
+                    </div>
+
+                    <div class="item" style="--clr: #FCB72A; --val: 43"> <!-- Example for February -->
+                        <div class="label">Feb</div>
+                        <div class="value">43%</div>
+                    </div>
+
+                    <div class="item" style="--clr: #F8821A; --val: 65"> <!-- Example for March -->
+                        <div class="label">Mar</div>
+                        <div class="value">65%</div>
+                    </div>
+
+                    <div class="item" style="--clr: #E0393E; --val: 53"> <!-- Example for April -->
+                        <div class="label">Apr</div>
+                        <div class="value">53%</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        
-        
+            <!-- Browser Usage Pie Chart -->
+            <div class="dashboard-section">
+                <h2 class="section-title">Browser Usage</h2>
+                <div class="pie-chart-container">
+                    <div class="pie-chart">
+                        <div class="segment chrome" data-name="Chrome"></div>
+                        <div class="segment firefox" data-name="Firefox"></div>
+                        <div class="segment edge" data-name="Edge"></div>
+                        <div class="segment safari" data-name="Safari"></div>
+                    </div>
+                    <div class="labels">
+                        <div class="label" style="--angle: 0;">Chrome 25%</div>
+                        <div class="label" style="--angle: 90deg;">Firefox 20%</div>
+                        <div class="label" style="--angle: 180deg;">Edge 15%</div>
+                        <div class="label" style="--angle: 270deg;">Safari 40%</div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
     </main>
 
+
+
+
     <footer>
-        <a href="#">Server</a>
-        <a href="#">Documents</a>
-        <a href="#">Tools</a>
-        <a href="#">APIs</a>
+        <a href="https://youtu.be/dQw4w9WgXcQ" target="_blank">made with 💙 in Braude</a>
+        <a href="https://github.com/SecretPasta/Llama_Cloud.git" target="_blank">GitHub</a>
     </footer>
 
 </body>

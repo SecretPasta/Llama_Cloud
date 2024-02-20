@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llama - Admin Dashboard</title>
+
+    <!-- Icons -->
+    <link rel="icon" type="image/png" href="logo_nobg.png">
+    <link rel="apple-touch-icon" href="logo_nobg.png">
+    <meta name="theme-color" content="#10182F">
+
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- Visibility Change Script -->
+    <script>
+        function handleVisibilityChange() {
+            if (document.hidden) {
+                document.title = "Llama 😢";
+            } else {
+                document.title = "Llama";
+            }
+        }
+        document.addEventListener("visibilitychange", handleVisibilityChange, false);
+    </script>
+
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to bottom left, #0F172A, #1A2346, #193251, #142941, #0F172A);
+            color: white;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-attachment: fixed;
+
+            height: 100%;
+            min-height: 100vh;
+        }
+
+        /* --- HEADER --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0.5rem;
+        }
+
+        .logo-container,
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            gap: 6px;
+        }
+
+        .logo {
+            height: 70px;
+            width: auto;
+        }
+
+        .section-title {
+            color: #007bff;
+        }
+
+        .miniTitle {
+            width: 100%;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #38BDF8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .login-container {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94A3B8;
+            background-color: #ffffff0f;
+            border: 1px solid #ffffff1a;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 20px;
+            backdrop-filter: blur(10px);
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+
+            width: auto;
+            min-width: 120px;
+        }
+
+        .login-container:hover {
+            background-color: #ffffff1a;
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .admin-container,
+        .dashboard-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-section {
+            background: #ffffff1a;
+            /* Light background for sections */
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px 0;
+            width: 80%;
+            /* Adjusted width for better layout control */
+            max-width: 960px;
+            /* Max width for larger screens */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+        }
+
+        .action-btn {
+            background-color: #007bff;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            align-self: center;
+            /* Center button in the section */
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .code-window {
+            background-color: #0F172A;
+            color: #dcdcdc;
+            padding: 15px;
+            border-radius: 8px;
+            overflow: auto;
+            font-size: 0.9rem;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            text-align: left;
+        }
+
+        .scan-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            max-width: 800px;
+            margin-top: 20px;
+        }
+
+        .scan-status {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        /* --- FOOTER --- */
+
+        footer {
+            bottom: 0;
+            width: 100%;
+            padding: 1rem;
+            text-align: center;
+            background: transparent;
+        }
+
+        footer a {
+            color: #E2E8F0;
+            /* Light grey color for footer links */
+            text-decoration: none;
+            font-size: 1rem;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #0E99DA;
+        }
+
+
+        /* --- FOR DIFFERENT SIZES OF SCREEN --- */
+
+        @media (max-width: 600px) {
+            .scan-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .scan-info span,
+            .scan-info button {
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-section {
+                width: 95%;
+                /* More width for smaller screens */
+            }
+
+            .logo {
+                height: 40px;
+                /* Smaller logo for smaller screens */
+            }
+
+            .section-title,
+            .code-window,
+            .action-btn {
+                font-size: 0.8rem;
+                /* Smaller text for better readability */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="logo_nobg.png" alt="LlamaCloud" class="logo">
+        </div>
+
+        <span class="miniTitle">Hello, Admin 👋🏼</span>
+
+        <a href="index.html" class="login-container">Log Out
+            <i class="fas fa-sign-out-alt"></i>
+        </a>
+    </header>
+
+    <main>
+        <div class="admin-container">
+            <!-- Dashboard Sections -->
+            <section class="dashboard-section">
+                <h2 class="section-title">Check Statistic</h2>
+                <a href="statistics.html" class="action-btn">Check Statistic</a>
+            </section>
+
+            <section class="dashboard-section">
+                <h2 class="section-title">Index of AWS</h2>
+                <pre class="code-window">
+{
+    "AWSSearch": {
+        "service": "EC2",
+        "documentation": "Instance Types",
+        "blogPosts": [
+            "Scaling Your EC2 Infrastructure",
+            "Cost Optimization with EC2"
+        ],
+        "moreInfo": "Visit AWS official documentation for detailed information."
+    }
+}
+            </pre>
+            </section>
+
+            <section class="dashboard-section">
+                <h2 class="section-title">Last scan of AWS</h2>
+                <div class="scan-info">
+                    <span id="lastScanDate">Last Scan of AWS on 20/02/2024</span>
+                    <span id="scanStatus" class="scan-status success">Success</span> <!-- Dynamic status indicator -->
+                    <button class="action-btn">Scan AWS</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <a href="https://youtu.be/dQw4w9WgXcQ" target="_blank">made with 💙 in Braude</a>
+        <a href="https://github.com/SecretPasta/Llama_Cloud.git" target="_blank">GitHub</a>
+    </footer>
+
+
+
+</body>
+
+</html>

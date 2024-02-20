@@ -19,12 +19,11 @@
         * {
             box-sizing: border-box;
             margin: 0;
-            padding: 50;
+            padding: 0;
         }
 
         body,
         html {
-
             -webkit-user-select: none;
             /* Safari */
             -moz-user-select: none;
@@ -33,26 +32,126 @@
             /* Internet Explorer/Edge */
             user-select: none;
             /* Non-prefixed version, currently supported by Chrome, Opera and Edge */
-
             height: 100%;
-            /* font-family: 'Roboto', sans-serif; */
-            font-family: 'Calibri', sans-serif;
-            
-            background: linear-gradient(to bottom left, #10182F, #152e48, #112037, #0F172A);
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to bottom left, #0F172A, #1A2346, #193251, #142941, #0F172A, #0F172A, #0F172A);
             /* Dark background */
-            color: rgb(141, 174, 230);
+            color: white;
         }
 
-        .container {
+        /* Header Styles */
+        header {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: left;
-            height: 110vh;
-            /* Change height to 100vh to fill the entire viewport */
+            /* Stack elements vertically */
+            align-items: center;
+            width: 100%;
+            padding: 1rem;
         }
-        .logo-cont {
+
+        .header-top {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            /* Space out logo, search bar, and login button */
+            align-items: center;
+        }
+
+        /* Search Box Styles */
+        .search-box {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 50px;
+            border: 2px solid #0488D2;
+            background: #ffffff1a;
+            flex-grow: 2;
+            /* Allow search box to take up available space */
+            margin: 0 10px;
+            /* Ensure some space around the search box */
+        }
+
+        .search-box input[type="search"] {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            background-color: transparent;
+            color: #94A3B8;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .search-box .search-btn,
+        .left-pan {
+            background: none;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            color: #94A3B8;
+            /* Button icon color */
+        }
+
+        .search-box button {
+            background: none;
+            border: none;
+            color: #94A3B8;
+            cursor: pointer;
+        }
+
+        /* Filter Options Styles */
+        .filter-options {
+            display: flex;
+            justify-content: center;
+            /* Center filter buttons under the search bar */
+            gap: 10px;
+            width: 100%;
+            margin-top: 10px;
+            /* Space between search bar and filter buttons */
+        }
+
+        .filter-topic,
+        .filter-btn {
+            background: #ffffff1a;
+            /* Semi-transparent background */
+            border: 1px solid #0488D2;
+            /* Border color */
+            border-radius: 20px;
+            /* Rounded edges */
+            padding: 5px 15px;
+            /* Padding inside the buttons */
+            cursor: pointer;
+            color: #E2E8F0;
+            /* Button text color */
+        }
+
+        .filter-options button {
+            background-color: transparent;
+            border: 2px solid #0488D2;
+            border-radius: 20px;
+            padding: 5px 10px;
+            color: #94A3B8;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .filter-topic:hover,
+        .filter-btn:hover {
+            background: #0488D2;
+            /* Darker background on hover */
+            color: #ffffff;
+            /* White text on hover */
+        }
+
+        header .login,
+        header .user-icon {
+            color: #94A3B8;
+        }
+
+        header .user-icon {
             font-size: 2rem;
+        }
+
+        .logo-container {
             top: 0;
             right: 0;
             padding: 10px;
@@ -66,136 +165,271 @@
         }
 
         .logo {
-            height: 100px;
+            height: 80px;
             /* Adjust based on your logo's size */
             width: auto;
             /* Maintains the aspect ratio of the logo */
             margin-right: 10px;
             /* Adds some space between the logo and the label */
-            color: #010406;
         }
-        
-        .title {
-            font-size: 4rem;
+
+        .miniTitle {
+            font-size: 1.5rem;
             font-weight: 600;
-            color: #1b769e;
-        }
-        
-        .search-result {
-            margin-bottom: 1px;
-            padding: 0px;
-            border: 5px solid #ffffff1a;
-            border-radius: 10px;
-            background-color: #9dbe6800;
-            backdrop-filter: blur(10px);
-            width: 100%;
-            text-align: left;
+            color: #38BDF8;
         }
 
-        .search-result h2 {
-            margin-bottom: 10px;
-            color: #11a0de;
+        .title {
+            font-size: 6rem;
+            font-weight: 600;
+            background: linear-gradient(to right, #007bff, #70bee6);
+            /* Gradient from blue to light blue */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline;
+            /* Required for gradient text */
+            background-clip: text;
+            color: transparent;
+            /* Fallback for non-webkit browsers */
+            text-shadow: 0 0 3px #007bff59, 0 0 6px #007bff56, 0 0 9px #85d6ff50;
+            /* Glowing effect */
+            font-weight: bold;
         }
 
-        .search-result p {
-            color: rgb(157, 161, 157);
-            font-size: 13px;
-            margin-bottom: 10px;
-        }
-
-        .search-result a {
-            color: #12a0e2;
-            /* font-weight: bold; */
-            font-size: 18px;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .search-result a:hover {
-            color: #1086b9;
-        }
-        .search-result {
-            margin-top: 50px; /* Adjust this value to move it further down */
-            margin-bottom: 1px;
-            padding: 0px;
-            border: 5px solid #ffffff1a;
-            border-radius: 10px;
-            background-color: #9dbe6800;
-            backdrop-filter: blur(10px);
-            width: 60%;
-            text-align: left;
-        }
-        .pagination {
-            margin-top: 20px;
+        .login-container {
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            padding: 8px;
+            background-color: #ffffff0f;
+            border: 1px solid #ffffff1a;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #94A3B8;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            font-size: 0.9rem;
+            /* Adjust the font size if necessary */
+        }
+
+        .login-container i {
+            margin-left: 5px;
+            /* Space between text and icon */
+        }
+
+        .login-container:hover {
+            background-color: #ffffff1a;
+        }
+
+
+        /* --- MAIN --- */
+
+        .main {
+            width: 100%;
+            /* Ensure main content takes full width */
+            padding-top: 1rem;
+            /* Minimal space between header and main content */
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-results {
+            background: #ffffff1a;
+            /* Light background for sections */
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            width: 80%;
+            /* Adjusted width for better layout control */
+            max-width: 960px;
+            /* Max width for larger screens */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+        }
+
+        .results-title {
+            margin-bottom: 1rem;
+            color: #38BDF8;
+            /* Example color */
+            text-align: center;
+        }
+
+        .search-result-item {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: #007bff 1px dashed;
+            border-radius: 5px;
+        }
+
+        .result-link {
+            color: #007bff;
+            /* Example link color */
+            font-weight: bold;
+            text-decoration: none;
+            /* Removes underline */
+        }
+
+        .result-description {
+            color: #E2E8F0;
+            /* Light grey for readability */
+            padding-top: 0.5rem;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 10px;
         }
 
         .pagination a {
-            color: #38BDF8;
+            color: #94A3B8;
             text-decoration: none;
             padding: 5px 10px;
+            border: 1px solid #94A3B8;
             border-radius: 5px;
-            margin: 0 5px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .pagination a:hover {
-            background-color: #38BDF8;
-            color: rgba(255, 255, 255, 0.705);
-        }
-        header {
-            position: absolute;
-            display: flex;
-            top: 0;
-            width: 100%;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: left;
+            background-color: #94A3B8;
+            color: #ffffff;
         }
 
-        header .title {
-            font-size: 2rem;
+        .page-link,
+        .pagination-ellipsis {
+            color: #94A3B8;
+            /* Styling for pagination links */
+            text-decoration: none;
+        }
+
+        .page-link:hover {
+            text-decoration: underline;
+            /* Adds interactivity on hover */
+        }
+
+
+
+
+        /* --- FOOTER --- */
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 1rem;
+            text-align: center;
+            background: transparent;
+        }
+
+        footer a {
+            color: #E2E8F0;
+            /* Light grey color for footer links */
+            text-decoration: none;
+            font-size: 1rem;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #0E99DA;
         }
     </style>
 </head>
 
 <body>
     <header>
-        <div class="logo-cont">
-            <img src="logo_nobg.png" alt="LlamaCloud" class="logo">
-            <label class="miniTitle">Llama Search Results</label>
+        <div class="header-top">
+            <div class="logo-container">
+                <img src="logo_nobg.png" alt="LlamaCloud" class="logo">
+            </div>
+            <div class="search-box">
+                <button class="left-pan" aria-label="Search by voice">
+                    <i class="fa fa-microphone"></i>
+                    <span class="divider">|</span>
+                </button>
+                <input id="search" type="search" placeholder="What are you looking for in AWS?">
+                <button class="search-btn" type="submit" aria-label="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <a href="index.html" class="login-container">Log Out
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+        <div class="filter-options">
+            <button class="filter-topic">Server</button>
+            <button class="filter-topic">Documents</button>
+            <button class="filter-topic">Tools</button>
+            <button class="filter-topic">APIs</button>
+            <button class="filter-btn">Filters</button>
         </div>
     </header>
 
     <main>
-        <div class="container">
+        <div class="search-container">
+
+            <!-- Search Result -->
             <div class="search-result">
-                <h2>Amazon Web Services</h2>
-                <p><a href="https://aws.amazon.com/account/sign-up">Amazon Web Services</a><br>
-                    Get Innovating On AWS Today — Build, Deploy, and Manage Websites, Apps or Processes On AWS' Secure, Reliable Network. Sign Up for a Free Account &amp; Experience AWS' Secure, Reliable, Scalable Services. In-Memory Caching. Performance At Scale. Easily Manage Clusters.</p>
-                <p><a href="#">What is Cloud Computing?</a><br>
-                    Benefits &amp; Types of Cloud Computing Learn How AWS Can Help your Success</p>
-                <p><a href="#">AWS Cloud Compute Service</a><br>
-                    AWS Lightsail: Easy-To-Use Platform For Simple Computing. 1 Year Free.</p>
-                <p><a href="#">Why Choose AWS?</a><br>
-                    From Startups to Enterprises. Learn Why Millions of Customers Chose AWS</p>
-                <p><a href="#">AWS Compute Solutions</a><br>
-                    Try Amazon EC2 - Resizable Compute Capacity in The Cloud. 1 Year Free.</p>
-                <p><a href="#">Why Amazon Web Services</a><br>
-                    Focus on What Differentiates Your Business - Not the Infrastructure.</p>
+                <!-- Search Result Item -->
+                <div class="search-result-item">
+                    <a href="https://aws.amazon.com/account/sign-up" class="result-link">Amazon Web Services</a>
+                    <p class="result-description">Get Innovating On AWS Today — Build, Deploy, and Manage Websites, Apps
+                        or Processes On
+                        AWS' Secure, Reliable Network. Sign Up for a Free Account & Experience AWS' Secure, Reliable,
+                        Scalable Services.
+                        In-Memory Caching. Performance At Scale. Easily Manage Clusters.</p>
+                </div>
+                <!-- Additional results here, structured similarly -->
+                <div class="search-result-item">
+                    <a href="#" class="result-link">What is Cloud Computing?</a>
+                    <p class="result-description">Benefits & Types of Cloud Computing Learn How AWS Can Help your
+                        Success</p>
+                </div>
+                <div class="search-result-item">
+                    <a href="#" class="result-link">AWS Cloud Compute Service</a>
+                    <p class="result-description">Lightsail: Easy-To-Use Platform For Simple Computing. 1 Year Free.</p>
+                </div>
+
+                <div class="search-result-item">
+                    <a href="#" class="result-link">Why Choose AWS?</a>
+                    <p class="result-description">From Startups to Enterprises. Learn Why Millions of Customers Chose
+                        AWS</p>
+                </div>
+                <div class="search-result-item">
+                    <a href="#" class="result-link">AWS Compute Solutions</a>
+                    <p class="result-description">Try Amazon EC2 - Resizable Compute Capacity in The Cloud. 1 Year Free.
+                    </p>
+                </div>
+                <div class="search-result-item">
+                    <a href="#" class="result-link">Why Amazon Web Services</a>
+                    <p class="result-description">Focus on What Differentiates Your Business - Not the Infrastructure.
+                    </p>
+                </div>
             </div>
+
+            <!-- Pagination -->
             <div class="pagination">
-                <a href="#">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <span>. . . .</span>
-                <a href="#">10</a>
+                <a href="#" class="page-link">1</a>
+                <a href="#" class="page-link">2</a>
+                <a href="#" class="page-link">3</a>
+                <span class="pagination-ellipsis">. . .</span>
+                <a href="#" class="page-link">10</a>
             </div>
         </div>
     </main>
+
+    <footer>
+        <a href="https://youtu.be/dQw4w9WgXcQ" target="_blank">made with 💙 in Braude</a>
+        <a href="https://github.com/SecretPasta/Llama_Cloud.git" target="_blank">GitHub</a>
+    </footer>
 
 </body>
 
