@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llama</title>
+
+    <!-- For PNG or other formats -->
+    <link rel="icon" type="image/png" href="logo_nobg.png">
+    <!-- Apple Touch Icon for use with Apple devices -->
+    <link rel="apple-touch-icon" href="logo_nobg.png">
+    <!-- To specify a theme color for address bar in mobile browsers -->
+    <meta name="theme-color" content="#10182F">
+
+    <!-- Function to change the title of the page when the tab is not active -->
+    <script>
+        function handleVisibilityChange() {
+            if (document.hidden) {
+                // Set the new title when the tab is inactive
+                document.title = "Llama 😢";
+            } else {
+                // Reset the title when the tab is active again
+                document.title = "Llama";
+            }
+        }
+        // Add a listener for the visibilitychange event
+        document.addEventListener("visibilitychange", handleVisibilityChange, false);
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body,
+        html {
+
+            -webkit-user-select: none;
+            /* Safari */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* Internet Explorer/Edge */
+            user-select: none;
+            /* Non-prefixed version, currently supported by Chrome, Opera and Edge */
+
+            height: 132%;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to bottom left, #10182F, #152e48, #112037, #0F172A);
+            /* Dark background */
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* Change height to 100vh to fill the entire viewport */
+        }
+
+        .miniTitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #38BDF8;
+        }
+
+        .logo-cont {
+            top: 0;
+            right: 0;
+            padding: 10px;
+            /* Adjust the padding to control the distance from the corner */
+            display: flex;
+            /* Enables Flexbox for this container */
+            align-items: center;
+            /* Vertically centers the flex items (the image and label) */
+            justify-content: flex-start;
+            /* Aligns items to the start of the container */
+        }
+
+        .logo {
+            height: 100px;
+            /* Adjust based on your logo's size */
+            width: auto;
+            /* Maintains the aspect ratio of the logo */
+            margin-right: 10px;
+            /* Adds some space between the logo and the label */
+        }
+
+        .title {
+            font-size: 4rem;
+            font-weight: 600;
+            color: #38BDF8;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 1rem;
+            background-color: #38BDF8;
+            text-align: center;
+            height: 50px;
+        }
+
+        footer a {
+            color: #E2E8F0;
+            /* Light grey color for footer links */
+            text-decoration: none;
+            font-size: 1rem;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #0E99DA;
+        }
+
+        header {
+            position: absolute;
+            display: flex;
+            top: 0;
+            width: 100%;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .login {
+            color: #94A3B8;
+            font-size: 1rem;
+        }
+
+        header .user-icon {
+            color: #94A3B8;
+            font-size: 2rem;
+        }
+
+        .chart-wrap {
+        margin-left: 50px;
+        font-family: sans-serif;
+        }
+
+        .chart-wrap .title {
+        font-weight: bold;
+        font-size: 1.62em;
+        padding: 0.5em 0 1.8em 0;
+        text-align: center;
+        white-space: nowrap;
+        }
+
+        .chart-wrap.vertical .grid {
+        transform: translateY(150px - 325px) translateX(325px - 150px) rotate(-90deg);
+        }
+
+        .chart-wrap.vertical .grid .bar::after {
+        transform: translateY(15%) rotate(0deg);
+        display: block;
+        }
+
+        .chart-wrap.vertical .grid::before,
+
+        .chart-wrap {
+        height: 360px;
+        width: 650px;
+        }
+
+        .chart-wrap .grid {
+        position: relative;
+        padding: 5px 0 5px 0;
+        height: 100%;
+        width: 100%;
+        border-left: 2px solid #94A3B8;
+        background: repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 19.5%,
+            fadeout(#94A3B8, 30%) 20%
+        );
+        }
+
+        .chart-wrap .grid::before {
+        font-size: 0.8em;
+        font-weight: bold;
+        content: "0%";
+        position: absolute;
+        left: -0.5em;
+        top: -1.5em;
+        }
+
+        .chart-wrap .grid::after {
+        font-size: 0.8em;
+        font-weight: bold;
+        content: "100%";
+        position: absolute;
+        right: 4em;
+        top: -1.5em;
+        }
+
+        .chart-wrap .bar {
+        width: var(--bar-value);
+        height: 50px;
+        margin: 20px 0;
+        background-color: #38BDF8;
+        border-radius: 0 3px 3px 0;
+        }
+
+        .chart-wrap .bar:hover {
+        opacity: 0.7;
+        }
+
+        .chart-wrap .bar::after {
+        content: attr(data-name);
+        margin-left: 100%;
+        padding: 10px;
+        display: inline-block;
+        white-space: nowrap;
+        font-size: var(--text-size, 14px);
+        }
+
+
+        
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo-cont">
+            <img src="logo_nobg.png" alt="LlamaCloud" class="logo">
+            <label class="miniTitle">LlamaCloud</label>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <label class="title" for="search">Statistics</label>
+            <div class="chart-wrap vertical">
+                <h2 class="title">Hourly usage</h2>
+                
+                <div class="grid">
+                    <div class="bar" style="--bar-value:3%;" data-name="00:00 - 08:00" title="3%"></div>
+                    <div class="bar" style="--bar-value:65%;" data-name="08:00 - 15:00" title="65%"></div>
+                    <div class="bar" style="--bar-value:21%;" data-name="15:00 - 20:00" title="21%"></div>
+                    <div class="bar" style="--bar-value:11%;" data-name="20:00 - 00:00" title="11%"></div>
+                </div>
+
+                <h2 class="title">Browser usage</h2>
+                
+                <div class="grid">
+                    <div class="bar" style="--bar-value:6%;" data-name="Explorer / Edge" title="6%"></div>
+                    <div class="bar" style="--bar-value:68%;" data-name="Chrome" title="68%"></div>
+                    <div class="bar" style="--bar-value:13%;" data-name="Safari" title="13%"></div>
+                    <div class="bar" style="--bar-value:11%;" data-name="Firefox" title="11%"></div>
+                    <div class="bar" style="--bar-value:2%;" data-name="Opera" title="2%"></div>
+                </div>
+            </div>
+        </div>
+
+        
+        
+    </main>
+
+    <footer>
+        <a href="#">Server</a>
+        <a href="#">Documents</a>
+        <a href="#">Tools</a>
+        <a href="#">APIs</a>
+    </footer>
+
+</body>
+
+</html>
