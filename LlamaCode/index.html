@@ -150,6 +150,7 @@
             background-color: #ffffff1a;
         }
 
+
         /* --- MAIN --- */
 
         main {
@@ -523,6 +524,98 @@
                 /* Optionally hide filters on smaller screens */
             }
         }
+
+        /* The Modal (background) */
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box - Adjusted to match your system's CSS */
+        .modal-content {
+            background-color: #142941;
+            /* Deep background */
+            margin: 10% auto;
+            /* Adjusted for centering */
+            padding: 20px;
+            border: 2px solid #0488D2;
+            /* Border color to match your system */
+            width: 40%;
+            /* Adjust based on preference */
+            border-radius: 10px;
+            /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            /* Soft shadow for depth */
+            color: #E2E8F0;
+            /* Text color */
+        }
+
+        /* The Close Button - Styled to fit within your design */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #E2E8F0;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Additional styles for inputs and buttons inside the modal to match your theme */
+        .modal-content input[type="password"],
+        .modal-content button {
+            font-family: 'Roboto', sans-serif;
+            padding: 10px 15px;
+            margin-top: 10px;
+            /* Space between elements */
+            border: 2px solid #0488D2;
+            /* Matching the search box border */
+            background-color: #ffffff1a;
+            /* Semi-transparent background */
+            color: #94A3B8;
+            /* Light grey color for text */
+            font-weight: bold;
+            border-radius: 50px;
+            /* Rounded corners */
+            cursor: pointer;
+            width: calc(100% - 40px);
+            /* Full width minus padding */
+            box-sizing: border-box;
+            /* Border box */
+        }
+
+        .modal-content button {
+            background: linear-gradient(to bottom left, #0F172A, #1A2346);
+            /* Gradient background */
+            color: #E2E8F0;
+            /* White-ish color for text */
+        }
+
+        .modal-content button:hover {
+            background-color: #0488D2;
+            /* Darker color on hover */
+            color: #FFFFFF;
+            /* White color for text on hover */
+        }
     </style>
 </head>
 
@@ -535,14 +628,26 @@
             <!-- <span class="miniTitle">LlamaCloud</span> -->
         </div>
 
-        <a href="admin.html" class="login-container">Login
+        <button class="login-container">
+            <span class="button-text">Admin Zone</span>
             <i class="fas fa-user-circle user-icon"></i>
-        </a>
+        </button>
 
 
     </header>
 
     <main>
+
+        <!-- Admin Password Modal -->
+        <div id="adminModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Please enter the admin password:</p>
+                <input type="password" id="adminPassword" placeholder="Password">
+                <button id="submitPassword">Submit</button>
+            </div>
+        </div>
+
         <div class="container">
 
             <!-- WELCOME MESSAGE -->
@@ -606,15 +711,72 @@
 
     <!-- SCRIPT SECTION -->
 
-
-    <!-- SEARCH QUERY + AUDIO INPUT -->
     <script>
-        document.querySelector('.search-btn').addEventListener('click', function () {
-            var query = document.getElementById('search').value;
-            console.log("Search query:", query);
-            // Implement search functionality here
+        document.addEventListener('DOMContentLoaded', function () {
+            var modal = document.getElementById("adminModal");
+            var btn = document.querySelector(".login-container");
+            var span = document.getElementsByClassName("close")[0];
+            var passwordInput = document.getElementById("adminPassword");
+            var submitBtn = document.getElementById("submitPassword");
+
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+            submitBtn.addEventListener('click', function () {
+                if (passwordInput.value === "bebra") {
+                    window.location.href = "admin.html"; // Redirect to admin page
+                } else {
+                    alert("Incorrect password.");
+                }
+            });
         });
 
+    </script>
+
+
+    <!-- SEARCH QUERY -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var searchInput = document.getElementById('search');
+            var searchBtn = document.querySelector('.search-btn');
+
+            // Listen for the Enter key press within the search input field
+            searchInput.addEventListener("keyup", function (event) {
+                // Check if the key pressed is the ENTER key
+                if (event.keyCode === 13) {
+                    event.preventDefault(); // Prevent the default action
+                    searchBtn.click(); // Trigger a click on the search button
+                }
+            });
+
+            // Event listener for the search button click
+            searchBtn.addEventListener('click', function () {
+                var query = searchInput.value; // Get the search input value
+                console.log("Search query:", query);
+                // Implement the redirection to the search results page with the query
+                // This is just an example path; adjust based on your actual setup
+
+                // Store the search query in the session storage
+                sessionStorage.setItem('searchQuery', query);
+
+                window.location.href = `search_results.html`;
+            });
+        });
+    </script>
+
+    <!-- AUDIO INPUT -->
+    <script>
         // Example function to start audio input - this will need actual implementation
         document.querySelector('.left-pan').addEventListener('click', function () {
             console.log("Audio input activated");

@@ -25,25 +25,18 @@
         body,
         html {
             -webkit-user-select: none;
-            /* Safari */
             -moz-user-select: none;
-            /* Firefox */
             -ms-user-select: none;
-            /* Internet Explorer/Edge */
             user-select: none;
-            /* Non-prefixed version, currently supported by Chrome, Opera and Edge */
             height: 100%;
             font-family: 'Roboto', sans-serif;
             background: linear-gradient(to bottom left, #0F172A, #1A2346, #193251, #142941, #0F172A, #0F172A, #0F172A);
-            /* Dark background */
             color: white;
         }
 
-        /* Header Styles */
         header {
             display: flex;
             flex-direction: column;
-            /* Stack elements vertically */
             align-items: center;
             width: 100%;
             padding: 1rem;
@@ -53,11 +46,9 @@
             display: flex;
             width: 100%;
             justify-content: space-between;
-            /* Space out logo, search bar, and login button */
             align-items: center;
         }
 
-        /* Search Box Styles */
         .search-box {
             display: flex;
             align-items: center;
@@ -66,9 +57,7 @@
             border: 2px solid #0488D2;
             background: #ffffff1a;
             flex-grow: 2;
-            /* Allow search box to take up available space */
             margin: 0 10px;
-            /* Ensure some space around the search box */
         }
 
         .search-box input[type="search"] {
@@ -88,7 +77,6 @@
             padding: 10px;
             cursor: pointer;
             color: #94A3B8;
-            /* Button icon color */
         }
 
         .search-box button {
@@ -98,48 +86,27 @@
             cursor: pointer;
         }
 
-        /* Filter Options Styles */
         .filter-options {
             display: flex;
             justify-content: center;
-            /* Center filter buttons under the search bar */
             gap: 10px;
             width: 100%;
             margin-top: 10px;
-            /* Space between search bar and filter buttons */
         }
 
         .filter-topic,
         .filter-btn {
             background: #ffffff1a;
-            /* Semi-transparent background */
             border: 1px solid #0488D2;
-            /* Border color */
             border-radius: 20px;
-            /* Rounded edges */
             padding: 5px 15px;
-            /* Padding inside the buttons */
             cursor: pointer;
             color: #E2E8F0;
-            /* Button text color */
         }
 
-        .filter-options button {
-            background-color: transparent;
-            border: 2px solid #0488D2;
-            border-radius: 20px;
-            padding: 5px 10px;
-            color: #94A3B8;
-            cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .filter-topic:hover,
-        .filter-btn:hover {
+        .filter-options button:hover {
             background: #0488D2;
-            /* Darker background on hover */
             color: #ffffff;
-            /* White text on hover */
         }
 
         header .login,
@@ -152,25 +119,16 @@
         }
 
         .logo-container {
-            top: 0;
-            right: 0;
-            padding: 10px;
-            /* Adjust the padding to control the distance from the corner */
             display: flex;
-            /* Enables Flexbox for this container */
             align-items: center;
-            /* Vertically centers the flex items (the image and label) */
             justify-content: flex-start;
-            /* Aligns items to the start of the container */
+            padding: 10px;
         }
 
         .logo {
             height: 80px;
-            /* Adjust based on your logo's size */
             width: auto;
-            /* Maintains the aspect ratio of the logo */
             margin-right: 10px;
-            /* Adds some space between the logo and the label */
         }
 
         .miniTitle {
@@ -182,18 +140,12 @@
         .title {
             font-size: 6rem;
             font-weight: 600;
-            background: linear-gradient(to right, #007bff, #70bee6);
-            /* Gradient from blue to light blue */
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: inline;
-            /* Required for gradient text */
             background-clip: text;
             color: transparent;
-            /* Fallback for non-webkit browsers */
             text-shadow: 0 0 3px #007bff59, 0 0 6px #007bff56, 0 0 9px #85d6ff50;
-            /* Glowing effect */
-            font-weight: bold;
         }
 
         .login-container {
@@ -209,26 +161,19 @@
             transition: background-color 0.3s ease;
             cursor: pointer;
             font-size: 0.9rem;
-            /* Adjust the font size if necessary */
         }
 
         .login-container i {
             margin-left: 5px;
-            /* Space between text and icon */
         }
 
         .login-container:hover {
             background-color: #ffffff1a;
         }
 
-
-        /* --- MAIN --- */
-
         .main {
             width: 100%;
-            /* Ensure main content takes full width */
             padding-top: 1rem;
-            /* Minimal space between header and main content */
             display: flex;
             justify-content: flex-start;
             align-items: center;
@@ -240,47 +185,41 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            width: calc(100% - 80px);
+            margin: 0 40px;
         }
 
         .search-results {
             background: #ffffff1a;
-            /* Light background for sections */
             border-radius: 10px;
             padding: 20px;
             margin: 20px 0;
-            width: 80%;
-            /* Adjusted width for better layout control */
+            width: 100%;
             max-width: 960px;
-            /* Max width for larger screens */
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            /* Subtle shadow for depth */
         }
 
         .results-title {
             margin-bottom: 1rem;
             color: #38BDF8;
-            /* Example color */
             text-align: center;
         }
 
         .search-result-item {
-            padding: 1rem;
-            margin-bottom: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 0.7rem;
             border-bottom: #007bff 1px dashed;
             border-radius: 5px;
         }
 
         .result-link {
             color: #007bff;
-            /* Example link color */
             font-weight: bold;
             text-decoration: none;
-            /* Removes underline */
         }
 
         .result-description {
             color: #E2E8F0;
-            /* Light grey for readability */
             padding-top: 0.5rem;
         }
 
@@ -303,23 +242,6 @@
             color: #ffffff;
         }
 
-        .page-link,
-        .pagination-ellipsis {
-            color: #94A3B8;
-            /* Styling for pagination links */
-            text-decoration: none;
-        }
-
-        .page-link:hover {
-            text-decoration: underline;
-            /* Adds interactivity on hover */
-        }
-
-
-
-
-        /* --- FOOTER --- */
-
         footer {
             position: absolute;
             bottom: 0;
@@ -331,7 +253,6 @@
 
         footer a {
             color: #E2E8F0;
-            /* Light grey color for footer links */
             text-decoration: none;
             font-size: 1rem;
             margin: 0 1rem;
@@ -430,6 +351,18 @@
         <a href="https://youtu.be/dQw4w9WgXcQ" target="_blank">made with 💙 in Braude</a>
         <a href="https://github.com/SecretPasta/Llama_Cloud.git" target="_blank">GitHub</a>
     </footer>
+
+    <!-- SCRIPT SECTION -->
+
+    <!-- DECODE QUERY -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var searchQuery = sessionStorage.getItem('searchQuery');
+            console.log(searchQuery); // Use this value as needed
+        });
+
+
+    </script>
 
 </body>
 
