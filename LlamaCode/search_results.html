@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Llama Search Results</title>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <!-- For PNG or other formats -->
     <link rel="icon" type="image/png" href="logo_nobg.png">
     <!-- Apple Touch Icon for use with Apple devices -->
@@ -172,75 +174,200 @@
         }
 
         .main {
-            width: 100%;
-            padding-top: 1rem;
             display: flex;
-            justify-content: flex-start;
-            align-items: center;
             flex-direction: column;
+            justify-content: space-between;
+            /* Distributes space between table and pagination */
+            align-items: center;
+            /* Center items horizontally */
+            width: 100%;
+            height: 100vh;
+            /* Take up the full viewport height */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            /* Add padding at the bottom */
+            box-sizing: border-box;
+            /* Include padding in the height calculation */
         }
 
         .search-container {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: calc(100% - 80px);
-            margin: 0 40px;
-        }
-
-        .search-results {
-            background: #ffffff1a;
-            border-radius: 10px;
+            flex-grow: 1;
+            /* Allow the container to grow and fill available space */
+            width: 90vw;
+            /* Adjust based on your preference */
+            margin: 20px auto;
             padding: 20px;
-            margin: 20px 0;
+            background-color: #ffffff1a;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            /* Contain the table's overflow */
+        }
+
+        .table-container {
+            flex-grow: 1;
+            /* Allow the table container to grow */
             width: 100%;
-            max-width: 960px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Full width to match the .search-container */
+            height: 500px;
+            /* Fixed height; adjust as needed */
+            overflow: auto;
+            /* Enables scrolling for overflow content */
+            margin-bottom: 20px;
+            /* Space above pagination */
         }
 
-        .results-title {
-            margin-bottom: 1rem;
-            color: #38BDF8;
-            text-align: center;
+
+        /* Table General Styles */
+        table {
+            width: 100%;
+            /* Full width of its container */
+            border-collapse: collapse;
+            /* Clean table borders */
+            table-layout: fixed;
+            /* Fixes column widths */
         }
 
-        .search-result-item {
-            padding: 1.5rem;
-            margin-bottom: 0.7rem;
-            border-bottom: #007bff 1px dashed;
-            border-radius: 5px;
+        th,
+        td {
+            padding: 12px;
+            /* Adequate padding for cell content */
+            text-align: left;
+            /* Align text to the left for readability */
+            border-bottom: 1px solid #ddd;
+            /* Light border for row separation */
         }
 
-        .result-link {
-            color: #007bff;
+        /* Title and Description Styles within Table Cells */
+        /* Assuming your titles are links (<a>), and descriptions are in <div> or <p> */
+        td a,
+        td div,
+        td p {
+            display: block;
+            /* Ensure block-level display for proper spacing */
+        }
+
+        td a {
+            color: #0488D2;
+            /* Title (link) color to match your scheme */
             font-weight: bold;
+            /* Make titles stand out */
             text-decoration: none;
+            /* No underline for a clean look */
+            margin-bottom: 5px;
+            /* Space between title and description */
         }
 
-        .result-description {
-            color: #E2E8F0;
-            padding-top: 0.5rem;
+        td a:hover {
+            text-decoration: underline;
+            /* Underline on hover for links */
         }
 
-        .pagination {
+        td div,
+        td p {
+            color: #cbcbcb;
+            /* Subdued color for descriptions */
+            font-size: 0.95rem;
+            /* Slightly smaller font for descriptions */
+        }
+
+        /* Rank Styles */
+        td:last-child {
+            width: 10%;
+            /* Allocate width to the rank column */
+            text-align: right;
+            /* Align rank to the right */
+            font-weight: bold;
+            /* Make the rank stand out */
+            color: #ffffff;
+            /* Darker text for better visibility */
+        }
+
+        th:nth-child(2) {
+            text-align: right;
+        }
+
+
+        /* Style the scrollbar itself (background) */
+        .table-container::-webkit-scrollbar {
+            width: 8px;
+            /* Adjust the width of the vertical scrollbar */
+            height: 8px;
+            /* Adjust the height of the horizontal scrollbar */
+            background-color: #f0f2f5;
+            /* Scrollbar background */
+        }
+
+        /* Style the scrollbar thumb (the part that you drag) */
+        .table-container::-webkit-scrollbar-thumb {
+            background-color: #0488D2;
+            /* Thumb color */
+        }
+
+        /* Style the scrollbar thumb on hover */
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background-color: #036C9E;
+            /* Darker shade for hover effect */
+        }
+
+
+        #pagination {
             display: flex;
+            justify-content: center;
+            align-items: center;
             gap: 10px;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+            overflow-x: auto;
+            padding: 10px 0;
         }
 
-        .pagination a {
-            color: #94A3B8;
-            text-decoration: none;
-            padding: 5px 10px;
-            border: 1px solid #94A3B8;
+        #pagination button,
+        #pagination span {
+            color: #0488D2;
+            /* Set text color for both buttons and the page indicator */
+            padding: 10px 15px;
+            /* Apply padding to both buttons and span for consistent size */
+            min-width: 80px;
+            /* Ensure buttons have at least a minimum width */
+            text-align: center;
+            /* Center text within buttons and span */
+            background-color: transparent;
             border-radius: 5px;
+            cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
         }
 
-        .pagination a:hover {
-            background-color: #94A3B8;
+        #pagination button {
+            border: 1px solid #0488D2;
+            /* Only buttons have a border */
             color: #ffffff;
         }
+
+        #pagination button:hover {
+            background-color: #007bff;
+            color: #ffffff;
+            /* Text color change on hover for buttons */
+        }
+
+        #pagination span {
+            cursor: default;
+            /* The page indicator shouldn't change cursor like buttons */
+            background-color: transparent;
+            /* Ensure the span doesn't have a background */
+            border: none;
+            /* Remove border for the span to avoid visual inconsistency */
+            display: inline-flex;
+            /* Align text vertically */
+            align-items: center;
+            /* Center text vertically */
+            justify-content: center;
+            /* Center text horizontally */
+        }
+
+
 
         footer {
             position: absolute;
@@ -296,54 +423,27 @@
 
     <main>
         <div class="search-container">
-
-            <!-- Search Result -->
-            <div class="search-result">
-                <!-- Search Result Item -->
-                <div class="search-result-item">
-                    <a href="https://aws.amazon.com/account/sign-up" class="result-link">Amazon Web Services</a>
-                    <p class="result-description">Get Innovating On AWS Today — Build, Deploy, and Manage Websites, Apps
-                        or Processes On
-                        AWS' Secure, Reliable Network. Sign Up for a Free Account & Experience AWS' Secure, Reliable,
-                        Scalable Services.
-                        In-Memory Caching. Performance At Scale. Easily Manage Clusters.</p>
-                </div>
-                <!-- Additional results here, structured similarly -->
-                <div class="search-result-item">
-                    <a href="#" class="result-link">What is Cloud Computing?</a>
-                    <p class="result-description">Benefits & Types of Cloud Computing Learn How AWS Can Help your
-                        Success</p>
-                </div>
-                <div class="search-result-item">
-                    <a href="#" class="result-link">AWS Cloud Compute Service</a>
-                    <p class="result-description">Lightsail: Easy-To-Use Platform For Simple Computing. 1 Year Free.</p>
-                </div>
-
-                <div class="search-result-item">
-                    <a href="#" class="result-link">Why Choose AWS?</a>
-                    <p class="result-description">From Startups to Enterprises. Learn Why Millions of Customers Chose
-                        AWS</p>
-                </div>
-                <div class="search-result-item">
-                    <a href="#" class="result-link">AWS Compute Solutions</a>
-                    <p class="result-description">Try Amazon EC2 - Resizable Compute Capacity in The Cloud. 1 Year Free.
-                    </p>
-                </div>
-                <div class="search-result-item">
-                    <a href="#" class="result-link">Why Amazon Web Services</a>
-                    <p class="result-description">Focus on What Differentiates Your Business - Not the Infrastructure.
-                    </p>
-                </div>
+            <h2 class="results-title"></h2>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Title and Description</th>
+                            <th>Rank</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Results will be inserted here via JavaScript -->
+                    </tbody>
+                </table>
             </div>
 
-            <!-- Pagination -->
-            <div class="pagination">
-                <a href="#" class="page-link">1</a>
-                <a href="#" class="page-link">2</a>
-                <a href="#" class="page-link">3</a>
-                <span class="pagination-ellipsis">. . .</span>
-                <a href="#" class="page-link">10</a>
-            </div>
+        </div>
+
+        <div id="pagination">
+            <button id="prevPage">Previous</button>
+            <span id="pageIndicator">Page 1</span>
+            <button id="nextPage">Next</button>
         </div>
     </main>
 
@@ -354,39 +454,77 @@
 
     <!-- SCRIPT SECTION -->
 
+
     <!-- DECODE QUERY -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var searchQuery = sessionStorage.getItem('searchQuery');
-            console.log(searchQuery); // Use this value as needed
 
+        $(document).ready(function () {
+            var searchQuery = sessionStorage.getItem('searchQuery');
+            console.log(searchQuery); // Confirming the search query is retrieved correctly
+            // Update the text of the results-title element with the searchQuery
+            $(".results-title").text("Search Results for " + searchQuery);
+
+            fetch('index.json')
+                .then(response => response.json())
+                .then(jsonData => {
+                    let termData = jsonData.index["-NtaO-5dL_XJw3XQ3bcE"].term[searchQuery] || [];
+                    // Ensure sorting is in descending order based on rank
+                    termData.sort((a, b) => b.rank - a.rank);
+
+                    // Limit to top 100 results
+                    termData = termData.slice(0, 100);
+
+                    let currentPage = 1;
+                    const resultsPerPage = 10;
+                    const totalPages = Math.ceil(termData.length / resultsPerPage);
+
+                    function displayPage(page) {
+                        const start = (page - 1) * resultsPerPage;
+                        const end = start + resultsPerPage;
+                        const pageItems = termData.slice(start, end);
+
+                        const $tbody = $('#resultsTable tbody');
+                        $tbody.empty(); // Clear previous results
+
+                        $.each(pageItems, function (index, item) {
+                            $tbody.append(`
+        <tr>
+            <td style="width: 90%;"><!-- Width allocation for responsiveness -->
+                <div style="margin-bottom: 5px;"><a href="${item.DocIDs}" target="_blank">${item.title}</a></div>
+                <div>${item.content}</div>
+            </td>
+            <td style="text-align: right; vertical-align: top;">${item.rank}</td>
+        </tr>
+    `);
+                        });
+
+                        $('#pageIndicator').text(`Page ${page} of ${totalPages}`);
+                    }
+
+                    displayPage(currentPage);
+
+                    $('#prevPage').click(function () {
+                        if (currentPage > 1) {
+                            currentPage--;
+                            displayPage(currentPage);
+                        }
+                    });
+
+                    $('#nextPage').click(function () {
+                        if (currentPage < totalPages) {
+                            currentPage++;
+                            displayPage(currentPage);
+                        }
+                    });
+
+                })
+                .catch(error => {
+                    console.error('Error loading index.json:', error);
+                });
         });
 
 
-    </script>
-    <script>
-        import { initializeApp } from 'firebase/app';
-        import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-        // Follow this pattern to import other Firebase services
-        // import { } from 'firebase/<service>';
 
-        // TODO: Replace the following with your app's Firebase project configuration
-        const firebaseConfig = {
-  "type": "service_account",
-  "project_id": "llama-cloud",
-  "private_key_id": "4ba7dc37f1b1329010e4bfa26740d204dc6c2e7d",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCM2M5b/o/Q0rIJ\nmrK5RuZmZ9H983tKjOstqlIvgTP5esy1xKFgePpIhvAfj5cQwaY/Z+Lsps7UqiCz\ntEIalzmdghoZSTBjD67sdmiAm318S0nhCHvZSCd89LYZPUmfgNf+h9DkwCz2CYQt\ne95qhYdnjzk3o5qeOghWU66IvoyXauLGF3y6VFahb9sjsqpi3ewS9Swd9Dfnb2+d\nVUL1//kOR6UGbveUAAdkosNZvSDn7YrtzGfcIVky3b0YnJ251XEpGarLnqYV+6WI\npqBZT+FTq5MZMmQuKkBff4VQsrZNVp1ixb1JMuTqf5JRIrqI47imXj11PQm0hnGT\nqdw9QPjjAgMBAAECggEAOYKtgFLJVnMxz0ojgBO7MEVkMVWiGibAQL0zIcKX/l5u\nCCpp2oKLb+HpWnm/LVBlGa7JsefKvHtbLwWDmGf3VqExFvITl99nhZYzxY+4BXCY\nkhJsv6P+u78QO+4SidaKW5wJZ94wfaYVGp1hjA1J5LdOnbFoCQOZM+andZ6YuZqI\nJRz9XAToKNBgh4eqhpwZi2epVzTAY2tzntFA+jOMRsuzK4loq8bEK3uxXEYU5d5f\nE9ehuKv1TGVoCFjky9xDmWzyHbG8FSWXAiyHNqR1MMZZI1Fmoq5+9wZVZGum+FJS\ne2FJZHlTAsMumhauqJIjpY/qDyaj8WRFa8FSR5MrQQKBgQDEfWxk7Jo6qEWli4WI\nGLk3dvemVwbivf8Yw8jvXMoIcPh4deqARG1WxzGfvhGq3TGE0f7IPWF7dAd8Vf09\nxt4LSuQ2Px+rzyLszfxpvjbltianF2EyP7tT7pQfBmHVT6dhSXohKpVIElbR0ZDB\n5U3df2T69h17rpb/lshdkKReDwKBgQC3gS0siL/2V17tWVdvwbMhXcIWljHBmzST\nq8/Ucg86rNh0NLYr9B9bQpmAcR+MlMRlI+2Pi6N+ABfMc/BL7cCHkHJq4WjrXRn2\nuPKF3OFOrdz9+ej6VHpjPiDG2PY7fY6uiU1mpSIYQGnKjNYT5D9Vm0S5XCQxknJA\nAxeLmYDL7QKBgDC6njAlUVZstuEISfRnlT+BHIe/G3EOB36fx2w9SclwIt7U93Qa\nBDe6LL9eBsmmE4rJ/XKxbkSMkPKv7J7ue9C3IQOnAfa85v9tUkTzLHApjUpxDOTG\nU3HMQCW1knuxRmRlMYmaIu19xtRAMbM0Z+wflO58LPGoacA3J7e0kF7XAoGBAI4h\nrqSk0tJx/+Ok5HV6OU2pujAWazmDBmkulY3+Pk97Gzh+r29B6Zuc7RowBHi1rZyN\nBG6/gIWSetxwHHojD5Gwzv570vEiLn8L50TJvXVccyQAknR6REVkFK0P1UBk0sPb\nMylC1DKmiYpKJXJIwsmCtus/NAV1Yaq0+mK1Ja5NAoGAW2nfHrlU7TRQ/mUCpUBd\n0pkPq+zUJ5mWAFg6tLrHmtpil7BVcYw+jVrbxjztabMrV6wDBFn6Sd0sm9FsrpOy\na0B/6Yn1ivtDIXqb+n52y+S9xbXXEkgLT8zOYYBVUza/fNEZXWy7+2J18qsw2HC/\niwwFYOXP4DKvllXpdKlBJLI=\n-----END PRIVATE KEY-----\n",
-  "client_email": "firebase-adminsdk-m4r1g@llama-cloud.iam.gserviceaccount.com",
-  "client_id": "108802475211146687997",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-m4r1g%40llama-cloud.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
-}
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
     </script>
 
 </body>

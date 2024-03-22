@@ -526,7 +526,6 @@
         }
 
         /* The Modal (background) */
-        /* The Modal (background) */
         .modal {
             display: none;
             /* Hidden by default */
@@ -610,11 +609,127 @@
             /* White-ish color for text */
         }
 
+        /* Focus state for the password input */
+        .modal-content input[type="password"]:focus {
+            outline: none;
+            border: 2px solid #E2E8F0;
+            /* Highlight color */
+        }
+
+        /* Stylish hover animation for the button */
         .modal-content button:hover {
             background-color: #0488D2;
-            /* Darker color on hover */
+            /* Darker shade on hover */
+            color: #FFFFFF;
+            /* Text color change */
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+            /* Smooth transition */
+        }
+
+        /* Error message text */
+        .error-text {
+            color: #ff3860;
+            /* Error color */
+            margin-top: 10px;
+            /* Spacing */
+            font-size: 0.9rem;
+            /* Text size */
+        }
+
+
+        /* --- CHATBOT --- */
+
+        /* Chatbot Button */
+        #chatbotButton button {
+            font-family: 'Roboto', sans-serif;
+            background-color: #142941;
+            /* Button background color */
+            color: #E2E8F0;
+            /* Button text color */
+            border: 2px solid #0488D2;
+            /* Border color to match the system */
+            border-radius: 50px;
+            /* Rounded corners */
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            /* Smooth transition for hover effects */
+        }
+
+        #chatbotButton button:hover {
+            background-color: #0488D2;
+            /* Darker color on hover for visibility */
             color: #FFFFFF;
             /* White color for text on hover */
+        }
+
+        /* Chatbot Panel */
+        #chatbotPanel {
+            font-family: 'Roboto', sans-serif;
+            color: #000;
+            /* Text color inside the chatbot panel */
+            border-radius: 10px;
+        }
+
+        /* Chatbot Panel Header */
+        #chatbotPanel>div:first-child {
+            font-weight: bold;
+            color: #E2E8F0;
+            /* Header text color */
+            background-color: #142941;
+            /* Header background color */
+            padding: 10px;
+        }
+
+        /* Close Button */
+        #closeChat {
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        #closeChat:hover {
+            color: #E2E8F0;
+        }
+
+        /* Chat Content Area */
+        #chatContent {
+            padding: 10px;
+            height: 340px;
+            overflow-y: auto;
+            background-color: #fff;
+            /* Background color for the chat content */
+            color: #000;
+            /* Text color for chat content */
+        }
+
+        /* User Input Field */
+        #userInput {
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            border-top: 1px solid #ccc;
+            /* Top border to separate input field from chat content */
+            padding: 10px;
+            background-color: #ffffff1a;
+            /* Semi-transparent background */
+            color: #94A3B8;
+            /* Input text color */
+        }
+
+        #userInput::placeholder {
+            color: #94A3B8;
+            /* Placeholder text color */
+        }
+
+        /* Chat Messages */
+        #chatContent div {
+            margin-bottom: 5px;
+            /* Space between messages */
+        }
+
+        #chatContent strong {
+            color: #38BDF8;
+            /* Color for the sender's name */
         }
     </style>
 </head>
@@ -644,9 +759,11 @@
                 <span class="close">&times;</span>
                 <p>Please enter the admin password:</p>
                 <input type="password" id="adminPassword" placeholder="Password">
-                <button id="submitPassword">Submit</button>
+                <button id="submitPassword">Enter</button>
+                <p id="errorMessage" class="error-text" style="display: none;">Incorrect password.</p>
             </div>
         </div>
+
 
         <div class="container">
 
@@ -702,6 +819,26 @@
 
 
         </div>
+
+        <!-- Chatbot Button -->
+        <div id="chatbotButton" style="position: fixed; bottom: 20px; right: 20px; cursor: pointer;">
+            <button>💬 Chatbot</button>
+        </div>
+
+        <!-- Chatbot Interface -->
+        <div id="chatbotPanel"
+            style="display: none; position: fixed; bottom: 70px; right: 20px; width: 300px; height: 400px; background-color: white; color: black; box-shadow: 0 0 10px rgba(0,0,0,0.5); border-radius: 10px; overflow: hidden;">
+            <div style="padding: 10px; background-color: #142941; color: white;">
+                AWS ChatBot
+                <span id="closeChat" style="float: right; cursor: pointer;">&times;</span>
+            </div>
+            <div id="chatContent"
+                style="padding: 10px; height: 340px; overflow-y: scroll; background-color: #fff; color: #000;"></div>
+            <input type="text" id="userInput"
+                style="width: 100%; box-sizing: border-box; border: none; border-top: 1px solid #ccc; padding: 10px;"
+                placeholder="Type a message...">
+        </div>
+
     </main>
 
     <footer>
@@ -718,29 +855,31 @@
             var span = document.getElementsByClassName("close")[0];
             var passwordInput = document.getElementById("adminPassword");
             var submitBtn = document.getElementById("submitPassword");
+            var errorMessage = document.getElementById("errorMessage"); // Error message element
 
             btn.onclick = function () {
                 modal.style.display = "block";
-            }
+            };
 
             span.onclick = function () {
                 modal.style.display = "none";
-            }
+            };
 
             window.onclick = function (event) {
                 if (event.target == modal) {
                     modal.style.display = "none";
                 }
-            }
+            };
 
             submitBtn.addEventListener('click', function () {
                 if (passwordInput.value === "bebra") {
                     window.location.href = "admin.html"; // Redirect to admin page
                 } else {
-                    alert("Incorrect password.");
+                    errorMessage.style.display = "block"; // Show error message
                 }
             });
         });
+
 
     </script>
 
@@ -817,6 +956,51 @@
             });
         });
     </script>
+
+    <!-- CHATBOT -->
+    <script>
+        document.getElementById('chatbotButton').onclick = function () {
+            document.getElementById('chatbotPanel').style.display = 'block';
+        };
+
+        document.getElementById('closeChat').onclick = function () {
+            document.getElementById('chatbotPanel').style.display = 'none';
+        };
+
+        document.getElementById('userInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                const userInput = this.value;
+                this.value = ''; // Clear input field
+                addChat("You", userInput);
+
+                // Simulate a response
+                const response = simulateResponse(userInput);
+                addChat("AWS ChatBot", response);
+            }
+        });
+
+        function addChat(sender, message) {
+            const chatContent = document.getElementById('chatContent');
+            const messageDiv = document.createElement('div');
+            messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            chatContent.appendChild(messageDiv);
+            chatContent.scrollTop = chatContent.scrollHeight; // Scroll to the bottom
+        }
+
+        function simulateResponse(input) {
+            // Simulate a basic response logic
+            if (/hi|hello|hey/i.test(input)) {
+                return "Hello! 😊 Welcome to AWS help chat!";
+            } else if (/how are you?/i.test(input)) {
+                return "I'm just a bot, so I'm always operating at peak efficiency! 😉";
+            } else if (/name?/i.test(input)) {
+                return "Call me AWS Bot. Your go-to assistant for all things AWS!";
+            }
+            // Add more response conditions here
+            return "Sorry, I didn't understand that. Can you rephrase?";
+        }
+    </script>
+
 
 </body>
 
