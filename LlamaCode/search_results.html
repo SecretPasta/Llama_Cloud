@@ -359,9 +359,34 @@
         document.addEventListener('DOMContentLoaded', function () {
             var searchQuery = sessionStorage.getItem('searchQuery');
             console.log(searchQuery); // Use this value as needed
+
         });
 
 
+    </script>
+    <script>
+        import { initializeApp } from 'firebase/app';
+        import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+        // Follow this pattern to import other Firebase services
+        // import { } from 'firebase/<service>';
+
+        // TODO: Replace the following with your app's Firebase project configuration
+        const firebaseConfig = {
+  "type": "service_account",
+  "project_id": "llama-cloud",
+  "private_key_id": "4ba7dc37f1b1329010e4bfa26740d204dc6c2e7d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCM2M5b/o/Q0rIJ\nmrK5RuZmZ9H983tKjOstqlIvgTP5esy1xKFgePpIhvAfj5cQwaY/Z+Lsps7UqiCz\ntEIalzmdghoZSTBjD67sdmiAm318S0nhCHvZSCd89LYZPUmfgNf+h9DkwCz2CYQt\ne95qhYdnjzk3o5qeOghWU66IvoyXauLGF3y6VFahb9sjsqpi3ewS9Swd9Dfnb2+d\nVUL1//kOR6UGbveUAAdkosNZvSDn7YrtzGfcIVky3b0YnJ251XEpGarLnqYV+6WI\npqBZT+FTq5MZMmQuKkBff4VQsrZNVp1ixb1JMuTqf5JRIrqI47imXj11PQm0hnGT\nqdw9QPjjAgMBAAECggEAOYKtgFLJVnMxz0ojgBO7MEVkMVWiGibAQL0zIcKX/l5u\nCCpp2oKLb+HpWnm/LVBlGa7JsefKvHtbLwWDmGf3VqExFvITl99nhZYzxY+4BXCY\nkhJsv6P+u78QO+4SidaKW5wJZ94wfaYVGp1hjA1J5LdOnbFoCQOZM+andZ6YuZqI\nJRz9XAToKNBgh4eqhpwZi2epVzTAY2tzntFA+jOMRsuzK4loq8bEK3uxXEYU5d5f\nE9ehuKv1TGVoCFjky9xDmWzyHbG8FSWXAiyHNqR1MMZZI1Fmoq5+9wZVZGum+FJS\ne2FJZHlTAsMumhauqJIjpY/qDyaj8WRFa8FSR5MrQQKBgQDEfWxk7Jo6qEWli4WI\nGLk3dvemVwbivf8Yw8jvXMoIcPh4deqARG1WxzGfvhGq3TGE0f7IPWF7dAd8Vf09\nxt4LSuQ2Px+rzyLszfxpvjbltianF2EyP7tT7pQfBmHVT6dhSXohKpVIElbR0ZDB\n5U3df2T69h17rpb/lshdkKReDwKBgQC3gS0siL/2V17tWVdvwbMhXcIWljHBmzST\nq8/Ucg86rNh0NLYr9B9bQpmAcR+MlMRlI+2Pi6N+ABfMc/BL7cCHkHJq4WjrXRn2\nuPKF3OFOrdz9+ej6VHpjPiDG2PY7fY6uiU1mpSIYQGnKjNYT5D9Vm0S5XCQxknJA\nAxeLmYDL7QKBgDC6njAlUVZstuEISfRnlT+BHIe/G3EOB36fx2w9SclwIt7U93Qa\nBDe6LL9eBsmmE4rJ/XKxbkSMkPKv7J7ue9C3IQOnAfa85v9tUkTzLHApjUpxDOTG\nU3HMQCW1knuxRmRlMYmaIu19xtRAMbM0Z+wflO58LPGoacA3J7e0kF7XAoGBAI4h\nrqSk0tJx/+Ok5HV6OU2pujAWazmDBmkulY3+Pk97Gzh+r29B6Zuc7RowBHi1rZyN\nBG6/gIWSetxwHHojD5Gwzv570vEiLn8L50TJvXVccyQAknR6REVkFK0P1UBk0sPb\nMylC1DKmiYpKJXJIwsmCtus/NAV1Yaq0+mK1Ja5NAoGAW2nfHrlU7TRQ/mUCpUBd\n0pkPq+zUJ5mWAFg6tLrHmtpil7BVcYw+jVrbxjztabMrV6wDBFn6Sd0sm9FsrpOy\na0B/6Yn1ivtDIXqb+n52y+S9xbXXEkgLT8zOYYBVUza/fNEZXWy7+2J18qsw2HC/\niwwFYOXP4DKvllXpdKlBJLI=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-m4r1g@llama-cloud.iam.gserviceaccount.com",
+  "client_id": "108802475211146687997",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-m4r1g%40llama-cloud.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
     </script>
 
 </body>
