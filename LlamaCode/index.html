@@ -335,127 +335,6 @@
             /* Stronger glow effect on hover */
         }
 
-
-        .filter-options {
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            /* This will vertically center the items in the container */
-            gap: 2rem;
-            /* Space between filter buttons */
-            margin: 1.3rem 0;
-            /* Distance from the search box */
-            flex-wrap: wrap;
-            /* Ensure responsiveness */
-        }
-
-        .filter-topic,
-        .filter-btn {
-            padding: 10px 15px;
-            border: 2px solid #0488D2;
-            /* Match the search box border */
-            background-color: #ffffff1a;
-            /* Semi-transparent background like the search box */
-            color: #94A3B8;
-            /* Light grey color to match the icon and placeholder */
-            font-weight: bold;
-            /* For emphasis */
-            border-radius: 50px;
-            /* Rounded corners */
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-            /* Smooth transition for hover effects */
-        }
-
-        .filter-btn {
-            background: linear-gradient(to bottom left, #0F172A, #1A2346);
-            /* Gradient background for filter button */
-            color: #E2E8F0;
-            /* White-ish color for text to stand out */
-        }
-
-        .filter-topic:hover,
-        .filter-btn:hover {
-            background-color: #0488D2;
-            /* Darker color on hover for visibility */
-            color: #FFFFFF;
-            /* White color for text on hover */
-            border-color: #007bff;
-            /* Slightly lighter border on hover */
-        }
-
-        .filter-topic.pressed {
-            background-color: #0056b3;
-            /* Darker shade to indicate pressed state */
-            color: #FFFFFF;
-            /* Change text color for contrast */
-            border-color: #004080;
-            /* Optionally change the border color */
-            box-shadow: 0 0 4px #007bff88;
-            /* Subtle shadow for depth */
-        }
-
-
-        .more-filters {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #0F172A;
-            /* Deep background to contrast with button */
-            border-radius: 10px;
-            /* Rounded corners for the container */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            /* Soft shadow for depth */
-        }
-
-        .checkbox-container {
-            margin: 10px 0;
-        }
-
-        .checkbox-container input[type="checkbox"] {
-            /* Hide the default checkbox */
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            /* Create a custom checkbox appearance */
-            width: 20px;
-            height: 20px;
-            background-color: #ffffff1a;
-            border: 2px solid #0488D2;
-            border-radius: 4px;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .checkbox-container input[type="checkbox"]:checked {
-            background-color: #007bff;
-            border: 2px solid #007bff;
-        }
-
-        .checkbox-container input[type="checkbox"]:checked::after {
-            /* Custom checkmark style */
-            content: '';
-            position: absolute;
-            left: 5px;
-            top: 1px;
-            width: 6px;
-            height: 12px;
-            border: solid white;
-            border-width: 0 3px 3px 0;
-            transform: rotate(45deg);
-        }
-
-        .checkbox-container label {
-            margin-left: 8px;
-            color: #94A3B8;
-            /* Light grey color to match the design */
-            font-weight: bold;
-            user-select: none;
-            /* Prevent text selection */
-        }
-
         /* --- FOOTER --- */
 
         footer {
@@ -465,6 +344,7 @@
             padding: 1rem;
             text-align: center;
             background: transparent;
+            z-index: 500;
         }
 
         footer a {
@@ -517,12 +397,6 @@
                 max-width: 15%;
                 /* Ensure logo does not exceed container width */
             }
-
-            .filter-options,
-            .more-filters {
-                display: none;
-                /* Optionally hide filters on smaller screens */
-            }
         }
 
         /* The Modal (background) */
@@ -541,7 +415,7 @@
             /* Full height */
             overflow: auto;
             /* Enable scroll if needed */
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: rgba(0, 0, 0, 0.5);
             /* Black w/ opacity */
         }
 
@@ -574,7 +448,7 @@
 
         .close:hover,
         .close:focus {
-            color: #E2E8F0;
+            color: #ff9900;
             text-decoration: none;
             cursor: pointer;
         }
@@ -593,7 +467,7 @@
             color: #94A3B8;
             /* Light grey color for text */
             font-weight: bold;
-            border-radius: 50px;
+            border-radius: 20px;
             /* Rounded corners */
             cursor: pointer;
             width: calc(100% - 40px);
@@ -614,17 +488,24 @@
             outline: none;
             border: 2px solid #E2E8F0;
             /* Highlight color */
+            color: #ff9900;
+            box-shadow: 0 0 8px #E2E8F0;
+            /* Glowing shadow effect */
+            transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out, color 0.3s ease-in-out;
+            /* Smooth transition for glow effect */
         }
+
 
         /* Stylish hover animation for the button */
         .modal-content button:hover {
-            background-color: #0488D2;
-            /* Darker shade on hover */
-            color: #FFFFFF;
+            color: #ff9900;
             /* Text color change */
-            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-            /* Smooth transition */
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            /* Updated transition to include box-shadow */
+            box-shadow: 0 4px 8px #0487d285, 0 6px 20px #0487d223;
+            /* Cool shadow effect */
         }
+
 
         /* Error message text */
         .error-text {
@@ -641,6 +522,12 @@
 
         /* Chatbot Button */
         #chatbotButton button {
+            position: relative;
+            z-index: 1000;
+            bottom: 30px;
+            /* Distance from the bottom */
+            right: 10px;
+            /* Distance from the right */
             font-family: 'Roboto', sans-serif;
             background-color: #142941;
             /* Button background color */
@@ -665,11 +552,18 @@
 
         /* Chatbot Panel */
         #chatbotPanel {
-            font-family: 'Roboto', sans-serif;
-            color: #000;
-            /* Text color inside the chatbot panel */
-            border-radius: 10px;
+            position: relative;
+            /* This makes child positioning relative to this container */
+            z-index: 1000;
+            /* Adjust as necessary to be on top */
+            margin-bottom: 20px;
+            /* Ensures some space at the bottom */
+            max-height: 80%;
+            /* Adjust based on your preference */
+            overflow: hidden;
+            /* Ensures no overflow outside the panel */
         }
+
 
         /* Chatbot Panel Header */
         #chatbotPanel>div:first-child {
@@ -693,35 +587,62 @@
 
         /* Chat Content Area */
         #chatContent {
-            padding: 10px;
-            height: 340px;
             overflow-y: auto;
+            height: calc(100% - 60px);
+            /* Adjust the subtracted value based on the height of your input field */
+            padding: 10px;
             background-color: #fff;
-            /* Background color for the chat content */
-            color: #000;
-            /* Text color for chat content */
+            /* Ensures readability */
         }
 
         /* User Input Field */
         #userInput {
+            position: absolute;
+            /* Relative to #chatbotPanel due to its parent's relative positioning */
+            bottom: 0;
+            /* Anchors the input to the bottom of the chatbot panel */
+            left: 0;
+            /* Aligns input to the left */
             width: 100%;
+            /* Ensures it spans the width of the chatbot panel */
             box-sizing: border-box;
-            border: none;
+            /* Ensures padding doesn't add to the width */
             border-top: 1px solid #ccc;
-            /* Top border to separate input field from chat content */
+            /* Visually separates input from chat content */
+            background-color: #ffffff;
+            /* Solid background for visibility */
+            color: #142941;
+            /* Ensures text is readable */
             padding: 10px;
-            background-color: #ffffff1a;
-            /* Semi-transparent background */
-            color: #94A3B8;
-            /* Input text color */
+            /* Comfortable padding around text */
         }
+
 
         #userInput::placeholder {
             color: #94A3B8;
             /* Placeholder text color */
         }
 
+        #userInput:focus {
+            outline: none;
+            /* Removes the default focus outline */
+            border: 1px solid #0488D2;
+            /* Example: Adds a lighter blue border */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+            /* Adds a soft glow effect */
+        }
+
+
         /* Chat Messages */
+        #chatContent {
+            padding: 10px;
+            padding-bottom: 60px;
+            /* Adjust based on the input field's height */
+            height: 340px;
+            overflow-y: auto;
+            background-color: #fff;
+        }
+
         #chatContent div {
             margin-bottom: 5px;
             /* Space between messages */
@@ -730,6 +651,37 @@
         #chatContent strong {
             color: #38BDF8;
             /* Color for the sender's name */
+        }
+
+        #chatbotButton button,
+        #closeChat,
+        #chatContent div {
+            cursor: pointer;
+            /* Ensures it's clear these elements are interactive */
+            user-select: none;
+            /* Prevents text selection for a cleaner interaction experience */
+        }
+
+        /* Style the scrollbar itself (background) for the chat content area */
+        #chatContent::-webkit-scrollbar {
+            width: 8px;
+            /* Adjust the width of the vertical scrollbar */
+            height: 8px;
+            /* Adjust the height of the horizontal scrollbar, if needed */
+            background-color: #f0f2f5;
+            /* Scrollbar background */
+        }
+
+        /* Style the scrollbar thumb (the part that you drag) for the chat content area */
+        #chatContent::-webkit-scrollbar-thumb {
+            background-color: #0488D2;
+            /* Thumb color */
+        }
+
+        /* Style the scrollbar thumb on hover for the chat content area */
+        #chatContent::-webkit-scrollbar-thumb:hover {
+            background-color: #036C9E;
+            /* Darker shade for hover effect */
         }
     </style>
 </head>
@@ -757,7 +709,7 @@
         <div id="adminModal" class="modal" style="display:none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <p>Please enter the admin password:</p>
+                <p>Dive into the matrix👇🏼</p>
                 <input type="password" id="adminPassword" placeholder="Password">
                 <button id="submitPassword">Enter</button>
                 <p id="errorMessage" class="error-text" style="display: none;">Incorrect password.</p>
@@ -785,38 +737,12 @@
 
                 <input id="search" type="search" placeholder="What are you looking for in AWS?">
 
-                <a href="search_results.html" aria-label="Search">
+                <a aria-label="Search">
                     <button class="search-btn" type="submit" aria-label="Search">
                         <i class="fas fa-search"></i>
                     </button>
                 </a>
             </div>
-
-            <!-- FILTER OPTIONS -->
-            <div class="filter-options">
-                <button class="filter-topic">Server</button>
-                <button class="filter-topic">Documents</button>
-                <button class="filter-topic">Tools</button>
-                <button class="filter-topic">APIs</button>
-                <button class="filter-btn">Filters</button>
-            </div>
-
-            <!-- MORE FILTERS (Initially hidden)-->
-            <div class="more-filters" style="display: none;">
-                <div class="checkbox-container">
-                    <input type="checkbox" id="option1" name="filter" value="option1">
-                    <label for="option1">Option 1</label>
-                </div>
-                <div class="checkbox-container">
-                    <input type="checkbox" id="option2" name="filter" value="option2">
-                    <label for="option2">Option 2</label>
-                </div>
-                <div class="checkbox-container">
-                    <input type="checkbox" id="option3" name="filter" value="option3">
-                    <label for="option3">Option 3</label>
-                </div>
-            </div>
-
 
         </div>
 
@@ -892,8 +818,8 @@
 
             // Listen for the Enter key press within the search input field
             searchInput.addEventListener("keyup", function (event) {
-                // Check if the key pressed is the ENTER key
-                if (event.keyCode === 13) {
+                // Check if the key pressed is the ENTER key and the input is not empty
+                if (event.keyCode === 13 && searchInput.value.trim() !== "") {
                     event.preventDefault(); // Prevent the default action
                     searchBtn.click(); // Trigger a click on the search button
                 }
@@ -901,59 +827,55 @@
 
             // Event listener for the search button click
             searchBtn.addEventListener('click', function () {
-                var query = searchInput.value; // Get the search input value
-                console.log("Search query:", query);
-                // Implement the redirection to the search results page with the query
-                // This is just an example path; adjust based on your actual setup
+                var query = searchInput.value.trim(); // Get the search input value and trim whitespace
+                // Only proceed if the query is not empty
+                if (query !== "") {
+                    console.log("Search query:", query);
+                    // Implement the redirection to the search results page with the query
+                    // This is just an example path; adjust based on your actual setup
 
-                // Store the search query in the session storage
-                sessionStorage.setItem('searchQuery', query);
+                    // Store the search query in the session storage
+                    sessionStorage.setItem('searchQuery', query);
 
-                window.location.href = `search_results.html`;
+                    window.location.href = `search_results.html`;
+                }
+                // Optionally, you could display a message to the user when the search field is empty
+                // e.g., alert("Please enter a search query.");
             });
         });
     </script>
 
     <!-- AUDIO INPUT -->
     <script>
-        // Example function to start audio input - this will need actual implementation
-        document.querySelector('.left-pan').addEventListener('click', function () {
-            console.log("Audio input activated");
-            // Implement audio input functionality here
-        });
-    </script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Check for browser support
+            window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    <!-- BUTTONS STAY PRESSED AFTER CLICK -->
-    <script>
-        // Wait for the DOM to fully load
-        document.addEventListener('DOMContentLoaded', function () {
-            // Get all the filter-topic buttons
-            var filterButtons = document.querySelectorAll('.filter-topic');
+            if (typeof window.SpeechRecognition !== "undefined") {
+                const recognition = new window.SpeechRecognition();
+                recognition.lang = 'en-US'; // Set recognition language
+                recognition.continuous = false; // Stops after a single result
+                recognition.interimResults = false; // We only want final results
 
-            // Add a click event listener to each button
-            filterButtons.forEach(function (button) {
-                button.addEventListener('click', function () {
-                    // Toggle the 'pressed' class on click
-                    button.classList.toggle('pressed');
+                const searchInput = document.getElementById('search'); // Get the search input
+                const voiceButton = document.querySelector('.left-pan'); // Get the voice search button
+
+                voiceButton.addEventListener('click', function () {
+                    recognition.start(); // Start recognizing voice input
                 });
-            });
-        });
-    </script>
 
-    <!-- OPEN FILTERS ON CLICK -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const filterBtn = document.querySelector('.filter-btn');
-            const moreFilters = document.querySelector('.more-filters');
+                recognition.addEventListener('result', function (event) {
+                    const text = event.results[0][0].transcript; // Extract text from the result
+                    searchInput.value = text; // Set the search input value to the recognized text
+                    recognition.stop(); // Stop recognizing
+                });
 
-            filterBtn.addEventListener('click', function () {
-                // Toggle visibility
-                if (moreFilters.style.display === 'none') {
-                    moreFilters.style.display = 'block';
-                } else {
-                    moreFilters.style.display = 'none';
-                }
-            });
+                recognition.addEventListener('end', function () {
+                    // Optional: Automatically restart recognition or handle end of recognition
+                });
+            } else {
+                console.log("Speech Recognition is not supported in this browser.");
+            }
         });
     </script>
 
@@ -988,17 +910,54 @@
         }
 
         function simulateResponse(input) {
-            // Simulate a basic response logic
+            // Basic greeting responses
             if (/hi|hello|hey/i.test(input)) {
                 return "Hello! 😊 Welcome to AWS help chat!";
             } else if (/how are you?/i.test(input)) {
-                return "I'm just a bot, so I'm always operating at peak efficiency! 😉";
+                return "I'm just a bot, but I'm buzzing along nicely today! 🐝";
             } else if (/name?/i.test(input)) {
-                return "Call me AWS Bot. Your go-to assistant for all things AWS!";
+                return "I'm AWS Bot. Your go-to assistant for AWS wonders! 🚀";
             }
-            // Add more response conditions here
-            return "Sorry, I didn't understand that. Can you rephrase?";
+
+            // Humorous responses
+            else if (/tell me a joke/i.test(input)) {
+                return "How does a computer get drunk? It takes screenshots. 🍻";
+            } else if (/purpose of life/i.test(input)) {
+                return "42, according to my calculations. 🌌 But let's focus on AWS for now!";
+            }
+
+            // AWS-related responses
+            else if (/aws/i.test(input)) {
+                return "AWS stands for Amazon Web Services, the world's most comprehensive and broadly adopted cloud platform! ☁️";
+            } else if (/cloud computing/i.test(input)) {
+                return "Cloud computing is the on-demand delivery of IT resources over the Internet. Like making rain with the click of a button! 🌧️";
+            } else if (/ec2/i.test(input)) {
+                return "Amazon EC2 provides scalable computing capacity in the AWS cloud. Like having a powerhouse in your pocket! 🔋";
+            } else if (/s3/i.test(input)) {
+                return "Amazon S3 is storage for the Internet. It's like an infinite closet for your data! 🚪";
+            } else if (/lambda/i.test(input)) {
+                return "AWS Lambda lets you run code without provisioning or managing servers. It's like magic, but real! 🧙‍♂️";
+            } else if (/iam/i.test(input)) {
+                return "AWS Identity and Access Management (IAM) helps you manage access to AWS services securely. Like a bouncer for your cloud! 🚪👮";
+            } else if (/help|how to work with site|how to use site|site help|help with site|using the site/i.test(input)) {
+                return "Welcome to Llama, the best place to search AWS services, documentation, blog posts, and more... In the middle of the screen, we have a search input, where you can write your search queries. Also, we have voice input, from the left of the search input. When you write a query, press on the search button (magnifier symbol). For admins: you can enter the admin panel in the right upper corner via your admin password. 🦙🔍";
+            }
+            // Add more AWS services and descriptions here
+
+            // Catch-all for unrecognized input
+            else {
+                const randomReplies = [
+                    "Hmm, I'm not quite sure how to answer that. 🤔 Let's talk AWS!",
+                    "I think I missed that class in bot school. 😅 Ask me about AWS!",
+                    "Intriguing question! 🧐 But can we pivot back to AWS?",
+                    "I'd love to chat more about that, but my expertise is in AWS. 📚",
+                    "That's outside my cloud of knowledge. 💭 Ask me something AWS-related!"
+                ];
+                // Return a random response from the catch-all replies
+                return randomReplies[Math.floor(Math.random() * randomReplies.length)];
+            }
         }
+
     </script>
 
 

@@ -51,66 +51,6 @@
             align-items: center;
         }
 
-        .search-box {
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-            border-radius: 50px;
-            border: 2px solid #0488D2;
-            background: #ffffff1a;
-            flex-grow: 2;
-            margin: 0 10px;
-        }
-
-        .search-box input[type="search"] {
-            flex-grow: 1;
-            padding: 10px;
-            border: none;
-            background-color: transparent;
-            color: #94A3B8;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
-        .search-box .search-btn,
-        .left-pan {
-            background: none;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            color: #94A3B8;
-        }
-
-        .search-box button {
-            background: none;
-            border: none;
-            color: #94A3B8;
-            cursor: pointer;
-        }
-
-        .filter-options {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .filter-topic,
-        .filter-btn {
-            background: #ffffff1a;
-            border: 1px solid #0488D2;
-            border-radius: 20px;
-            padding: 5px 15px;
-            cursor: pointer;
-            color: #E2E8F0;
-        }
-
-        .filter-options button:hover {
-            background: #0488D2;
-            color: #ffffff;
-        }
-
         header .login,
         header .user-icon {
             color: #94A3B8;
@@ -157,12 +97,16 @@
             padding: 8px;
             background-color: #ffffff0f;
             border: 1px solid #ffffff1a;
-            border-radius: 50px;
+            border-radius: 10px;
             text-decoration: none;
             color: #94A3B8;
             transition: background-color 0.3s ease;
             cursor: pointer;
             font-size: 0.9rem;
+            font-weight: bold;
+            /* Make the text bolder */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
         }
 
         .login-container i {
@@ -172,6 +116,110 @@
         .login-container:hover {
             background-color: #ffffff1a;
         }
+
+        .search-box.smaller {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 50px;
+            /* Match main search box border radius */
+            border: 2px solid #0488D2;
+            /* Match main search box border style */
+            background: #ffffff1a;
+            /* Match main search box background */
+            margin: 0 auto;
+            /* Keep specific to smaller search box */
+            width: 50%;
+            /* Keep specific to smaller search box */
+            /* Removed max-width: none; to keep specific to smaller search box */
+        }
+
+        .search-box.smaller input[type="search"] {
+            color: #E2E8F0;
+            /* Match main search box input text color */
+            padding: 1rem 0.5rem;
+            /* Match main search box padding */
+            font-size: 1rem;
+            /* Match main search box font size */
+            width: calc(100% - 96px);
+            /* Specific to smaller search box due to button adjustments */
+            border: none;
+            /* Match main search box border */
+            background: transparent;
+            /* Match main search box background */
+            font-weight: bold;
+        }
+
+        /* Focus and hover styles for smaller search box */
+        .search-box.smaller:focus-within,
+        .search-box.smaller input[type="search"]:focus {
+            border-color: #007bff;
+            /* Match main search box focus border color */
+            outline: none;
+            /* Ensure outline is none to match main search box */
+        }
+
+        .search-box.smaller:focus-within {
+            animation: pulse 0.8s infinite alternate;
+        }
+
+        .search-box.smaller .search-btn,
+        .search-box.smaller .left-pan {
+            padding: 13px 20px;
+            /* Match main search box button padding */
+            font-size: 1.3em;
+            /* Match main search box button font size */
+            color: #94A3B8;
+            /* Match main search box button icon color */
+            background: transparent;
+            /* Match main search box button background */
+            border: none;
+            /* Match main search box button border */
+            cursor: pointer;
+            /* Ensure cursor is pointer to match main search box */
+            transition: background-color 0.3s ease, color 0.3s ease;
+            /* Smooth transition for hover effects */
+        }
+
+        .search-box.smaller .search-btn:hover {
+            background: linear-gradient(to bottom left, #0F172A, #10182F);
+            /* Match main search box button hover background */
+            color: #E2E8F0;
+            /* Match main search box button hover text color */
+        }
+
+        /* Optional: Enhance the glow on hover for microphone icon in smaller search box */
+        .search-box.smaller .left-pan:hover i.fa-microphone,
+        .search-box.smaller .left-pan:hover {
+            text-shadow: 0 0 15px #007bff;
+            /* Stronger glow effect on hover to match main search box */
+            color: #E2E8F0;
+        }
+
+        .header-top {
+            padding: 0 10px;
+            /* Spacing around the header's edges */
+        }
+
+        .logo-container,
+        .login-container {
+            flex: 0 1 auto;
+            /* Ensures proper spacing and prevents growth */
+        }
+
+
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 10px #007bff;
+            }
+
+            100% {
+                box-shadow: 0 0 20px #007bff;
+            }
+        }
+
+
 
         .main {
             display: flex;
@@ -396,28 +444,27 @@
     <header>
         <div class="header-top">
             <div class="logo-container">
-                <img src="logo_nobg.png" alt="LlamaCloud" class="logo">
+                <a href="index.html"> <!-- Link to Main Page -->
+                    <img src="logo_nobg.png" alt="LlamaCloud" class="logo">
+                </a>
             </div>
-            <div class="search-box">
+
+            <!-- Smaller Search Box -->
+            <div class="search-box smaller">
                 <button class="left-pan" aria-label="Search by voice">
                     <i class="fa fa-microphone"></i>
-                    <span class="divider">|</span>
                 </button>
-                <input id="search" type="search" placeholder="What are you looking for in AWS?">
-                <button class="search-btn" type="submit" aria-label="Search">
-                    <i class="fas fa-search"></i>
-                </button>
+                <input type="search" id="search" placeholder="Continue your search...">
+                <a>
+                    <button class="search-btn" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </a>
             </div>
-            <a href="index.html" class="login-container">Log Out
+
+            <a href="index.html" class="login-container">Main Page
                 <i class="fas fa-sign-out-alt"></i>
             </a>
-        </div>
-        <div class="filter-options">
-            <button class="filter-topic">Server</button>
-            <button class="filter-topic">Documents</button>
-            <button class="filter-topic">Tools</button>
-            <button class="filter-topic">APIs</button>
-            <button class="filter-btn">Filters</button>
         </div>
     </header>
 
@@ -454,77 +501,175 @@
 
     <!-- SCRIPT SECTION -->
 
-
     <!-- DECODE QUERY -->
-    <script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
 
-        $(document).ready(function () {
-            var searchQuery = sessionStorage.getItem('searchQuery');
-            console.log(searchQuery); // Confirming the search query is retrieved correctly
-            // Update the text of the results-title element with the searchQuery
-            $(".results-title").text("Search Results for " + searchQuery);
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAUw9gCreO6yFtLXoeQog-TnF_04Sg2cFo",
+            authDomain: "llama-index-bebra.firebaseapp.com",
+            databaseURL: "https://llama-index-bebra-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "llama-index-bebra",
+            storageBucket: "llama-index-bebra.appspot.com",
+            messagingSenderId: "284847527852",
+            appId: "1:284847527852:web:9503f3f51fe54a8801cc09",
+            measurementId: "G-PCF21M780Y"
+        };
 
-            fetch('index.json')
-                .then(response => response.json())
-                .then(jsonData => {
-                    let termData = jsonData.index["-NtaO-5dL_XJw3XQ3bcE"].term[searchQuery] || [];
-                    // Ensure sorting is in descending order based on rank
-                    termData.sort((a, b) => b.rank - a.rank);
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
 
-                    // Limit to top 100 results
-                    termData = termData.slice(0, 100);
+        // Get a reference to the database service
+        const db = getDatabase();
 
-                    let currentPage = 1;
-                    const resultsPerPage = 10;
-                    const totalPages = Math.ceil(termData.length / resultsPerPage);
+        // Reference to the root of your Firebase Realtime Database
+        const rootRef = ref(db);
 
-                    function displayPage(page) {
-                        const start = (page - 1) * resultsPerPage;
-                        const end = start + resultsPerPage;
-                        const pageItems = termData.slice(start, end);
+        function getDataAsJson() {
+            return new Promise((resolve, reject) => {
+                const indexRef = ref(db, 'index'); // Reference to 'index' node in the database
 
-                        const $tbody = $('#resultsTable tbody');
-                        $tbody.empty(); // Clear previous results
-
-                        $.each(pageItems, function (index, item) {
-                            $tbody.append(`
-        <tr>
-            <td style="width: 90%;"><!-- Width allocation for responsiveness -->
-                <div style="margin-bottom: 5px;"><a href="${item.DocIDs}" target="_blank">${item.title}</a></div>
-                <div>${item.content}</div>
-            </td>
-            <td style="text-align: right; vertical-align: top;">${item.rank}</td>
-        </tr>
-    `);
-                        });
-
-                        $('#pageIndicator').text(`Page ${page} of ${totalPages}`);
-                    }
-
-                    displayPage(currentPage);
-
-                    $('#prevPage').click(function () {
-                        if (currentPage > 1) {
-                            currentPage--;
-                            displayPage(currentPage);
-                        }
-                    });
-
-                    $('#nextPage').click(function () {
-                        if (currentPage < totalPages) {
-                            currentPage++;
-                            displayPage(currentPage);
-                        }
-                    });
-
-                })
-                .catch(error => {
-                    console.error('Error loading index.json:', error);
+                // Listen for changes to the 'index' node
+                onValue(indexRef, (snapshot) => {
+                    const index = snapshot.val(); // Retrieve the data snapshot
+                    resolve(index); // Resolve the promise with the fetched JSON data
+                }, (error) => {
+                    reject(error); // Reject the promise if there's an error
                 });
+            });
+        }
+
+        getDataAsJson().then((index) => {
+            // Once data is fetched, proceed with displaying search results
+            $(document).ready(function () {
+                var searchQuery = sessionStorage.getItem('searchQuery');
+                $(".results-title").text("Search Results for " + searchQuery);
+
+                let termData = index["-NtaO-5dL_XJw3XQ3bcE"].term[searchQuery] || [];
+                termData.sort((a, b) => b.rank - a.rank);
+                termData = termData.slice(0, 100);
+
+                let currentPage = 1;
+                const resultsPerPage = 10;
+                const totalPages = Math.ceil(termData.length / resultsPerPage);
+
+                function displayPage(page) {
+                    const start = (page - 1) * resultsPerPage;
+                    const end = start + resultsPerPage;
+                    const pageItems = termData.slice(start, end);
+
+                    const $tbody = $('#resultsTable tbody');
+                    $tbody.empty();
+
+                    $.each(pageItems, function (index, item) {
+                        $tbody.append(`
+                            <tr>
+                                <td style="width: 90%;">
+                                    <div style="margin-bottom: 5px;"><a href="${item.DocIDs}" target="_blank">${item.title}</a></div>
+                                    <div>${item.content}</div>
+                                </td>
+                                <td style="text-align: right; vertical-align: top;">${item.rank}</td>
+                            </tr>
+                        `);
+                    });
+
+                    $('#pageIndicator').text(`Page ${page} of ${totalPages}`);
+                }
+
+                displayPage(currentPage);
+
+                $('#prevPage').click(function () {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        displayPage(currentPage);
+                    }
+                });
+
+                $('#nextPage').click(function () {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        displayPage(currentPage);
+                    }
+                });
+
+            });
+        }).catch(error => {
+            console.error('Error loading index from Firebase Realtime Database:', error);
         });
+    </script>
 
+    <!-- SEARCH QUERY -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var searchInput = document.getElementById('search');
+            var searchBtn = document.querySelector('.search-btn');
 
+            // Listen for the Enter key press within the search input field
+            searchInput.addEventListener("keyup", function (event) {
+                // Check if the key pressed is the ENTER key and the input is not empty
+                if (event.keyCode === 13 && searchInput.value.trim() !== "") {
+                    event.preventDefault(); // Prevent the default action
+                    searchBtn.click(); // Trigger a click on the search button
+                }
+            });
 
+            // Event listener for the search button click
+            searchBtn.addEventListener('click', function () {
+                var query = searchInput.value.trim(); // Get the search input value and trim whitespace
+                // Only proceed if the query is not empty
+                if (query !== "") {
+                    console.log("Search query:", query);
+                    // Implement the redirection to the search results page with the query
+                    // This is just an example path; adjust based on your actual setup
+
+                    // Store the search query in the session storage
+                    sessionStorage.setItem('searchQuery', query);
+
+                    window.location.href = `search_results.html`;
+                }
+                // Optionally, you could display a message to the user when the search field is empty
+                // e.g., alert("Please enter a search query.");
+            });
+        });
+    </script>
+
+    <!-- AUDIO INPUT -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Check for browser support
+            window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+            if (typeof window.SpeechRecognition !== "undefined") {
+                const recognition = new window.SpeechRecognition();
+                recognition.lang = 'en-US'; // Set recognition language
+                recognition.continuous = false; // Stops after a single result
+                recognition.interimResults = false; // We only want final results
+
+                const searchInput = document.getElementById('search'); // Get the search input
+                const voiceButton = document.querySelector('.left-pan'); // Get the voice search button
+
+                voiceButton.addEventListener('click', function () {
+                    recognition.start(); // Start recognizing voice input
+                });
+
+                recognition.addEventListener('result', function (event) {
+                    const text = event.results[0][0].transcript; // Extract text from the result
+                    searchInput.value = text; // Set the search input value to the recognized text
+                    recognition.stop(); // Stop recognizing
+                });
+
+                recognition.addEventListener('end', function () {
+                    // Optional: Automatically restart recognition or handle end of recognition
+                });
+            } else {
+                console.log("Speech Recognition is not supported in this browser.");
+            }
+        });
     </script>
 
 </body>
