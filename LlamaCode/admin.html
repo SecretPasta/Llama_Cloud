@@ -106,80 +106,397 @@
             background-color: #ffffff1a;
         }
 
-        .main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
+        /* --- MAIN --- */
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(auto, auto);
+            /* Automatically adjust row height */
+            /* 4 equal columns */
             gap: 20px;
+            /* Spacing between grid items */
+            margin: 20px;
         }
 
-        .admin-container,
+        /* General dashboard section styles */
         .dashboard-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .dashboard-section {
+            /* Center-aligns content, including the h2 title */
             background: #ffffff1a;
-            /* Light background for sections */
             border-radius: 10px;
             padding: 20px;
-            margin: 10px 0;
-            width: 80%;
-            /* Adjusted width for better layout control */
-            max-width: 960px;
-            /* Max width for larger screens */
+            color: #E2E8F0;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            /* Subtle shadow for depth */
+            margin-bottom: 20px;
+            /* Add space between vertical sections */
         }
 
-        .action-btn {
-            background-color: #007bff;
-            color: #FFFFFF;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            align-self: center;
-            /* Center button in the section */
-            text-decoration: none;
+        /* Updated Index of AWS section to span 3 columns and 2 rows */
+        .index-aws-section {
+            grid-column: span 3;
+            grid-row: span 2;
+            /* Make the section span 2 rows */
         }
 
-        .action-btn:hover {
-            background-color: #0056b3;
+        /* Last Scan section remains spanning 1 column and now explicitly defined to span 1 row for clarity */
+        .last-scan-section {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+
+        /* New box (e.g., "Additional Information" section) that is below the Last Scan and also spans 1 column and 1 row */
+        .additional-info-section {
+            grid-column: span 1;
+            /* Spans 1 column */
+            grid-row: span 1;
+            /* Spans 1 row, adjust the row span as needed */
+        }
+
+        /* Full-width rows for additional statistics */
+        .statistics-section {
+            grid-column: 1 / -1;
+            /* Spans from the first to the last column */
+        }
+
+        /* --- INDEX --- */
+
+        .index-aws-section {
+            grid-column: span 3;
+            grid-row: span 2;
+            /* Make the section span 2 rows */
+            display: flex;
+            /* Use flexbox for child elements */
+            flex-direction: column;
+            /* Arrange child elements vertically */
+        }
+
+        .code-container {
+            position: relative;
+            /* Make this a positioning context */
+            height: 400px;
+            /* Fixed height */
+            overflow: auto;
+            /* Enables scrolling within this container */
         }
 
         .code-window {
+            position: absolute;
+            /* Position relative to code-container */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background-color: #0F172A;
             color: #dcdcdc;
             padding: 15px;
             border-radius: 8px;
-            overflow: auto;
             font-size: 0.9rem;
             font-family: 'Courier New', Courier, monospace;
             white-space: pre-wrap;
             text-align: left;
+            overflow-y: auto;
+            /* Allows for scrolling within code-window if needed */
+            box-sizing: border-box;
+            /* Makes padding included in the height/width */
         }
 
-        .scan-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 90%;
-            max-width: 800px;
-            margin-top: 20px;
+        .term-section {
+            margin-bottom: 20px;
         }
 
-        .scan-status {
-            color: #4CAF50;
+        .term-section h3 {
+            color: #38BDF8;
+            margin-bottom: 10px;
+        }
+
+        /* Existing .api-card, .api-title, .api-content, .api-link styles */
+        .api-card {
+            background-color: #1E293B;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            color: #E2E8F0;
+        }
+
+        .api-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .api-content {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .api-link {
+            color: #38BDF8;
+            text-decoration: none;
             font-weight: bold;
         }
+
+        .api-rank {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            color: #ff9900;
+            /* Adjust color as needed */
+        }
+
+        /* For Webkit browsers like Chrome, Safari */
+        .code-window::-webkit-scrollbar {
+            width: 12px;
+            /* Width of vertical scrollbar */
+            height: 12px;
+            /* Height of horizontal scrollbar */
+        }
+
+        .code-window::-webkit-scrollbar-thumb {
+            background-color: #dcdcdc;
+            /* Color of the scrollbar thumb */
+            border-radius: 6px;
+            /* Rounded corners of the scrollbar thumb */
+            border: 3px solid #0F172A;
+            /* Creates padding around the scrollbar thumb */
+        }
+
+        .code-window::-webkit-scrollbar-track {
+            background: #0F172A;
+            /* Color of the scrollbar track */
+        }
+
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            /* Center the buttons horizontally */
+            gap: 40px;
+            /* Space between the buttons */
+        }
+
+        .data-btn {
+            font-family: 'Roboto', sans-serif;
+            padding: 12px 20px;
+            /* Adjust padding to ensure text fits well */
+            margin-top: 10px;
+            /* Space between elements, as needed */
+            background: linear-gradient(to bottom left, #0F172A, #1A2346);
+            color: #E2E8F0;
+            font-weight: bold;
+            font-size: 0.9rem;
+            border-radius: 15px;
+            cursor: pointer;
+            min-width: 150px;
+            /* Set a minimum width for both buttons */
+            box-sizing: border-box;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            display: inline-flex;
+            /* Use inline-flex to center text inside the button */
+            justify-content: center;
+            /* Center the text and icon horizontally */
+            align-items: center;
+            /* Center the text and icon vertically */
+            text-align: center;
+            /* Ensure the text is centered */
+        }
+
+        /* Keep the specific styles for .add-data-btn and .delete-data-btn unchanged */
+
+
+        .add-data-btn {
+            border: 2px solid #4CAF50;
+            /* Green border for Add Data button */
+        }
+
+        .add-data-btn:hover {
+            color: #4CAF50;
+            /* Green color on hover */
+            box-shadow: 0 0 8px #4caf4fb7, 0 0 20px #0487d223;
+        }
+
+        .delete-data-btn {
+            border: 2px solid #FF6347;
+            /* Red border for Delete Data button */
+        }
+
+        .delete-data-btn:hover {
+            color: #FF6347;
+            /* Red color on hover */
+            box-shadow: 0 0 8px #ff6347a1, 0 0 20px #0487d223;
+        }
+
+
+
+
+        /* --- SCAN AWS --- */
+
+        .scan-description {
+            margin: 0 auto 20px;
+            /* Adds spacing and centers the text */
+            max-width: 80%;
+            /* Limits width for readability */
+            color: #E2E8F0;
+            /* Light grey color for contrast */
+        }
+
+        .scan-date-number {
+            font-size: 24px;
+            /* Makes the date more prominent */
+            font-weight: bold;
+            color: #4CAF50;
+            /* Ensures visibility against the background */
+            margin-bottom: 15px;
+            /* Adds spacing between this and the next element */
+            animation: fadeAnimation 5s infinite;
+            /* Apply the blinking animation */
+        }
+
+        @keyframes fadeAnimation {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .scan-btn {
+            font-family: 'Roboto', sans-serif;
+            padding: 12px 24px;
+            /* Vertical and Horizontal Padding */
+            margin-top: 10px;
+            /* Space between elements, adjust as needed */
+            background: linear-gradient(to bottom left, #0F172A, #1A2346);
+            /* Gradient background */
+            color: #E2E8F0;
+            /* White-ish color for text */
+            font-weight: bold;
+            font-size: 0.9rem;
+            border: 2px solid #0488D2;
+            /* Matching the search box border, adjust if necessary */
+            border-radius: 15px;
+            /* Rounded corners */
+            cursor: pointer;
+            width: calc(80% - 40px);
+            /* Full width minus padding */
+            box-sizing: border-box;
+            /* Ensures padding and border are included in total width/height */
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            /* Smooth Transition for properties */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            /* Initial subtle shadow for depth */
+        }
+
+        .scan-btn:hover,
+        .scan-btn:focus {
+            color: #ff9900;
+            /* Text color change on hover/focus */
+            box-shadow: 0 0 8px #0487d285, 0 0 20px #0487d223;
+            /* Cool shadow effect on hover/focus */
+        }
+
+        .fas.fa-spinner.fa-spin {
+            margin-left: 8px;
+            /* Ensures spacing between text and spinner */
+        }
+
+        /* --- GEEK LAUGHS --- */
+
+        /* Additional Information Section Styles */
+        .additional-info-section {
+            background: #1A2346;
+            /* A darker shade to stand out a bit */
+            color: #E2E8F0;
+            /* Maintaining the light color for text for readability */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            text-align: center;
+            /* Center-align content */
+        }
+
+        .additional-info-content {
+            font-style: italic;
+            /* Italicize the joke for emphasis */
+            margin-top: 15px;
+            /* Add some space above the joke */
+        }
+
+        /* --- SEARCH TERMS --- */
+
+        /* Ensure the search terms section spans all 4 columns */
+        .search-terms-section {
+            grid-column: 1 / -1;
+            /* Spans from the first to the last column */
+            padding: 20px;
+            background: #ffffff1a;
+            /* Adjust the background as needed */
+            border-radius: 10px;
+            color: #E2E8F0;
+            /* Adjust the text color as needed */
+            margin: 20px 0;
+            /* Adds some margin around the section for spacing */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Optional shadow for depth */
+        }
+
+        .terms-container {
+            position: relative;
+            height: 400px;
+            /* Fixed height similar to code-container */
+            overflow: auto;
+            /* Enables scrolling within this container */
+        }
+
+        .term-window {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #0F172A;
+            /* Dark background for contrast */
+            color: #dcdcdc;
+            /* Light text color for readability */
+            padding: 15px;
+            border-radius: 8px;
+            /* Rounded corners */
+            font-size: 0.9rem;
+            font-family: 'Courier New', Courier, monospace;
+            /* Monospace font for code-like appearance */
+            white-space: pre-wrap;
+            /* Maintains whitespace formatting */
+            text-align: left;
+            /* Aligns text to the left */
+            overflow-y: auto;
+            /* Allows vertical scrolling */
+            box-sizing: border-box;
+            /* Includes padding and border in element's total width and height */
+        }
+
+        .term-entry {
+            padding: 10px;
+            margin-bottom: 5px;
+            background-color: #1E293B;
+            /* Dark background for contrast */
+            color: #dcdcdc;
+            /* Light text color for readability */
+            border-radius: 5px;
+            /* Optional: rounded corners */
+            font-family: 'Courier New', Courier, monospace;
+            /* Consistent with code-window */
+            font-size: 0.9rem;
+        }
+
+
+
+
+
 
         /* --- FOOTER --- */
 
@@ -203,40 +520,6 @@
         footer a:hover {
             color: #0E99DA;
         }
-
-
-        /* --- FOR DIFFERENT SIZES OF SCREEN --- */
-
-        @media (max-width: 600px) {
-            .scan-info {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .scan-info span,
-            .scan-info button {
-                margin-bottom: 10px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .dashboard-section {
-                width: 95%;
-                /* More width for smaller screens */
-            }
-
-            .logo {
-                height: 40px;
-                /* Smaller logo for smaller screens */
-            }
-
-            .section-title,
-            .code-window,
-            .action-btn {
-                font-size: 0.8rem;
-                /* Smaller text for better readability */
-            }
-        }
     </style>
 </head>
 
@@ -255,45 +538,331 @@
     </header>
 
     <main>
-        <div class="admin-container">
-            <!-- Dashboard Sections -->
-            <section class="dashboard-section">
-                <h2 class="section-title">Check Statistic</h2>
-                <a href="statistics.html" class="action-btn">Check Statistic</a>
-            </section>
+        <div class="dashboard-grid">
 
-            <section class="dashboard-section">
+            <!-- Index of AWS Section -->
+            <section class="dashboard-section index-aws-section">
                 <h2 class="section-title">Index of AWS</h2>
-                <pre class="code-window">
-{
-    "AWSSearch": {
-        "service": "EC2",
-        "documentation": "Instance Types",
-        "blogPosts": [
-            "Scaling Your EC2 Infrastructure",
-            "Cost Optimization with EC2"
-        ],
-        "moreInfo": "Visit AWS official documentation for detailed information."
-    }
-}
-            </pre>
-            </section>
+                <div class="code-container">
+                    <div class="code-window" contenteditable="false">
+                        {
+                        "BebraSearch": {
+                        "service": "Bebra",
+                        "documentation": "Braude College",
+                        "blogPosts": [
+                        "Scaling Your EC2 Infrastructure",
+                        "Cost Optimization with EC2"
+                        ],
+                        "moreInfo": "Visit AWS official documentation for detailed information."
+                        }
+                        }
+                    </div>
+                </div>
 
-            <section class="dashboard-section">
-                <h2 class="section-title">Last scan of AWS</h2>
-                <div class="scan-info">
-                    <span id="lastScanDate">Last Scan of AWS on 20/02/2024</span>
-                    <span id="scanStatus" class="scan-status success">Success</span> <!-- Dynamic status indicator -->
-                    <button class="action-btn">Scan AWS</button>
+                <div class="buttons-container">
+                    <!-- Add Data Button -->
+                    <button class="data-btn add-data-btn">Add Data +</button>
+                    <!-- Delete Data Button -->
+                    <button class="data-btn delete-data-btn">Delete Data -</button>
                 </div>
             </section>
+
+
+            <!-- Last Scan of AWS Section -->
+            <section class="dashboard-section last-scan-section">
+                <h2 class="section-title">Last scan of AWS</h2>
+                <p class="scan-description">To ensure the AWS index remains current and accurately reflects the
+                    latest data, it is recommended to <strong style="color: #ff9900;">run the scraper</strong>
+                    at least <strong style="color: #ff9900;">every 24 hours</strong>.</p>
+
+                <p class="last-scan-text">Last scan on:</p>
+                <div class="scan-date-number">20/03/2024</div>
+
+                <button class="scan-btn" onclick="scanAWS()">Scan AWS
+                    <i class="fas fa-spinner fa-spin" style="display:none;" id="loadingIcon"></i>
+                </button>
+            </section>
+
+            <!-- Additional Information Section -->
+            <section class="dashboard-section additional-info-section">
+                <h2 class="section-title">🤖 Geek Laughs</h2>
+                <p class="additional-info-content">Why do programmers prefer using AWS when they're cold? Because they
+                    can use
+                    Lambda functions to stay warm with serverless computing!</p>
+            </section>
+
+
+            <!-- Search Terms Section -->
+            <section class="dashboard-section search-terms-section">
+                <h2 class="section-title">Search Terms Overview</h2>
+                <div class="terms-container">
+                    <div class="term-window" contenteditable="false">
+                        {
+                        "BebraSearch"
+                        }
+                    </div>
+                </div>
+            </section>
+
+
         </div>
+
+        <!-- Additional Statistics Sections -->
+        <section class="dashboard-section statistics-section">
+            <h2 class="section-title">Statistics of Llama</h2>
+            <a href="statistics.html" class="action-btn">Check Statistic</a>
+        </section>
+
+        <!-- Other sections can follow here... -->
     </main>
 
     <footer>
         <a href="https://youtu.be/dQw4w9WgXcQ" target="_blank">made with 💙 in Braude</a>
         <a href="https://github.com/SecretPasta/Llama_Cloud.git" target="_blank">GitHub</a>
     </footer>
+
+    <!-- SCRIPT SECTION -->
+
+    <!-- Firebase Functionality -->
+
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getDatabase, ref, onValue, get } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAUw9gCreO6yFtLXoeQog-TnF_04Sg2cFo",
+            authDomain: "llama-index-bebra.firebaseapp.com",
+            databaseURL: "https://llama-index-bebra-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "llama-index-bebra",
+            storageBucket: "llama-index-bebra.appspot.com",
+            messagingSenderId: "284847527852",
+            appId: "1:284847527852:web:9503f3f51fe54a8801cc09",
+            measurementId: "G-PCF21M780Y"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        // Get a reference to the database service
+        const db = getDatabase();
+
+        // Reference to the root of your Firebase Realtime Database
+        const rootRef = ref(db);
+
+        // Function to get the last key in the "index" node
+        const getLastKeyFromIndex = async () => {
+            const indexRef = ref(db, 'index');
+            const snapshot = await get(indexRef);
+            if (snapshot.exists()) {
+                const keys = Object.keys(snapshot.val());
+                return keys[keys.length - 1]; // Return the last key
+            } else {
+                console.log('No data available');
+                return null; // No data found
+            }
+        };
+
+        // Function to get the last key in the "index" node
+        const getLastKeyFromTerms = async () => {
+            const indexRef = ref(db, 'terms');
+            const snapshot = await get(indexRef);
+            if (snapshot.exists()) {
+                const keys = Object.keys(snapshot.val());
+                return keys[keys.length - 1]; // Return the last key
+            } else {
+                console.log('No data available');
+                return null; // No data found
+            }
+        };
+
+        const getDataAsJson = async () => {
+            const lastKey = await getLastKeyFromIndex();
+            if (!lastKey) return null; // If there's no last key, return null
+
+            const termRef = ref(db, `index/${lastKey}/term`);
+            const snapshot = await get(termRef);
+            if (snapshot.exists()) {
+                return snapshot.val(); // Return the data as JSON
+            } else {
+                console.log('No data available at specified reference');
+                return null; // No data found
+            }
+        };
+
+        const getDataAsJsonTerm = async () => {
+            const lastKey = await getLastKeyFromTerms();
+            if (!lastKey) return null; // If there's no last key, return null
+
+            const termRef = ref(db, `terms/${lastKey}`);
+            const snapshot = await get(termRef);
+            if (snapshot.exists()) {
+                return snapshot.val(); // Return the data as JSON
+            } else {
+                console.log('No data available at specified reference');
+                return null; // No data found
+            }
+        };
+
+        const displayTermData = async () => {
+            const dataAsJson = await getDataAsJson();
+            if (dataAsJson) {
+                console.log('Term Data:', dataAsJson);
+                const codeWindow = document.querySelector('.code-window');
+                codeWindow.innerHTML = ''; // Clear existing content
+
+                // Loop through each term in the JSON
+                Object.entries(dataAsJson).forEach(([term, entries]) => {
+                    const termSection = document.createElement('div');
+                    termSection.className = 'term-section';
+                    const termTitle = document.createElement('h3');
+                    termTitle.textContent = term; // Term name as section title
+                    termSection.appendChild(termTitle);
+
+                    entries.forEach(entry => {
+                        const card = document.createElement('div');
+                        card.className = 'api-card';
+                        card.innerHTML = `
+                    <div class="api-title">${entry.title}</div>
+                    <div class="api-content">${entry.content}</div>
+                    <div class="api-rank">Rank: ${entry.rank}</div>
+                    <a href="${entry.DocIDs}" target="_blank" class="api-link">Link to site</a>
+                `;
+                        termSection.appendChild(card);
+                    });
+
+                    codeWindow.appendChild(termSection);
+                });
+            } else {
+                console.log('Failed to retrieve term data');
+            }
+        };
+
+        const displayTerms = async () => {
+            try {
+                const termsArray = await getDataAsJsonTerm(); // Assuming this function returns the array directly
+                if (termsArray && termsArray.length > 0) {
+                    const termWindow = document.querySelector('.term-window');
+                    termWindow.innerHTML = ''; // Clear existing content
+
+                    // Iterate over each term in the array
+                    termsArray.forEach(term => {
+                        // Create a div for each term
+                        const termDiv = document.createElement('div');
+                        termDiv.className = 'term-entry'; // Use a class for styling if needed
+                        termDiv.textContent = term; // Set the text content to the term
+
+                        // Append the div to the term-window
+                        termWindow.appendChild(termDiv);
+                    });
+                } else {
+                    console.log('No data to display.'); // Handle the case where no data is returned
+                }
+            } catch (error) {
+                // Catch and log any errors that occur during the process
+                console.error('Error fetching terms data:', error);
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', displayTermData);
+        document.addEventListener('DOMContentLoaded', displayTerms);
+
+    </script>
+
+    <!-- Scan AWS Functionality -->
+
+    <!-- Simulate scanning process -->
+    <script>
+        function scanAWS() {
+            // Show the loading icon at the start of the scan
+            const loadingIcon = document.getElementById('loadingIcon');
+            loadingIcon.style.display = 'inline-block'; // Make sure the loading icon is visible
+
+            // Use setTimeout to simulate a 3-second loading process
+            setTimeout(() => {
+                const today = new Date();
+                const formattedDate = today.toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                });
+
+                const scanDateElement = document.querySelector('.scan-date-number');
+                scanDateElement.textContent = formattedDate; // Update the date after the "loading" period
+                scanDateElement.style.color = '#4CAF50'; // Change color to green
+
+                // Hide the loading icon after the scan completes
+                loadingIcon.style.display = 'none';
+            }, 3000); // 3000 milliseconds = 3 seconds
+        }
+
+    </script>
+
+    <script>
+        function checkDateDifference() {
+            const scanDateElement = document.querySelector('.scan-date-number');
+            const scanDateString = scanDateElement.textContent;
+            const scanDate = new Date(scanDateString.split('/').reverse().join('-')); // Adjust for the format day/month/year
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Ignore time part of the date
+
+            const timeDiff = today - scanDate;
+            const diffDays = timeDiff / (1000 * 60 * 60 * 24);
+
+            if (diffDays > 1) { // More than 24 hours difference
+                scanDateElement.style.color = '#ff9900'; // Change color to orange
+            } else {
+                scanDateElement.style.color = '#4CAF50'; // Keep or change to green
+            }
+        }
+
+        // Call the checkDateDifference function when the page loads
+        document.addEventListener('DOMContentLoaded', checkDateDifference);
+
+    </script>
+
+    <!-- Display a random joke in the "Additional Information" section -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const jokes = [
+                "Why did the programmer go broke? 💸<br>Because he used up all his cache! 🚫",
+                "What's a computer's favorite beat? 🎶<br>An algo-rhythm! 💾",
+                "Why was the developer always calm? 😌<br>Because he had good exception handling! 🤲",
+                "Why did the database administrator leave his wife? 👩‍🦱<br>She had one-to-many relationships! 💔",
+                "Why did the computer cross the road? 🐔<br>To get to the other website! 🌐",
+                "What do you call a programmer from Finland? 🇫🇮<br>Nerdic! 🤓",
+                "Why don't programmers like to play hide and seek? 🙈<br>Because good players are hard to find! 🔍",
+                "Why was the HTML developer never lonely? 👨‍💻<br>He had lots of <div> friends! 🤝",
+                "Why did the JavaScript framework break up with the CSS stylesheet? 💔<br>It found someone more 'flex'ible! 🕺",
+                "Why was the math book sad? 📚<br>Because it had too many problems! 😢",
+                "Why is the answer to life, the universe, and everything always 42? 🤔<br>Because even programmers need a mystery! 🕵️‍♂️",
+                "Why did the frontend developer break up with his girlfriend? 💔<br>She couldn't handle his 'div'-ided attention! 😄",
+                "Why did the bug refuse to play hide and seek? 🐞<br>Because it kept getting caught in a loop! 🔄",
+                "Why did the HTML file go to therapy? 🛋️<br>It had too many 'div' conflicts! 😩",
+                "Why did the cloud break up with the sun? 🌤️<br>It found a better match in AWS! ☁️",
+                "Why was the AWS engineer always so calm? 😌<br>Because he knew how to handle high traffic! 🚗💨",
+                "Why did the Matrix developer feel lonely? 😢<br>Because he couldn't find his 'Neo'vers! 🕶️",
+                "Why did the JavaScript function go to therapy? 🛋️<br>It had too many 'undefined' issues! 🤦‍♂️",
+                "Why did the AWS server go to the beach? 🏖️<br>It needed to 'refresh' its cache! 🌊",
+                "Why did the CSS stylesheet feel lost? 🤷‍♀️<br>Because it couldn't find its 'position'! 🧭"
+            ];
+
+            // Function to select a random joke and display it
+            function displayRandomJoke() {
+                const jokeElement = document.querySelector('.additional-info-content');
+                const randomIndex = Math.floor(Math.random() * jokes.length);
+                const randomJoke = jokes[randomIndex];
+                jokeElement.innerHTML = randomJoke;
+            }
+
+            displayRandomJoke(); // Call the function to display a joke when the page loads
+        });
+    </script>
+
 
 
 
