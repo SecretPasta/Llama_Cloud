@@ -15,6 +15,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- Visibility Change Script -->
     <script>
         function handleVisibilityChange() {
@@ -44,6 +47,29 @@
 
             height: 100%;
             min-height: 100vh;
+        }
+
+        body::-webkit-scrollbar {
+            width: 10px;
+            /* Scrollbar width */
+        }
+
+        body::-webkit-scrollbar-track {
+            background: #0F172A;
+            /* Scrollbar track color */
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background-color: #dcdcdc;
+            /* Scrollbar thumb color */
+            /* Rounded corners for the thumb */
+            border: 3px solid #0F172A;
+            /* Creates padding around the scrollbar thumb */
+        }
+
+        body::-webkit-scrollbar-thumb:hover {
+            background-color: #ff9900;
+            /* Scrollbar thumb color on hover */
         }
 
         /* --- HEADER --- */
@@ -154,10 +180,23 @@
         }
 
         /* Full-width rows for additional statistics */
-        .statistics-section {
-            grid-column: 1 / -1;
-            /* Spans from the first to the last column */
+        .statistics-cta-section {
+            grid-column: 3 / span 2;
+            /* Ensures it spans all columns from the first to the last */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            /* Stack children vertically */
+            text-align: center;
+            color: #E2E8F0;
+            /* Light text for contrast */
+            border-radius: 10px;
+            /* Smooth edges */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Consistent shadowing with other sections */
         }
+
 
         /* --- INDEX --- */
 
@@ -274,57 +313,41 @@
             /* Space between the buttons */
         }
 
-        .data-btn {
-            font-family: 'Roboto', sans-serif;
-            padding: 12px 20px;
-            /* Adjust padding to ensure text fits well */
-            margin-top: 10px;
-            /* Space between elements, as needed */
-            background: linear-gradient(to bottom left, #0F172A, #1A2346);
-            color: #E2E8F0;
-            font-weight: bold;
-            font-size: 0.9rem;
-            border-radius: 15px;
-            cursor: pointer;
-            min-width: 150px;
-            /* Set a minimum width for both buttons */
-            box-sizing: border-box;
-            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            display: inline-flex;
-            /* Use inline-flex to center text inside the button */
-            justify-content: center;
-            /* Center the text and icon horizontally */
-            align-items: center;
-            /* Center the text and icon vertically */
-            text-align: center;
-            /* Ensure the text is centered */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
-        /* Keep the specific styles for .add-data-btn and .delete-data-btn unchanged */
-
-
-        .add-data-btn {
-            border: 2px solid #4CAF50;
-            /* Green border for Add Data button */
+        .loader-index,
+        .loader-terms {
+            border: 4px solid #f3f3f3;
+            /* Light grey */
+            border-top: 4px solid #ff9900;
+            /* Blue */
+            border-radius: 50%;
+            width: 12px;
+            height: 12px;
+            animation: spin 1s linear infinite;
+            margin-left: 5px;
         }
 
-        .add-data-btn:hover {
-            color: #4CAF50;
-            /* Green color on hover */
-            box-shadow: 0 0 8px #4caf4fb7, 0 0 20px #0487d223;
+        .refresh-index-btn {
+            border: 2px solid #ff9900;
+            /* Blue border for Refresh Index button */
+            /* Reuse styles from .data-btn for consistency */
         }
 
-        .delete-data-btn {
-            border: 2px solid #FF6347;
-            /* Red border for Delete Data button */
+        .refresh-index-btn:hover {
+            color: #ff9900;
+            /* Blue color on hover */
+            box-shadow: 0 0 8px #ff99009a, 0 0 20px #0487d223;
         }
 
-        .delete-data-btn:hover {
-            color: #FF6347;
-            /* Red color on hover */
-            box-shadow: 0 0 8px #ff6347a1, 0 0 20px #0487d223;
-        }
 
 
 
@@ -391,8 +414,7 @@
             /* Initial subtle shadow for depth */
         }
 
-        .scan-btn:hover,
-        .scan-btn:focus {
+        .scan-btn:hover {
             color: #ff9900;
             /* Text color change on hover/focus */
             box-shadow: 0 0 8px #0487d285, 0 0 20px #0487d223;
@@ -431,16 +453,13 @@
 
         /* Ensure the search terms section spans all 4 columns */
         .search-terms-section {
-            grid-column: 1 / -1;
-            /* Spans from the first to the last column */
+            grid-column: 1 / span 2;
             padding: 20px;
             background: #ffffff1a;
             /* Adjust the background as needed */
             border-radius: 10px;
             color: #E2E8F0;
             /* Adjust the text color as needed */
-            margin: 20px 0;
-            /* Adds some margin around the section for spacing */
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             /* Optional shadow for depth */
         }
@@ -454,6 +473,11 @@
         }
 
         .term-window {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* Creates a grid with 3 columns */
+            gap: 10px;
+            /* Space between grid items */
             position: absolute;
             top: 0;
             left: 0;
@@ -479,7 +503,34 @@
             /* Includes padding and border in element's total width and height */
         }
 
+        .term-window::-webkit-scrollbar {
+            width: 12px;
+            /* Width of vertical scrollbar */
+            height: 12px;
+            /* Height of horizontal scrollbar */
+        }
+
+        .term-window::-webkit-scrollbar-thumb {
+            background-color: #dcdcdc;
+            /* Color of the scrollbar thumb */
+            border-radius: 6px;
+            /* Rounded corners of the scrollbar thumb */
+            border: 3px solid #0F172A;
+            /* Creates padding around the scrollbar thumb */
+        }
+
+        .term-window::-webkit-scrollbar-track {
+            background: #0F172A;
+            /* Color of the scrollbar track */
+        }
+
+
         .term-entry {
+            text-align: center;
+            justify-content: center;
+            /* Center text horizontally */
+            align-items: center;
+            /* Center text vertically */
             padding: 10px;
             margin-bottom: 5px;
             background-color: #1E293B;
@@ -493,9 +544,269 @@
             font-size: 0.9rem;
         }
 
+        .data-btn {
+            font-family: 'Roboto', sans-serif;
+            padding: 12px 20px;
+            /* Adjust padding to ensure text fits well */
+            margin-top: 10px;
+            /* Space between elements, as needed */
+            background: linear-gradient(to bottom left, #0F172A, #1A2346);
+            color: #E2E8F0;
+            font-weight: bold;
+            font-size: 0.9rem;
+            border-radius: 15px;
+            cursor: pointer;
+            min-width: 150px;
+            /* Set a minimum width for both buttons */
+            box-sizing: border-box;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            display: inline-flex;
+            /* Use inline-flex to center text inside the button */
+            justify-content: center;
+            /* Center the text and icon horizontally */
+            align-items: center;
+            /* Center the text and icon vertically */
+            text-align: center;
+            /* Ensure the text is centered */
+        }
+
+        .refresh-terms-btn {
+            border: 2px solid #ff9900;
+            /* Blue border for Refresh Index button */
+            /* Reuse styles from .data-btn for consistency */
+        }
+
+        .refresh-terms-btn:hover {
+            color: #ff9900;
+            /* Blue color on hover */
+            box-shadow: 0 0 8px #ff99009a, 0 0 20px #0487d223;
+        }
+
+        .add-data-btn,
+        .submitadd-data-btn {
+            border: 2px solid #4CAF50;
+            /* Green border for Add Data button */
+        }
+
+        .add-data-btn:hover,
+        .submitadd-data-btn:hover {
+            color: #4CAF50;
+            /* Green color on hover */
+            box-shadow: 0 0 8px #4caf4fb7, 0 0 20px #0487d223;
+        }
+
+        .delete-data-btn,
+        .submitdelete-data-btn {
+            border: 2px solid #FF6347;
+            /* Red border for Delete Data button */
+        }
+
+        .delete-data-btn:hover,
+        .submitdelete-data-btn:hover {
+            color: #FF6347;
+            /* Red color on hover */
+            box-shadow: 0 0 8px #ff6347a1, 0 0 20px #0487d223;
+        }
+
+        .popup-window {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Semi-transparent background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            position: relative;
+            /* This line is crucial */
+            background-color: #0F172A;
+            /* Background color for Add */
+            padding: 20px;
+            border-radius: 8px;
+            width: 50%;
+            /* Adjusted to make the pop-up larger */
+            max-width: 600px;
+            /* Ensures pop-up isn't too large on big screens */
+            margin: 10% auto;
+            /* Center the popup */
+            color: #E2E8F0;
+        }
+
+        .popup-title {
+            color: #E2E8F0;
+        }
+
+        #addTermPopup .popup-title {
+            color: #E2E8F0;
+            margin-bottom: 20px;
+            /* Space between the title and input field */
+            text-align: center;
+            /* Center-align the title */
+        }
+
+        #addTermPopup .popup-input {
+            border: 2px solid #4CAF50;
+            /* Green border */
+            background-color: transparent;
+            /* Minimalistic background */
+            color: #E2E8F0;
+            /* Text color */
+            padding: 12px 20px;
+            /* Comfortable padding */
+            font-size: 1rem;
+            /* Readable font size */
+            border-radius: 15px;
+            /* Rounded corners for the input field */
+            margin-bottom: 20px;
+            /* Space between the input field and submit button */
+            width: calc(100% - 48px);
+            /* Adjust width to account for padding and border */
+            box-sizing: border-box;
+            /* Include padding and border in width calculation */
+            transition: all 0.3s ease;
+            /* Smooth transition for focus/hover effects */
+        }
+
+        #addTermPopup .popup-input:hover {
+            border-color: #4CAF50;
+            /* Darker green on hover/focus */
+            box-shadow: 0 0 4px #4caf4fb7, 0 0 12px #0487d223;
+            /* Subtle glow effect */
+        }
+
+        #addTermPopup .popup-input:focus {
+            outline: none;
+            /* Removes the default outline */
+            border-color: #4CAF50;
+            /* Darker green on hover/focus as before */
+            box-shadow: 0 0 6px #4caf4fb7, 0 0 16px #0487d223;
+        }
+
+        .deleteTermPopup .popup-title {
+            color: #E2E8F0;
+            margin-bottom: 20px;
+            /* Space between the title and input field */
+            text-align: center;
+            /* Center-align the title */
+        }
+
+        #deleteTermPopup .popup-input {
+            border: 2px solid #FF6347;
+            /* Red border for Delete */
+            background-color: transparent;
+            /* Minimalistic background */
+            color: #E2E8F0;
+            /* Text color */
+            padding: 12px 20px;
+            /* Comfortable padding */
+            font-size: 1rem;
+            /* Readable font size */
+            border-radius: 15px;
+            /* Consistency in rounded corners */
+            margin-bottom: 20px;
+            /* Space between the input field and submit button */
+            width: calc(100% - 48px);
+            /* Adjusted width to account for padding and border */
+            box-sizing: border-box;
+            /* Include padding and border in element's total width */
+            transition: all 0.3s ease;
+            /* Smooth transition for hover/focus effects */
+        }
+
+        #deleteTermPopup .popup-input:hover {
+            border-color: #d9534f;
+            /* Slightly darker red on hover */
+            box-shadow: 0 0 4px rgba(217, 83, 79, 0.7), 0 0 12px rgba(217, 83, 79, 0.5);
+            /* Subtle red glow effect */
+        }
+
+        #deleteTermPopup .popup-input:focus {
+            outline: none;
+            /* Removes the default outline */
+            border-color: #d9534f;
+            /* Consistent with hover state */
+            box-shadow: 0 0 6px rgba(217, 83, 79, 0.7), 0 0 16px rgba(217, 83, 79, 0.5);
+            /* Enhanced red glow effect for focus */
+        }
 
 
+        .popup-close-btn {
+            position: absolute;
+            /* Positions relative to .popup-content now */
+            top: 20px;
+            /* Adjusted indentation from the top */
+            right: 20px;
+            /* Adjusted indentation from the right */
+            background-color: transparent;
+            border: none;
+            color: #E2E8F0;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
 
+        .popup-close-btn:hover {
+            color: #ff9900;
+        }
+
+        /* --- STATISTICS CTA --- */
+
+        .cta-btn {
+            display: inline-block;
+            /* Necessary for width and margin */
+            background-color: #FF9F1C;
+            /* Bright, inviting button color */
+            color: #102A43;
+            /* Text color that contrasts with the button */
+            padding: 15px 30px;
+            /* Generous padding for clickability */
+            font-size: 18px;
+            /* Larger font size for readability */
+            border-radius: 20px;
+            /* Pill-shaped button */
+            text-decoration: none;
+            /* Remove underline from link */
+            font-weight: bold;
+            /* Bold text for emphasis */
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            /* Smooth transitions for multiple properties */
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05);
+            /* Slightly enlarges the button */
+            box-shadow:
+                0 4px 8px rgba(0, 0, 0, 0.2),
+                /* Shadow for depth */
+                0 0 15px rgba(255, 159, 28, 0.6),
+                /* Soft glow effect */
+                0 0 30px rgba(255, 159, 28, 0.4);
+            /* Extended soft glow for more diffused effect */
+        }
+
+        .stats-quote {
+            margin-top: 30px;
+            /* Space between button and quote */
+            font-style: italic;
+            /* Italicize the quote */
+            color: #F0F4F8;
+            /* A lighter shade for the quote */
+        }
+
+        .chart-container {
+            background-color: #15213b;
+            border-radius: 10px;
+            padding: 5px;
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            margin: 20px auto;
+        }
 
 
         /* --- FOOTER --- */
@@ -560,11 +871,11 @@
                 </div>
 
                 <div class="buttons-container">
-                    <!-- Add Data Button -->
-                    <button class="data-btn add-data-btn">Add Data +</button>
-                    <!-- Delete Data Button -->
-                    <button class="data-btn delete-data-btn">Delete Data -</button>
+                    <button class="data-btn refresh-index-btn">Refresh Index
+                        <span class="loader-index" style="display:none;"></span>
+                    </button>
                 </div>
+
             </section>
 
 
@@ -602,18 +913,58 @@
                         }
                     </div>
                 </div>
+
+                <div class="buttons-container">
+                    <!-- Add Data Button -->
+                    <button class="data-btn add-data-btn">Add Term +</button>
+                    <!-- Delete Data Button -->
+                    <button class="data-btn delete-data-btn">Delete Term -</button>
+
+                    <button class="data-btn refresh-terms-btn">Refresh Terms
+                        <span class="loader-terms" style="display:none;"></span>
+                    </button>
+                </div>
+
+                <div id="addTermPopup" class="popup-window" style="display: none;">
+                    <div class="popup-content">
+                        <button class="popup-close-btn" onclick="closePopup('addTermPopup')">&times;</button>
+                        <h2 class="popup-title">Add New Term👇🏼</h2> <!-- Updated call to action -->
+                        <input type="text" id="addTermInput" class="popup-input" placeholder="I want to search...">
+                        <button class="data-btn submitadd-data-btn" onclick="submitAddTerm()">Submit</button>
+                        <!-- Apply styles -->
+                    </div>
+                </div>
+
+
+                <!-- Delete Term Pop-up -->
+                <div id="deleteTermPopup" class="popup-window" style="display: none;">
+                    <div class="popup-content delete">
+                        <button class="popup-close-btn" onclick="closePopup('deleteTermPopup')">&times;</button>
+                        <h2 class="popup-title">Delete Term👇🏼</h2>
+                        <input type="text" id="deleteTermInput" class="popup-input" placeholder="I want to delete...">
+                        <button class="data-btn submitdelete-data-btn" onclick="submitDeleteTerm()">Submit</button>
+                    </div>
+                </div>
             </section>
 
+            <!-- Statistics CTA Section -->
+            <section class="dashboard-section statistics-cta-section">
+                <h2 class="section-title">Unlock the Power of Data with Llama Analytics</h2>
 
+                <div class="chart-container">
+                    <canvas id="funnyLineChart"></canvas>
+                </div>
+
+                <!-- Call to Action Button -->
+                <a href="statistics.html" class="cta-btn">See Detailed Stats</a>
+
+                <!-- Inspirational Quote -->
+                <p class="stats-quote">"Data is like garbage.<br> You'd better know what you are going to do with it
+                    before
+                    you collect
+                    it."<br>- Mark Twain</p>
+            </section>
         </div>
-
-        <!-- Additional Statistics Sections -->
-        <section class="dashboard-section statistics-section">
-            <h2 class="section-title">Statistics of Llama</h2>
-            <a href="statistics.html" class="action-btn">Check Statistic</a>
-        </section>
-
-        <!-- Other sections can follow here... -->
     </main>
 
     <footer>
@@ -653,22 +1004,11 @@
         // Reference to the root of your Firebase Realtime Database
         const rootRef = ref(db);
 
+        // -------- START DISPLAY INDEX --------
+
         // Function to get the last key in the "index" node
         const getLastKeyFromIndex = async () => {
             const indexRef = ref(db, 'index');
-            const snapshot = await get(indexRef);
-            if (snapshot.exists()) {
-                const keys = Object.keys(snapshot.val());
-                return keys[keys.length - 1]; // Return the last key
-            } else {
-                console.log('No data available');
-                return null; // No data found
-            }
-        };
-
-        // Function to get the last key in the "index" node
-        const getLastKeyFromTerms = async () => {
-            const indexRef = ref(db, 'terms');
             const snapshot = await get(indexRef);
             if (snapshot.exists()) {
                 const keys = Object.keys(snapshot.val());
@@ -693,24 +1033,9 @@
             }
         };
 
-        const getDataAsJsonTerm = async () => {
-            const lastKey = await getLastKeyFromTerms();
-            if (!lastKey) return null; // If there's no last key, return null
-
-            const termRef = ref(db, `terms/${lastKey}`);
-            const snapshot = await get(termRef);
-            if (snapshot.exists()) {
-                return snapshot.val(); // Return the data as JSON
-            } else {
-                console.log('No data available at specified reference');
-                return null; // No data found
-            }
-        };
-
         const displayTermData = async () => {
             const dataAsJson = await getDataAsJson();
             if (dataAsJson) {
-                console.log('Term Data:', dataAsJson);
                 const codeWindow = document.querySelector('.code-window');
                 codeWindow.innerHTML = ''; // Clear existing content
 
@@ -741,6 +1066,37 @@
             }
         };
 
+        // -------- END DISPLAY INDEX --------
+
+        // -------- START DISPLAY TERMS --------
+
+        // Function to get the last key in the "index" node
+        const getLastKeyFromTerms = async () => {
+            const indexRef = ref(db, 'terms');
+            const snapshot = await get(indexRef);
+            if (snapshot.exists()) {
+                const keys = Object.keys(snapshot.val());
+                return keys[keys.length - 1]; // Return the last key
+            } else {
+                console.log('No data available');
+                return null; // No data found
+            }
+        };
+
+        const getDataAsJsonTerm = async () => {
+            const lastKey = await getLastKeyFromTerms();
+            if (!lastKey) return null; // If there's no last key, return null
+
+            const termRef = ref(db, `terms/${lastKey}`);
+            const snapshot = await get(termRef);
+            if (snapshot.exists()) {
+                return snapshot.val(); // Return the data as JSON
+            } else {
+                console.log('No data available at specified reference');
+                return null; // No data found
+            }
+        };
+
         const displayTerms = async () => {
             try {
                 const termsArray = await getDataAsJsonTerm(); // Assuming this function returns the array directly
@@ -767,14 +1123,69 @@
             }
         };
 
+        // -------- END DISPLAY TERMS --------
+
+
+        // DISPLAY INDEX AND TERMS ON PAGE LOAD
         document.addEventListener('DOMContentLoaded', displayTermData);
         document.addEventListener('DOMContentLoaded', displayTerms);
 
+        // REFRESH INDEX AND TERMS
+
+
+        window.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelector('.refresh-terms-btn').addEventListener('click', refreshTerms);
+        });
+
+        function refreshTerms() {
+            const loader = document.querySelector('.refresh-terms-btn .loader-terms');
+            loader.style.display = 'inline-block'; // Show the loader
+
+            // Now call displayTerms to refresh the list of terms.
+            displayTerms(); // Assuming displayTerms is accessible globally
+
+            // Simulate a 3-second loading process
+            setTimeout(() => {
+                loader.style.display = 'none'; // Hide the loader after 3 seconds
+
+
+
+                // If displayTerms relies on 'this' context or is not global, 
+                // you might need to ensure you call it with the correct context.
+            }, 3000);
+        }
+
+
+        window.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelector('.refresh-index-btn').addEventListener('click', refreshIndex);
+        });
+
+        function refreshIndex() {
+            const loader = document.querySelector('.refresh-index-btn .loader-index');
+            loader.style.display = 'inline-block'; // Show the loader
+
+            // Now call displayTermData to refresh the index.
+            displayTermData(); // Assuming displayTermData is accessible globally
+
+            // Simulate a 3-second loading process
+            setTimeout(() => {
+                loader.style.display = 'none'; // Hide the loader after 3 seconds
+
+
+
+                // If displayTermData makes use of 'this' or is not global, you might need to ensure proper context.
+            }, 5000);
+        }
+
+
+
     </script>
 
-    <!-- Scan AWS Functionality -->
+    <!-- SCAN AWS -->
 
     <!-- Simulate scanning process -->
+
+    <!-- TODO -->
     <script>
         function scanAWS() {
             // Show the loading icon at the start of the scan
@@ -801,6 +1212,8 @@
 
     </script>
 
+    <!-- CHECKING IF ITS TIME TO RERUN A SCRAPPER -->
+
     <script>
         function checkDateDifference() {
             const scanDateElement = document.querySelector('.scan-date-number');
@@ -823,6 +1236,8 @@
         document.addEventListener('DOMContentLoaded', checkDateDifference);
 
     </script>
+
+    <!-- GEEK LAUGHS -->
 
     <!-- Display a random joke in the "Additional Information" section -->
 
@@ -863,8 +1278,96 @@
         });
     </script>
 
+    <!-- SEARCH TERMS -->
+
+    <!-- Add and Delete Term Pop-up Functionality -->
+
+    <!-- TODO -->
+
+    <script>
+        // Function to show the "Add Term" pop-up
+        function showAddTermPopup() {
+            document.getElementById('addTermPopup').style.display = 'flex';
+        }
+
+        // Function to show the "Delete Term" pop-up
+        function showDeleteTermPopup() {
+            document.getElementById('deleteTermPopup').style.display = 'flex';
+        }
+
+        // Attach these functions to your buttons
+        document.querySelector('.add-data-btn').addEventListener('click', showAddTermPopup);
+        document.querySelector('.delete-data-btn').addEventListener('click', showDeleteTermPopup);
+
+        // Implement submission logic here
+        function submitAddTerm() {
+            const term = document.getElementById('addTermInput').value;
+            console.log('Adding term:', term);
+            // Add your logic to handle the term addition
+            document.getElementById('addTermPopup').style.display = 'none'; // Hide popup after submission
+        }
+
+        function submitDeleteTerm() {
+            const term = document.getElementById('deleteTermInput').value;
+            console.log('Deleting term:', term);
+            // Add your logic to handle the term deletion
+            document.getElementById('deleteTermPopup').style.display = 'none'; // Hide popup after submission
+        }
+
+        function closePopup(popupId) {
+            document.getElementById(popupId).style.display = 'none';
+        }
 
 
+    </script>
+
+    <!-- SMALL CHART -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('funnyLineChart').getContext('2d');
+            var funnyLineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ["Kick-off Meeting", "Feature Creep", "Debugging Sprint", "Pre-Launch Panic", "Launch Day"],
+                    datasets: [{
+                        label: "Cups of Coffee",
+                        data: [1, 3, 5, 7, 9], // Increasing coffee consumption
+                        fill: false,
+                        borderColor: 'rgb(255, 159, 64)',
+                        tension: 0.4, // Make the line a bit curvier for fun
+                        backgroundColor: 'rgba(255, 205, 86, 0.5)', // Soft background color for the data line
+                        borderDash: [5, 5], // Dashed line for a bit of style
+                        pointBackgroundColor: 'rgb(255, 159, 64)', // Points color
+                        pointBorderColor: '#fff', // Points border color
+                        pointHoverBackgroundColor: '#fff', // Hover color for points
+                        pointHoverBorderColor: '#28a745', // Hover border color for points
+                        pointRadius: 5, // Increase the radius of points to make them more visible
+                        pointHitRadius: 10, // Makes it easier to hit the points with cursor
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1,
+                                callback: function (value) { return value + " cups"; } // Custom callback for Y-axis labels
+                            }
+                        }
+                    },
+                    legend: {
+                        display: false
+                    },
+                    layout: {
+                        padding: 10 // Adds a little padding around the chart
+                    }
+                }
+            });
+        });
+    </script>
 
 </body>
 

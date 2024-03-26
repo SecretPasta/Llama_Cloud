@@ -4,39 +4,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Llama - Statistics</title>
+    <title>Llama - Admin Dashboard</title>
 
-    <!-- For PNG or other formats -->
+    <!-- Icons -->
     <link rel="icon" type="image/png" href="logo_nobg.png">
+    <link rel="apple-touch-icon" href="logo_nobg.png">
+    <meta name="theme-color" content="#10182F">
 
+    <!-- Fonts and Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
 
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Visibility Change Script -->
+    <script>
+        function handleVisibilityChange() {
+            if (document.hidden) {
+                document.title = "Llama 😢";
+            } else {
+                document.title = "Llama";
+            }
+        }
+        document.addEventListener("visibilitychange", handleVisibilityChange, false);
+    </script>
+
+    <style>
         body,
         html {
-
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to bottom left, #0F172A, #1A2346, #193251, #142941, #0F172A);
+            color: white;
             -webkit-user-select: none;
-            /* Safari */
             -moz-user-select: none;
-            /* Firefox */
             -ms-user-select: none;
-            /* Internet Explorer/Edge */
             user-select: none;
-            /* Non-prefixed version, currently supported by Chrome, Opera and Edge */
+            background-attachment: fixed;
 
             height: 100%;
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to bottom left, #0F172A, #1A2346, #193251, #142941, #0F172A, #0F172A, #0F172A);
-            /* Dark background */
-            background-attachment: fixed;
-            /* Keep the gradient fixed during scroll */
-            color: white;
+            min-height: 100vh;
+        }
+
+        body::-webkit-scrollbar {
+            width: 10px;
+            /* Scrollbar width */
+        }
+
+        body::-webkit-scrollbar-track {
+            background: #0F172A;
+            /* Scrollbar track color */
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background-color: #dcdcdc;
+            /* Scrollbar thumb color */
+            /* Rounded corners for the thumb */
+            border: 3px solid #0F172A;
+            /* Creates padding around the scrollbar thumb */
+        }
+
+        body::-webkit-scrollbar-thumb:hover {
+            background-color: #ff9900;
+            /* Scrollbar thumb color on hover */
         }
 
         /* --- HEADER --- */
@@ -62,10 +95,6 @@
             width: auto;
         }
 
-        .section-title {
-            color: #007bff;
-        }
-
         .miniTitle {
             width: 100%;
             text-align: center;
@@ -85,15 +114,16 @@
             background-color: #ffffff0f;
             border: 1px solid #ffffff1a;
             border-radius: 10px;
-            padding: 10px;
+            padding: 10px 20px;
+            /* Increased horizontal padding */
             margin: 20px;
             backdrop-filter: blur(10px);
             transition: background-color 0.3s ease;
             cursor: pointer;
-
             width: auto;
-            min-width: 120px;
+            min-width: 150px;
         }
+
 
         .login-container:hover {
             background-color: #ffffff1a;
@@ -101,181 +131,52 @@
 
         /* --- MAIN --- */
 
-        .main {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            /* Use at least 100% of the viewport height */
-        }
-
-        .stat-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            margin-bottom: 40px;
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            /* 4 equal columns */
+            grid-auto-rows: minmax(300px, auto);
+            /* Adjust the minimum height of the rows */
+            gap: 20px;
+            /* Spacing between grid items */
+            margin: 20px;
         }
 
         .dashboard-section {
+            grid-column: span 2;
+            /* Each section spans 2 columns */
+            grid-row: span 2;
+            /* Each section spans 2 rows */
+            text-align: center;
             background: #ffffff1a;
-            /* Light background for sections */
             border-radius: 10px;
             padding: 20px;
-            margin: 20px 0;
-            width: 80%;
-            /* Adjusted width for better layout control */
-            max-width: 960px;
-            /* Max width for larger screens */
+            color: #E2E8F0;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            /* Subtle shadow for depth */
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
-
 
         .section-title {
-            text-align: center;
-            margin-bottom: 15px;
+            font-size: 1.5rem;
+            color: #007bff;
+            margin-bottom: 1rem;
         }
 
-        /* Line Chart Styling */
-
-        /* --- BAR CHART --- */
-        .simple-bar-chart {
-            --line-count: 10;
-            --line-color: currentcolor;
-            --line-opacity: 0.25;
-            --item-gap: 2%;
-            --item-default-color: #060606;
-
-            height: 10rem;
-            display: grid;
-            grid-auto-flow: column;
-            gap: var(--item-gap);
-            align-items: end;
-            padding-inline: var(--item-gap);
-            --padding-block: 1.5rem;
-            /*space for labels*/
-            padding-block: var(--padding-block);
-            position: relative;
-            isolation: isolate;
-        }
-
-        .simple-bar-chart::after {
-            content: "";
-            position: absolute;
-            inset: var(--padding-block) 0;
-            z-index: -1;
-            --line-width: 1px;
-            --line-spacing: calc(100% / var(--line-count));
-            background-image: repeating-linear-gradient(to top, transparent 0 calc(var(--line-spacing) - var(--line-width)), var(--line-color) 0 var(--line-spacing));
-            box-shadow: 0 var(--line-width) 0 var(--line-color);
-            opacity: var(--line-opacity);
-        }
-
-        .simple-bar-chart>.item {
-            height: calc(1% * var(--val));
-            background-color: var(--clr, var(--item-default-color));
-            position: relative;
-            animation: item-height 1s ease forwards
-        }
-
-        @keyframes item-height {
-            from {
-                height: 0
-            }
-        }
-
-        .simple-bar-chart>.item>* {
-            position: absolute;
-            text-align: center
-        }
-
-        .simple-bar-chart>.item>.label {
-            inset: 100% 0 auto 0
-        }
-
-        .simple-bar-chart>.item>.value {
-            inset: auto 0 100% 0
-        }
-
-        /* >--- BAR CHART ---< */
-
-        /* --- PIE CHART --- */
-
-        .pie-chart-container {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .pie-chart {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            position: relative;
-            background-color: #eee;
-            /* Fallback color */
-            background-image:
-                conic-gradient(from 0deg at 50% 50%,
-                    #FFD700 0deg 90deg,
-                    /* Chrome */
-                    #FF8C00 90deg 162deg,
-                    /* Firefox */
-                    #FF6347 162deg 207deg,
-                    /* Edge */
-                    #4682B4 207deg 360deg
-                    /* Safari */
-                );
-        }
-
-        .segment {
-            position: absolute;
+        .chart-container {
             width: 100%;
             height: 100%;
-            clip-path: circle(50% at 50% 50%);
+            /* Make the chart container take full height of its parent */
+            background-color: #e2e8f0;
+            padding: 10px;
+            border-radius: 5px;
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: justify;
-            font-size: 1;
-            /* Hide text */
         }
-
-        .segment::before {
-            content: attr(style);
-            font-size: 14px;
-            position: absolute;
-            white-space: nowrap;
-            color: transparent;
-            /* Hide actual content */
-        }
-
-        .labels {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: -30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: black;
-        }
-
-        .label {
-            position: absolute;
-            /* Adjust the translate value to move labels outward */
-            transform: translate(100%, -50%) rotate(var(--angle)) translateX(50%);
-            transform-origin: 0% 50%;
-            white-space: nowrap;
-        }
-
-
-        /* >--- PIE CHART ---< */
-
-
 
         /* --- FOOTER --- */
 
@@ -309,74 +210,258 @@
             <img src="logo_nobg.png" alt="LlamaCloud" class="logo">
         </div>
 
-        <span class="miniTitle">Statistics 📊</span>
+        <span class="miniTitle">Insightful Discoveries 🔍</span>
 
-        <a href="admin.html" class="login-container">Back
-            <i class="fas fa-arrow-left"></i>
+        <a href="admin.html" class="login-container">to Admin Zone
+            <i class="fas fa-arrow-alt-circle-left"></i>
         </a>
     </header>
 
     <main>
-        <div class="stat-container">
-
-            <!-- Monthly Usage Bar Chart -->
-            <div class="dashboard-section">
-                <h2 class="section-title">Monthly Usage</h2>
-                <div class="simple-bar-chart">
-                    <!-- Each "item" represents a month with a unique color and value -->
-
-                    <div class="item" style="--clr: #5EB344; --val: 21"> <!-- Example for January -->
-                        <div class="label">Jan</div>
-                        <div class="value">21%</div>
+        <main>
+            <div class="dashboard-grid">
+                <section class="dashboard-section daily-active-user">
+                    <h2 class="section-title">Daily Active Users</h2>
+                    <div class="chart-container">
+                        <canvas id="dailyActiveUserChart"></canvas>
                     </div>
+                </section>
 
-                    <div class="item" style="--clr: #FCB72A; --val: 43"> <!-- Example for February -->
-                        <div class="label">Feb</div>
-                        <div class="value">43%</div>
+                <section class="dashboard-section daily-queries-per-term">
+                    <h2 class="section-title">Daily Queries Per Term</h2>
+                    <div class="chart-container">
+                        <canvas id="dailyQueriesPerTermChart"></canvas>
                     </div>
+                </section>
 
-                    <div class="item" style="--clr: #F8821A; --val: 65"> <!-- Example for March -->
-                        <div class="label">Mar</div>
-                        <div class="value">65%</div>
+                <section class="dashboard-section response-time-distribution">
+                    <h2 class="section-title">Response Time Distribution</h2>
+                    <div class="chart-container">
+                        <canvas id="responseTimeDistributionChart"></canvas>
                     </div>
+                </section>
 
-                    <div class="item" style="--clr: #E0393E; --val: 53"> <!-- Example for April -->
-                        <div class="label">Apr</div>
-                        <div class="value">53%</div>
+                <section class="dashboard-section links-per-term">
+                    <h2 class="section-title">Links Per Term</h2>
+                    <div class="chart-container">
+                        <canvas id="linksPerTermChart"></canvas>
                     </div>
-                </div>
-            </div>
-
-            <!-- Browser Usage Pie Chart -->
-            <div class="dashboard-section">
-                <h2 class="section-title">Browser Usage</h2>
-                <div class="pie-chart-container">
-                    <div class="pie-chart">
-                        <div class="segment chrome" data-name="Chrome"></div>
-                        <div class="segment firefox" data-name="Firefox"></div>
-                        <div class="segment edge" data-name="Edge"></div>
-                        <div class="segment safari" data-name="Safari"></div>
-                    </div>
-                    <div class="labels">
-                        <div class="label" style="--angle: 0;">Chrome 25%</div>
-                        <div class="label" style="--angle: 90deg;">Firefox 20%</div>
-                        <div class="label" style="--angle: 180deg;">Edge 15%</div>
-                        <div class="label" style="--angle: 270deg;">Safari 40%</div>
-                    </div>
-                </div>
+                </section>
 
             </div>
+        </main>
 
-        </div>
+
     </main>
-
-
-
 
     <footer>
         <a href="https://youtu.be/dQw4w9WgXcQ" target="_blank">made with 💙 in Braude</a>
         <a href="https://github.com/SecretPasta/Llama_Cloud.git" target="_blank">GitHub</a>
     </footer>
+
+    <!-- SCRIPT SECTION -->
+
+    <!-- Firebase Functionality -->
+
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getDatabase, ref, onValue, get } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyADCCAyqAIwppJV6hNmpWzQv9KjVN85VXg",
+            authDomain: "statistics-llama.firebaseapp.com",
+            databaseURL: "https://statistics-llama-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "statistics-llama",
+            storageBucket: "statistics-llama.appspot.com",
+            messagingSenderId: "515214636544",
+            appId: "1:515214636544:web:fb2d56998844da299ecae5",
+            measurementId: "G-2N0311GRMD"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        // Get a reference to the database service
+        const db = getDatabase();
+
+        // Reference to the root of your Firebase Realtime Database
+        const rootRef = ref(db);
+
+        // Function to fetch data from the Firebase Realtime Database
+        function fetchDatabaseData(path) {
+            const dataRef = ref(db, path); // Create a reference to the data path
+            return get(dataRef) // Fetch data from Firebase
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        return snapshot.val(); // Return the data as JSON if it exists
+                    } else {
+                        console.log('No data available at this path:', path);
+                        return null; // Return null if no data exists
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error fetching data:', error);
+                    throw error; // Throw error to be handled by the caller
+                });
+        }
+
+        // Function to initialize charts after data is fetched
+        function initializeCharts(data) {
+            // Assuming 'data' is the full JSON received from Firebase
+            // Parse the data for each chart as needed here
+
+            //  DAILY ACTIVE USERS
+            var ctx = document.getElementById('dailyActiveUserChart').getContext('2d');
+            var dailyActiveUserChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: Object.keys(data.DailyActiveUsers),
+                    datasets: [{
+                        label: 'Daily Active Users',
+                        data: Object.values(data.DailyActiveUsers),
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // DAILY QUERIES PER TERM
+            var dailyQueriesPerTermCtx = document.getElementById('dailyQueriesPerTermChart').getContext('2d');
+            var dailyQueriesPerTermChart = new Chart(dailyQueriesPerTermCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(data.DailyQueriesPerTerm), // Extract term names as labels
+                    datasets: [{
+                        label: 'Daily Queries Per Term',
+                        data: Object.values(data.DailyQueriesPerTerm), // Extract query counts as data
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)', // Light red background color for each bar
+                        borderColor: 'rgba(255, 99, 132, 1)', // Dark red border color for each bar
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true // Start the y-axis from zero
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false, // Ensure the chart sizes correctly in your layout
+                    plugins: {
+                        legend: {
+                            display: true, // Show the legend
+                            position: 'top' // Position the legend at the top
+                        }
+                    }
+                }
+            });
+
+            // LINKS PER TERM
+            var linksPerTermCtx = document.getElementById('linksPerTermChart').getContext('2d');
+            var linksPerTermChart = new Chart(linksPerTermCtx, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(data.LinksPerTerm), // Extract term names as labels
+                    datasets: [{
+                        data: Object.values(data.LinksPerTerm), // Extract link counts as data
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            // Repeat colors as necessary for the number of terms
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            // Repeat colors as necessary
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Ensure the chart sizes correctly in your layout
+                    plugins: {
+                        legend: {
+                            position: 'right', // Position the legend on the right side
+                            labels: {
+                                boxWidth: 10, // Reduce the legend indicator size
+                                padding: 20 // Increase padding for readability
+                            }
+                        }
+                    }
+                }
+            });
+
+            // RESPONSE TIME DISTRIBUTION
+            var responseTimeDistributionCtx = document.getElementById('responseTimeDistributionChart').getContext('2d');
+            var responseTimeDistributionChart = new Chart(responseTimeDistributionCtx, {
+                type: 'bar', // Using a bar chart to simulate a histogram
+                data: {
+                    // Example ranges - you would generate these based on your data preprocessing
+                    labels: ['0-50ms', '51-100ms', '101-150ms', '151-200ms', '201-250ms'],
+                    datasets: [{
+                        label: 'Frequency of Response Times',
+                        // Example frequency data - you would generate this based on your data preprocessing
+                        data: [5, 10, 15, 7, 3],
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Frequency'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Response Time (ms)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Function to fetch all data and initialize charts on document load
+        document.addEventListener('DOMContentLoaded', function () {
+            // Fetch all data needed for charts, for example from the root
+            fetchDatabaseData('/').then((jsonData) => {
+                console.log('Received JSON data:', jsonData);
+                // Initialize charts with the fetched data
+                initializeCharts(jsonData);
+            }).catch((error) => {
+                console.error('Failed to fetch data:', error);
+                // Handle the error appropriately
+            });
+        });
+
+    </script>
 
 </body>
 
