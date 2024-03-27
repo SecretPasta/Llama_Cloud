@@ -26,22 +26,63 @@
 
         body,
         html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to bottom left, #0F172A, #1A2346, #193251, #142941, #0F172A);
+            color: white;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            background-attachment: fixed;
+
             height: 100%;
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to bottom left, #0F172A, #1A2346, #193251, #142941, #0F172A, #0F172A, #0F172A);
-            color: white;
+            min-height: 100vh;
+        }
+
+        body {
+            justify-content: space-between;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Webkit browsers */
+        ::-webkit-scrollbar {
+            width: 12px;
+            /* Width of the vertical scrollbar */
+            height: 12px;
+            /* Height of the horizontal scrollbar */
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #2E3440;
+            /* Color of the scrollbar track */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #4C566A;
+            /* Color of the scrollbar thumb */
+            border: 3px solid #2E3440;
+            /* Creates padding around the scrollbar thumb */
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #616E88;
+            /* Lighter or different color on hover */
         }
 
         header {
+            position: sticky;
+            z-index: 1000;
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
-            padding: 1rem;
+            padding-top: 1rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
         }
 
         .header-top {
@@ -94,7 +135,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 8px;
+            padding: 12px 24px;
             background-color: #ffffff0f;
             border: 1px solid #ffffff1a;
             border-radius: 10px;
@@ -222,6 +263,7 @@
 
 
         .main {
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -231,9 +273,6 @@
             width: 100%;
             height: 100vh;
             /* Take up the full viewport height */
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-            /* Add padding at the bottom */
             box-sizing: border-box;
             /* Include padding in the height calculation */
         }
@@ -340,7 +379,7 @@
 
         /* Style the scrollbar itself (background) */
         .table-container::-webkit-scrollbar {
-            width: 8px;
+            width: 10px;
             /* Adjust the width of the vertical scrollbar */
             height: 8px;
             /* Adjust the height of the horizontal scrollbar */
@@ -356,7 +395,7 @@
 
         /* Style the scrollbar thumb on hover */
         .table-container::-webkit-scrollbar-thumb:hover {
-            background-color: #036C9E;
+            background-color: #26abf8;
             /* Darker shade for hover effect */
         }
 
@@ -415,10 +454,8 @@
             /* Center text horizontally */
         }
 
-
-
         footer {
-            position: absolute;
+            position: static;
             bottom: 0;
             width: 100%;
             padding: 1rem;
@@ -550,52 +587,83 @@
                 var searchQuery = sessionStorage.getItem('searchQuery');
                 $(".results-title").text("Search Results for " + searchQuery);
 
-                let termData = index["-NtaO-5dL_XJw3XQ3bcE"].term[searchQuery] || [];
-                termData.sort((a, b) => b.rank - a.rank);
-                termData = termData.slice(0, 100);
+                // Function to find a term in the index
+                function findTermInIndex(searchQuery, index) {
+                    const sanitizedQuery = searchQuery.replace(/[.!?]/g, '');
+                    const words = sanitizedQuery.split(' ');
+
+                    for (let word of words) {
+                        if (index[word]) {
+                            return index[word];
+                        }
+                    }
+                    return null;
+                }
+
+                // Use the function to find term data
+                let termData = findTermInIndex(searchQuery, index["-NtaO-5dL_XJw3XQ3bcE"].term) || [];
+
+                function displayPage(page, dataAvailable) {
+                    const $tbody = $('#resultsTable tbody');
+                    $tbody.empty(); // Clear the previous content
+
+                    if (dataAvailable && termData.length) {
+                        const start = (page - 1) * resultsPerPage;
+                        const end = start + resultsPerPage;
+                        const pageItems = termData.slice(start, end);
+
+                        $.each(pageItems, function (index, item) {
+                            $tbody.append(`
+                <tr>
+                    <td style="width: 90%;">
+                        <div style="margin-bottom: 5px;"><a href="${item.DocIDs}" target="_blank">${item.title}</a></div>
+                        <div>${item.content}</div>
+                    </td>
+                    <td style="text-align: right; vertical-align: top;">${item.rank}</td>
+                </tr>
+            `);
+                        });
+
+                        $('#pageIndicator').text(`Page ${page} of ${totalPages}`);
+                    } else {
+                        // Display a message if no term is found
+                        $tbody.append(`
+            <tr>
+                <td style="text-align: center; vertical-align: middle; font-weight: bold">🔎 No results in the cloud...</td>
+                <td style="text-align: left; vertical-align: middle;">Refine your search and let's dive back in. The right results await! 🌩️💻</td>
+            </tr>
+        `);
+                        // Hide or disable pagination if no results
+                        $('#prevPage, #nextPage, #pageIndicator').hide();
+                    }
+                }
 
                 let currentPage = 1;
                 const resultsPerPage = 10;
                 const totalPages = Math.ceil(termData.length / resultsPerPage);
 
-                function displayPage(page) {
-                    const start = (page - 1) * resultsPerPage;
-                    const end = start + resultsPerPage;
-                    const pageItems = termData.slice(start, end);
-
-                    const $tbody = $('#resultsTable tbody');
-                    $tbody.empty();
-
-                    $.each(pageItems, function (index, item) {
-                        $tbody.append(`
-                            <tr>
-                                <td style="width: 90%;">
-                                    <div style="margin-bottom: 5px;"><a href="${item.DocIDs}" target="_blank">${item.title}</a></div>
-                                    <div>${item.content}</div>
-                                </td>
-                                <td style="text-align: right; vertical-align: top;">${item.rank}</td>
-                            </tr>
-                        `);
-                    });
-
-                    $('#pageIndicator').text(`Page ${page} of ${totalPages}`);
+                if (termData && termData.length > 0) {
+                    termData.sort((a, b) => b.rank - a.rank);
+                    termData = termData.slice(0, 100);
+                    displayPage(currentPage, true); // Pass true to indicate that data is available
+                } else {
+                    displayPage(currentPage, false); // Pass false to indicate that data is not available
                 }
-
-                displayPage(currentPage);
 
                 $('#prevPage').click(function () {
                     if (currentPage > 1) {
                         currentPage--;
-                        displayPage(currentPage);
+                        displayPage(currentPage, termData.length > 0);
                     }
                 });
 
                 $('#nextPage').click(function () {
                     if (currentPage < totalPages) {
                         currentPage++;
-                        displayPage(currentPage);
+                        displayPage(currentPage, termData.length > 0);
                     }
                 });
+
 
             });
         }).catch(error => {
@@ -624,16 +692,12 @@
                 // Only proceed if the query is not empty
                 if (query !== "") {
                     console.log("Search query:", query);
-                    // Implement the redirection to the search results page with the query
-                    // This is just an example path; adjust based on your actual setup
 
                     // Store the search query in the session storage
                     sessionStorage.setItem('searchQuery', query);
 
                     window.location.href = `search_results.html`;
                 }
-                // Optionally, you could display a message to the user when the search field is empty
-                // e.g., alert("Please enter a search query.");
             });
         });
     </script>

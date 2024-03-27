@@ -857,14 +857,13 @@
                 <div class="code-container">
                     <div class="code-window" contenteditable="false">
                         {
-                        "BebraSearch": {
-                        "service": "Bebra",
-                        "documentation": "Braude College",
-                        "blogPosts": [
-                        "Scaling Your EC2 Infrastructure",
-                        "Cost Optimization with EC2"
-                        ],
-                        "moreInfo": "Visit AWS official documentation for detailed information."
+                        "LoadingBebraData": {
+                        "status": "Compiling wisdom...",
+                        "task": "Brewing coffee ☕ and spinning up the servers 🔄",
+                        "progress": "Aligning the stars for optimal data retrieval 🌌",
+                        "advice": "Patience, young Padawan. Good things come to those who wait... or refresh
+                        aggressively. 🚀",
+                        "ETA": "Just a few moments more or until you see a 🦄..."
                         }
                         }
                     </div>
@@ -908,9 +907,10 @@
                 <h2 class="section-title">Search Terms Overview</h2>
                 <div class="terms-container">
                     <div class="term-window" contenteditable="false">
-                        {
-                        "BebraSearch"
-                        }
+
+                        Gathering insights from the depths of the code ocean... 🌊
+                        Please stand by while we summon the data krakens 🐙.
+
                     </div>
                 </div>
 
@@ -1299,25 +1299,50 @@
         document.querySelector('.add-data-btn').addEventListener('click', showAddTermPopup);
         document.querySelector('.delete-data-btn').addEventListener('click', showDeleteTermPopup);
 
-        // Implement submission logic here
         function submitAddTerm() {
-            const term = document.getElementById('addTermInput').value;
-            console.log('Adding term:', term);
-            // Add your logic to handle the term addition
-            document.getElementById('addTermPopup').style.display = 'none'; // Hide popup after submission
+            const term = document.getElementById('addTermInput').value.trim();
+            if (term) { // Check if the term is not empty
+                const termWindow = document.querySelector('.term-window');
+                const termDiv = document.createElement('div');
+                termDiv.className = 'term-entry'; // Make sure this class is styled appropriately
+                termDiv.textContent = term;
+
+                termWindow.appendChild(termDiv); // Add the new term to the window
+
+                document.getElementById('addTermPopup').style.display = 'none'; // Hide popup after submission
+                document.getElementById('addTermInput').value = ''; // Clear the input field
+            } else {
+                alert("Please enter a term to add."); // Basic validation feedback
+            }
         }
 
+
         function submitDeleteTerm() {
-            const term = document.getElementById('deleteTermInput').value;
-            console.log('Deleting term:', term);
-            // Add your logic to handle the term deletion
-            document.getElementById('deleteTermPopup').style.display = 'none'; // Hide popup after submission
+            const termToDelete = document.getElementById('deleteTermInput').value.trim();
+            if (termToDelete) { // Check if the term to delete is not empty
+                const terms = document.querySelectorAll('.term-entry');
+                let found = false;
+                terms.forEach(termDiv => {
+                    if (termDiv.textContent === termToDelete) {
+                        termDiv.remove(); // Remove the matching term div
+                        found = true;
+                    }
+                });
+
+                if (!found) {
+                    alert("Can't locate that term. Another try? 🧐"); // Inform the user if the term to delete was not found
+                }
+
+                document.getElementById('deleteTermPopup').style.display = 'none'; // Hide popup after attempting deletion
+                document.getElementById('deleteTermInput').value = ''; // Clear the input field
+            } else {
+                alert("Please enter a term to delete."); // Basic validation feedback
+            }
         }
 
         function closePopup(popupId) {
             document.getElementById(popupId).style.display = 'none';
         }
-
 
     </script>
 
