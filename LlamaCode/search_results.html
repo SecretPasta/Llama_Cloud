@@ -47,7 +47,7 @@
             display: flex;
             flex-direction: column;
         }
-        
+
         /* Webkit browsers */
         ::-webkit-scrollbar {
             width: 12px;
@@ -400,7 +400,7 @@
         }
 
 
-        #pagination {
+        .pagination {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -411,8 +411,8 @@
             padding: 10px 0;
         }
 
-        #pagination button,
-        #pagination span {
+        .pagination button,
+        .pagination span {
             color: #0488D2;
             /* Set text color for both buttons and the page indicator */
             padding: 10px 15px;
@@ -427,19 +427,19 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        #pagination button {
+        .pagination button {
             border: 1px solid #0488D2;
             /* Only buttons have a border */
             color: #ffffff;
         }
 
-        #pagination button:hover {
+        .pagination button:hover {
             background-color: #007bff;
             color: #ffffff;
             /* Text color change on hover for buttons */
         }
 
-        #pagination span {
+        .pagination span {
             cursor: default;
             /* The page indicator shouldn't change cursor like buttons */
             background-color: transparent;
@@ -452,6 +452,51 @@
             /* Center text vertically */
             justify-content: center;
             /* Center text horizontally */
+        }
+
+        .search-container,
+        .pagination {
+            display: none;
+            /* Hide table and pagination initially */
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            /* Light grey border */
+            border-left-color: #09f;
+            /* Blue color for the spinner */
+            border-radius: 50%;
+            /* Circular shape */
+            width: 100px;
+            /* Increased size */
+            height: 100px;
+            /* Increased size */
+            animation: spin 1s linear infinite;
+            /* Continuous rotation */
+            position: fixed;
+            /* Fixed positioning relative to the viewport */
+            top: 50%;
+            /* Center vertically */
+            left: 50%;
+            /* Center horizontally */
+            transform: translate(-50%, -50%);
+            /* Offset the spinner to truly center it */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            /* Shadow effect */
+            display: block;
+            /* Make sure it's visible when you want it to be */
+        }
+
+        @keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+                /* Adjust for centering */
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+                /* Adjust for centering */
+            }
         }
 
         footer {
@@ -506,6 +551,8 @@
     </header>
 
     <main>
+        <div id="loadingSpinner" class="spinner"></div>
+
         <div class="search-container">
             <h2 class="results-title"></h2>
             <div class="table-container">
@@ -521,14 +568,15 @@
                     </tbody>
                 </table>
             </div>
-
         </div>
 
-        <div id="pagination">
+        <div class="pagination">
             <button id="prevPage">Previous</button>
             <span id="pageIndicator">Page 1</span>
             <button id="nextPage">Next</button>
         </div>
+
+
     </main>
 
     <footer>
@@ -542,7 +590,7 @@
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+        import { getDatabase, ref, onValue, get } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
 
         // Your web app's Firebase configuration
@@ -567,6 +615,19 @@
         // Reference to the root of your Firebase Realtime Database
         const rootRef = ref(db);
 
+        // Function to get the last key in the "index" node
+        const getLastKeyFromIndex = async () => {
+            const indexRef = ref(db, 'index');
+            const snapshot = await get(indexRef);
+            if (snapshot.exists()) {
+                const keys = Object.keys(snapshot.val());
+                return keys[keys.length - 1]; // Return the last key
+            } else {
+                console.log('No data available');
+                return null; // No data found
+            }
+        };
+
         function getDataAsJson() {
             return new Promise((resolve, reject) => {
                 const indexRef = ref(db, 'index'); // Reference to 'index' node in the database
@@ -581,27 +642,34 @@
             });
         }
 
-        getDataAsJson().then((index) => {
-            // Once data is fetched, proceed with displaying search results
-            $(document).ready(function () {
+        // Function to find a term in the index
+        function findTermInIndex(searchQuery, index) {
+            const sanitizedQuery = searchQuery.replace(/[.!?]/g, '');
+            const words = sanitizedQuery.split(' ');
+
+            for (let word of words) {
+                if (index && index[word]) {
+                    return index[word];
+                }
+            }
+            return null;
+        }
+
+        $(document).ready(async function () { // Modified to async function
+            try {
+                showSpinner(); // Show the loading spinner immediately before data fetch
+
+                const index = await getDataAsJson(); // Await the fetching of the index
                 var searchQuery = sessionStorage.getItem('searchQuery');
                 $(".results-title").text("Search Results for " + searchQuery);
 
-                // Function to find a term in the index
-                function findTermInIndex(searchQuery, index) {
-                    const sanitizedQuery = searchQuery.replace(/[.!?]/g, '');
-                    const words = sanitizedQuery.split(' ');
+                const lastKey = await getLastKeyFromIndex(); // Await the last key from the index
 
-                    for (let word of words) {
-                        if (index[word]) {
-                            return index[word];
-                        }
-                    }
-                    return null;
+                let termData = [];
+                if (lastKey !== null && index[lastKey]) {
+                    // Use the function to find term data
+                    termData = findTermInIndex(searchQuery, index[lastKey].term) || [];
                 }
-
-                // Use the function to find term data
-                let termData = findTermInIndex(searchQuery, index["-NtaO-5dL_XJw3XQ3bcE"].term) || [];
 
                 function displayPage(page, dataAvailable) {
                     const $tbody = $('#resultsTable tbody');
@@ -640,11 +708,11 @@
 
                 let currentPage = 1;
                 const resultsPerPage = 10;
-                const totalPages = Math.ceil(termData.length / resultsPerPage);
+                let totalPages = Math.ceil(termData.length / resultsPerPage); // Moved inside to be after termData is potentially filled
 
                 if (termData && termData.length > 0) {
                     termData.sort((a, b) => b.rank - a.rank);
-                    termData = termData.slice(0, 100);
+                    termData = termData.slice(0, 100); // Limit to the first 100 results for performance
                     displayPage(currentPage, true); // Pass true to indicate that data is available
                 } else {
                     displayPage(currentPage, false); // Pass false to indicate that data is not available
@@ -664,11 +732,25 @@
                     }
                 });
 
+                $('.search-container, .pagination').show(); // Show table and pagination
+                hideSpinner(); // Hide the loading spinner after all data has been fetched and processed
+                $('.pagination').css('display', 'flex');
 
-            });
-        }).catch(error => {
-            console.error('Error loading index from Firebase Realtime Database:', error);
+            } catch (error) {
+                console.error('Error loading index from Firebase Realtime Database:', error);
+                hideSpinner(); // Ensure spinner is hidden on error
+
+            }
         });
+
+        function showSpinner() {
+            document.getElementById('loadingSpinner').style.display = 'block';
+        }
+
+        function hideSpinner() {
+            document.getElementById('loadingSpinner').style.display = 'none';
+        }
+
     </script>
 
     <!-- SEARCH QUERY -->
